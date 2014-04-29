@@ -13,7 +13,7 @@ import java.util.LinkedList;
 public class Graph {
 
 
-    private String path = "/Volumes/Macintosh HD/User/peng0in/Developer/Java/Graph-Visualisieren-Java/ext/map.txt";
+    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
     public LinkedList<Knoten> l_knoten = new LinkedList<Knoten>();
     public LinkedList<Kante> l_kante = new LinkedList<Kante>();
     public int anzahl_an_Knoten;
