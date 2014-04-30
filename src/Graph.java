@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Projekt: Graph-Visualisieren-Java
@@ -48,6 +48,26 @@ public class Graph {
         } catch (IOException ex) {
             System.out.printf("Fehler beim lesen einer Zeile der Datei");
         }
+    }
+    public HashSet<Knoten> toHashSet() {
+        HashSet<Knoten> retrn = new HashSet<Knoten>();
+        for (Knoten k : l_knoten){
+            retrn.add(k);
+        }
+        return retrn;
+    }
+
+    public HashSet<Knoten> getNachbarschaft(Knoten knoten){
+        HashSet<Knoten> retrn = new HashSet<Knoten>();
+        for (Kante k : l_kante){
+            if (k.getPunkt1() == knoten){
+                retrn.add(k.getPunkt2());
+            }
+            if (k.getPunkt2() == knoten){
+                retrn.add(k.getPunkt1());
+            }
+        }
+        return retrn;
     }
 
     public Knoten findKnoten(int id) {
