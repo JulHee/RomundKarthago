@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Projekt: Graph-Visualisieren-Java
- * Author : Julian Heeger
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
  * Date : 26.04.14
  * Year : 2014
  */
@@ -14,10 +14,12 @@ public class Graph {
 
 
 //<<<<<<< HEAD
-    private String path = "C:\\Users\\Acer\\Documents\\Uni\\romundkathargoswp\\ext\\map.txt";
+//    private String path = "C:\\Users\\Acer\\Documents\\Uni\\romundkathargoswp\\ext\\map.txt";
 //=======
-//    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
+    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
 //>>>>>>> bc34c50fec4907f953d266db51c57150a9903889
+
+
     public LinkedList<Knoten> l_knoten = new LinkedList<Knoten>();
     public LinkedList<Kante> l_kante = new LinkedList<Kante>();
     public int anzahl_an_Knoten;

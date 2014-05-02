@@ -1,7 +1,7 @@
 /**
- * Projekt: Graph-Visualisieren-Java
- * Author : Julian Heeger
- * Date : 29.04.14
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
+ * Date : 26.04.14
  * Year : 2014
  */
 public class Position {

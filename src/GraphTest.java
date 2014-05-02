@@ -2,6 +2,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
+ * Date : 26.04.14
+ * Year : 2014
+ */
+
 public class GraphTest {
 
     @Test

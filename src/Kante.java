@@ -1,6 +1,6 @@
 /**
- * Projekt: Graph-Visualisieren-Java
- * Author : Julian Heeger
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
  * Date : 26.04.14
  * Year : 2014
  */
