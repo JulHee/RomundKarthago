@@ -75,6 +75,21 @@ public class Graph {
         }
         return retrn;
     }
+	public HashSet<Knoten> getNachbarschaft(LinkedList<Knoten> knotenListe) {
+		HashSet<Knoten> retrn = new HashSet<Knoten>();
+		for(Knoten knot : knotenListe){
+			for(Knoten temp : getNachbarschaft(knot)){
+				retrn.add(temp);
+			}
+		}
+
+		for(Knoten checkKnoten: retrn){
+			if(knotenListe.contains(checkKnoten)){
+				retrn.remove(checkKnoten);
+			}
+		}
+		return retrn;
+	}
 
     public Knoten findKnoten(int id) {
         for (Knoten i : l_knoten) {
