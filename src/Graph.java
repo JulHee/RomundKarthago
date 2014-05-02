@@ -13,11 +13,11 @@ import java.util.*;
 public class Graph {
 
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
     private String path = "C:\\Users\\Acer\\Documents\\Uni\\romundkathargoswp\\ext\\map.txt";
-=======
-    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
->>>>>>> bc34c50fec4907f953d266db51c57150a9903889
+//=======
+//    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
+//>>>>>>> bc34c50fec4907f953d266db51c57150a9903889
     public LinkedList<Knoten> l_knoten = new LinkedList<Knoten>();
     public LinkedList<Kante> l_kante = new LinkedList<Kante>();
     public int anzahl_an_Knoten;
