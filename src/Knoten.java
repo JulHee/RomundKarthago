@@ -23,4 +23,5 @@ public class Knoten {
                 ", position=" + position.toString() +
                 '}';
     }
+
 }

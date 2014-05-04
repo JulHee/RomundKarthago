@@ -14,9 +14,9 @@ public class Graph {
 
 
 //<<<<<<< HEAD
-//    private String path = "C:\\Users\\Acer\\Documents\\Uni\\romundkathargoswp\\ext\\map.txt";
+    private String path = "C:\\Users\\Acer\\Documents\\Uni\\romundkathargoswp\\ext\\map2.txt";
 //=======
-    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
+//    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
 //>>>>>>> bc34c50fec4907f953d266db51c57150a9903889
 
 
@@ -90,6 +90,17 @@ public class Graph {
 		}
 		return retrn;
 	}
+
+    public HashSet<Knoten> besetztesGebiet(Knoten knoten){
+        HashSet<Knoten> retrn = new HashSet<Knoten>();
+        String tmpSeiteStr = knoten.seite.toString();
+        for (Knoten i : getNachbarschaft(knoten)){
+            if(i.seite.toString() == tmpSeiteStr){retrn.add(i);
+                for (Knoten j :besetztesGebiet(i)) {retrn.add(j);}}
+        }
+        return retrn;
+    }
+
 
     public Knoten findKnoten(int id) {
         for (Knoten i : l_knoten) {
