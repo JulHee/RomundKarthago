@@ -97,7 +97,7 @@ public class Graph {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
         String tmpSeiteStr = rekKnoten.seite.toString();
         HashSet<Knoten> tmpSet = getNachbarschaft(rekKnoten);
-        tmpSet.remove(rekVorherigerKnoten);
+        if(rekVorherigerKnoten!= null){tmpSet.remove(rekVorherigerKnoten);}
         for (Knoten i : tmpSet) {
             if (i.seite.toString() == tmpSeiteStr) {
                 retrn.add(i);
