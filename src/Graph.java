@@ -90,13 +90,21 @@ public class Graph {
 		}
 		return retrn;
 	}
-
-    public HashSet<Knoten> besetztesGebiet(Knoten knoten){
+    public HashSet<Knoten> getBesetztesGebiet(Knoten knoten) {
+       return rekGBG(knoten,null);
+    }
+    public HashSet<Knoten> rekGBG (Knoten rekKnoten, Knoten rekVorherigerKnoten){
         HashSet<Knoten> retrn = new HashSet<Knoten>();
-        String tmpSeiteStr = knoten.seite.toString();
-        for (Knoten i : getNachbarschaft(knoten)){
-            if(i.seite.toString() == tmpSeiteStr){retrn.add(i);
-                for (Knoten j :besetztesGebiet(i)) {retrn.add(j);}}
+        String tmpSeiteStr = rekKnoten.seite.toString();
+        HashSet<Knoten> tmpSet = getNachbarschaft(rekKnoten);
+        tmpSet.remove(rekVorherigerKnoten);
+        for (Knoten i : tmpSet) {
+            if (i.seite.toString() == tmpSeiteStr) {
+                retrn.add(i);
+                for (Knoten j : rekGBG(i,rekKnoten)) {
+                    retrn.add(j);
+                }
+            }
         }
         return retrn;
     }
