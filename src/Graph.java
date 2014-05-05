@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 /**
  * Projekt: Rom und Karthago
@@ -100,6 +101,81 @@ public class Graph {
         }
         return retrn;
     }
+
+
+	/**
+	 * Funktion, die ueber saemtliche Staedte der Map iteriert und alle eigenen Staedte direkt hinzufuegt.
+	 * Bei neutralen Staedten werden alle direkten Nachbarn gecheckt und sobald einer dieser Nachbarn nicht
+	 * nicht von der Eigenen Seite besetzt ist, gibt es keinen Punkt.
+	 *
+	 * Ansatz: Alle direkten Nachbarn muessen von einem selbst besetzt sein.
+	 *
+	 * @param spieler
+	 * @return
+	 */
+			public int punkteStandFuer(Seite spieler){
+				int retrn = 0;
+				for(Knoten i : l_knoten){
+					if(i.seite == spieler || i.seite == Seite.Neutral && einfacherNachbarCheck(i)) {
+						retrn += 1;
+					}
+				}
+				return retrn;
+	}
+
+			private boolean einfacherNachbarCheck(Knoten knot){
+				HashSet<Knoten> tempNachbarn = getNachbarschaft(knot);
+				for( Knoten i : tempNachbarn){
+					if( i.seite != knot.seite){
+						return false;
+					}
+				}
+				return true;
+			}
+
+	/**
+	 * Funktion, die die eigenen Staedte direkt zaehlt. Bei neutralen Staedten wird rekursiv gecheckt,
+	 * ob die Stadt von der eigenen Seite umzingelt ist. Die muessen jedoch keine direkten Nachbarn sein.
+	 *
+	 * Ansatz: Neutrale Staedte geben auch dann Punkte, wenn sie nicht von ihren direkten Nachbar umzingelt sind,
+	 *          sondern ueber mehrere andere neutrale Staedte insgesamt umzingelt sind.
+	 *
+	 * @param spieler
+	 * @return
+	 */
+	public int recPunkteStandFuer(Seite spieler){
+		HashSet<Knoten> punkteStaedte = new HashSet<Knoten>();
+		for( Knoten i : l_knoten){
+			if(i.seite == spieler) {
+				punkteStaedte.add(i);
+			} else if(i.seite == Seite.Neutral){
+				punkteStaedte.addAll(recPunkteNeutraleNachbarn(i));
+			}
+		}
+		return punkteStaedte.size();
+	}
+
+	private HashSet<Knoten> recPunkteNeutraleNachbarn(Knoten knot){
+		HashSet<Knoten> tempNachbarn = getNachbarschaft(knot);
+		HashSet<Knoten> countNachbarn = new HashSet<Knoten>();
+		for(Knoten i: tempNachbarn){
+
+			if(i.seite != knot.seite) {
+				if (i.seite == Seite.Neutral) {
+					countNachbarn.addAll(recPunkteNeutraleNachbarn(i));
+				}else{
+					return new HashSet<Knoten>();
+				}
+			}
+		}
+		return countNachbarn;
+	}
+
+
+
+
+
+
 
 
     public Knoten findKnoten(int id) {
