@@ -11,5 +11,11 @@ public class Run {
         Graph graph = new Graph();
         graph.read();
         graph.ausgeben();
+	    System.out.println(graph.punkteStandFuer(Seite.Kathargo));
+	    System.out.println(graph.besetztePunkteStandFuer(Seite.Kathargo));
+	//    System.out.println(graph.recPunkteStandFuer(Seite.Kathargo));
+	    System.out.println(graph.punkteStandFuer(Seite.Rom));
+	    System.out.println(graph.besetztePunkteStandFuer(Seite.Rom));
+	//    System.out.println(graph.recPunkteStandFuer(Seite.Rom));
     }
 }

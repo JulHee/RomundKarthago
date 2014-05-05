@@ -15,13 +15,13 @@ public class Graph {
 
 
 	// Auswahlliste bei unterschiedlichen Computern
-	private String path = "/Volumes/Macintosh HD/User/peng0in/Developer/Java/RomUndKathargo/ext/map2.txt";
+//     private String path = "/Volumes/Macintosh HD/User/peng0in/Developer/Java/RomUndKathargo/ext/map2.txt";
 //    private String path = "C:\\Users\\Acer\\Documents\\Uni\\romundkathargoswp\\ext\\map2.txt";
-//    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
+    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map2.txt";
 
 
-	public LinkedList<Knoten> l_knoten = new LinkedList<Knoten>();
-	public LinkedList<Kante> l_kante = new LinkedList<Kante>();
+	public HashSet<Knoten> l_knoten = new HashSet<Knoten>();
+	public HashSet<Kante> l_kante = new HashSet<Kante>();
 	public int anzahl_an_Knoten;
 
 	public void read() throws Exception {
@@ -77,7 +77,7 @@ public class Graph {
 		return retrn;
 	}
 
-	public HashSet<Knoten> getNachbarschaft(LinkedList<Knoten> knotenListe) {
+	public HashSet<Knoten> getNachbarschaft(HashSet<Knoten> knotenListe) {
 		HashSet<Knoten> retrn = new HashSet<Knoten>();
 		for (Knoten knot : knotenListe) {
 			for (Knoten temp : getNachbarschaft(knot)) {
@@ -115,6 +115,39 @@ public class Graph {
 		return retrn;
 	}
 
+	/**
+	 * Sollte eig funktionieren, wenn du getBesetztesGebiet() funktioniert.
+	 * Die Funktion holt sich, gegeben dem Fall, dass die Stadt neutral ist, das "neutral besetzte" Gebiet.
+	 * Von diesem wird dann die Nachbarschaft ermittelt und diese darauf geprueft, ob alle zur eigenen
+	 * Besetzungsmacht gehoeren. Gehoert auch nur eine einzelne Stadt dem Gegner, koennen keine Punkte fuer
+	 * diese neutralen Staedte gezaehlt werden.
+	 * @param spieler
+	 * @return
+	 */
+	public int besetztePunkteStandFuer(Seite spieler){
+		HashSet<Knoten> punkteStaedte = new HashSet<Knoten>();
+		for (Knoten i : l_knoten) {
+			if (i.seite == spieler) {
+				punkteStaedte.add(i);
+			} else if (i.seite == Seite.Neutral){
+				punkteStaedte.addAll(checkNachbarschaft(i, spieler));
+			}
+		}
+		return punkteStaedte.size();
+	}
+
+	private HashSet<Knoten> checkNachbarschaft(Knoten knot, Seite spieler){
+		HashSet<Knoten> umzingeltesGebiet = getBesetztesGebiet(knot);
+		HashSet<Knoten> umzingelndeNachbarn = getNachbarschaft(umzingeltesGebiet);
+		for(Knoten i:umzingelndeNachbarn){
+			if(i.seite != spieler){
+				return new HashSet<Knoten>();
+			}
+		}
+		return umzingeltesGebiet;
+	}
+
+
 
 	/**
 	 * Funktion, die ueber saemtliche Staedte der Map iteriert und alle eigenen Staedte direkt hinzufuegt.
@@ -129,17 +162,17 @@ public class Graph {
 	public int punkteStandFuer(Seite spieler) {
 		int retrn = 0;
 		for (Knoten i : l_knoten) {
-			if (i.seite == spieler || i.seite == Seite.Neutral && einfacherNachbarCheck(i)) {
+			if (i.seite == spieler || i.seite == Seite.Neutral && einfacherNachbarCheck(i,spieler)) {
 				retrn += 1;
 			}
 		}
 		return retrn;
 	}
 
-	private boolean einfacherNachbarCheck(Knoten knot) {
+	public boolean einfacherNachbarCheck(Knoten knot, Seite seite) {
 		HashSet<Knoten> tempNachbarn = getNachbarschaft(knot);
 		for (Knoten i : tempNachbarn) {
-			if (i.seite != knot.seite) {
+			if (i.seite != seite) {
 				return false;
 			}
 		}
@@ -161,26 +194,26 @@ public class Graph {
 		for (Knoten i : l_knoten) {
 			if (i.seite == spieler) {
 				punkteStaedte.add(i);
-			} else if (i.seite == Seite.Neutral) {
-				punkteStaedte.addAll(recPunkteNeutraleNachbarn(i));
+			} else if (i.seite == Seite.Neutral && !punkteStaedte.contains(i)) {
+				punkteStaedte.addAll(recPunkteNeutraleNachbarn(i, spieler));
 			}
 		}
 		return punkteStaedte.size();
 	}
 
-	private HashSet<Knoten> recPunkteNeutraleNachbarn(Knoten knot) {
+	private HashSet<Knoten> recPunkteNeutraleNachbarn(Knoten knot, Seite spieler) {
 		HashSet<Knoten> tempNachbarn = getNachbarschaft(knot);
 		HashSet<Knoten> countNachbarn = new HashSet<Knoten>();
 		for (Knoten i : tempNachbarn) {
-
-			if (i.seite != knot.seite) {
-				if (i.seite == Seite.Neutral) {
-					countNachbarn.addAll(recPunkteNeutraleNachbarn(i));
+			if (i.seite != spieler) {
+				if (i.seite == Seite.Neutral && !countNachbarn.contains(i)) {
+					countNachbarn.addAll(recPunkteNeutraleNachbarn(i, spieler));
 				} else {
 					return new HashSet<Knoten>();
 				}
 			}
 		}
+		countNachbarn.add(knot);
 		return countNachbarn;
 	}
 
