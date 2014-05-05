@@ -13,7 +13,7 @@ import java.util.*;
 public class Graph {
 
 
-//<<<<<<< HEAD
+    //<<<<<<< HEAD
     private String path = "C:\\Users\\Acer\\Documents\\Uni\\romundkathargoswp\\ext\\map2.txt";
 //=======
 //    private String path = "/Volumes/Data/University/Uni Marburg/4. Semester/IntelliJ_workspace/RomUndKarthagoSWP/ext/map.txt";
@@ -55,53 +55,59 @@ public class Graph {
             System.out.printf("Fehler beim lesen einer Zeile der Datei");
         }
     }
+
     public HashSet<Knoten> toHashSet() {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
-        for (Knoten k : l_knoten){
+        for (Knoten k : l_knoten) {
             retrn.add(k);
         }
         return retrn;
     }
 
-    public HashSet<Knoten> getNachbarschaft(Knoten knoten){
+    public HashSet<Knoten> getNachbarschaft(Knoten knoten) {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
-        for (Kante k : l_kante){
-            if (k.getPunkt1() == knoten){
+        for (Kante k : l_kante) {
+            if (k.getPunkt1() == knoten) {
                 retrn.add(k.getPunkt2());
             }
-            if (k.getPunkt2() == knoten){
+            if (k.getPunkt2() == knoten) {
                 retrn.add(k.getPunkt1());
             }
         }
         return retrn;
     }
-	public HashSet<Knoten> getNachbarschaft(LinkedList<Knoten> knotenListe) {
-		HashSet<Knoten> retrn = new HashSet<Knoten>();
-		for(Knoten knot : knotenListe){
-			for(Knoten temp : getNachbarschaft(knot)){
-				retrn.add(temp);
-			}
-		}
 
-		for(Knoten checkKnoten: retrn){
-			if(knotenListe.contains(checkKnoten)){
-				retrn.remove(checkKnoten);
-			}
-		}
-		return retrn;
-	}
-    public HashSet<Knoten> getBesetztesGebiet(Knoten knoten) {
-       return rekGBG(knoten,null);
+    public HashSet<Knoten> getNachbarschaft(LinkedList<Knoten> knotenListe) {
+        HashSet<Knoten> retrn = new HashSet<Knoten>();
+        for (Knoten knot : knotenListe) {
+            for (Knoten temp : getNachbarschaft(knot)) {
+                retrn.add(temp);
+            }
+        }
+
+        for (Knoten checkKnoten : retrn) {
+            if (knotenListe.contains(checkKnoten)) {
+                retrn.remove(checkKnoten);
+            }
+        }
+        return retrn;
     }
-    public HashSet<Knoten> rekGBG (Knoten rekKnoten, Knoten rekVorherigerKnoten){
+
+    public HashSet<Knoten> getBesetztesGebiet(Knoten knoten) {
+        return rekGBG(knoten, null);
+    }
+
+    public HashSet<Knoten> rekGBG(Knoten rekKnoten, Knoten rekVorherigerKnoten) {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
         String tmpSeiteStr = rekKnoten.seite.toString();
         HashSet<Knoten> tmpSet = getNachbarschaft(rekKnoten);
-        if(rekVorherigerKnoten!= null){tmpSet.remove(rekVorherigerKnoten);}
+        if (rekVorherigerKnoten != null) {
+            tmpSet.remove(rekVorherigerKnoten);
+        }
         for (Knoten i : tmpSet) {
             if (i.seite.toString() == tmpSeiteStr) {
                 retrn.add(i);
-                for (Knoten j : rekGBG(i,rekKnoten)) {
+                for (Knoten j : rekGBG(i, rekKnoten)) {
                     retrn.add(j);
                 }
             }
