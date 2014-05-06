@@ -12,7 +12,6 @@ import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 
-
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
@@ -28,8 +27,7 @@ public class Oberflaeche extends Application {
         Graph graph = new Graph();
         try {
             graph.read();
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Allgemeine Warnlampe");
         }
 
@@ -46,32 +44,15 @@ public class Oberflaeche extends Application {
 
         // Linien hinzufügen
 
-        for (Kante i: graph.l_kante){
-            Path temp_path = new Path();
+        for (Kante i : graph.l_kante) {
 
-            MoveTo moveTo = new MoveTo();
-            moveTo.setX(i.punkt1.position.x+(WIDTH/2));
-            moveTo.setY(i.punkt1.position.y+(HEIGHT/2));
-
-            LineTo lineTo = new LineTo();
-            lineTo.setX(i.punkt2.position.x+(WIDTH/2));
-            lineTo.setY(i.punkt2.position.y+(HEIGHT/2));
-
-            temp_path.getElements().add(moveTo);
-            temp_path.getElements().add(lineTo);
-            temp_path.setStrokeWidth(2);
-            temp_path.setStroke(Color.BLACK);
-            root.getChildren().add(temp_path);
+            root.getChildren().add(pathanlegen(i, WIDTH, HEIGHT));
         }
 
         // Buttons hinzufügen
 
-        for (Knoten i : graph.l_knoten){
-            Button temp = new Button();
-            temp.setText(String.valueOf(i.id)+" "+i.seite.toString());
-            temp.setLayoutX(i.position.x);
-            temp.setLayoutY(i.position.y);
-            root.getChildren().add(temp);
+        for (Knoten i : graph.l_knoten) {
+            root.getChildren().add(buttonalegen(i));
         }
 
 
@@ -80,5 +61,31 @@ public class Oberflaeche extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
+    }
+
+    private Button buttonalegen(Knoten knoten) {
+        Button temp = new Button();
+        temp.setText(String.valueOf(knoten.id) + " " + knoten.seite.toString());
+        temp.setLayoutX(knoten.position.x);
+        temp.setLayoutY(knoten.position.y);
+        return temp;
+    }
+
+    private Path pathanlegen(Kante kante, double width, double height) {
+        Path path = new Path();
+
+        MoveTo moveTo = new MoveTo();
+        moveTo.setX(kante.punkt1.position.x + (width / 2));
+        moveTo.setY(kante.punkt1.position.y + (height / 2));
+
+        LineTo lineTo = new LineTo();
+        lineTo.setX(kante.punkt2.position.x + (width / 2));
+        lineTo.setY(kante.punkt2.position.y + (height / 2));
+
+        path.getElements().add(moveTo);
+        path.getElements().add(lineTo);
+        path.setStrokeWidth(2);
+        path.setStroke(Color.BLACK);
+        return path;
     }
 }
