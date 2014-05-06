@@ -13,9 +13,11 @@ public class Run {
         graph.ausgeben();
 	    System.out.println(graph.punkteStandFuer(Seite.Kathargo));
 	    System.out.println(graph.besetztePunkteStandFuer(Seite.Kathargo));
-	//    System.out.println(graph.recPunkteStandFuer(Seite.Kathargo));
+        System.out.println(graph.getBesetztesGebiet(graph.findKnoten(6)));
+        //    System.out.println(graph.recPunkteStandFuer(Seite.Kathargo));
 	    System.out.println(graph.punkteStandFuer(Seite.Rom));
 	    System.out.println(graph.besetztePunkteStandFuer(Seite.Rom));
-	//    System.out.println(graph.recPunkteStandFuer(Seite.Rom));
+        System.out.println(graph.getBesetztesGebiet(graph.findKnoten(9)));
+        //    System.out.println(graph.recPunkteStandFuer(Seite.Rom));
     }
 }

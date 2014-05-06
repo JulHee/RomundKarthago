@@ -93,27 +93,23 @@ public class Graph {
 		return retrn;
 	}
 
-	public HashSet<Knoten> getBesetztesGebiet(Knoten knoten) {
-		return rekGBG(knoten, null);
-	}
+    public HashSet<Knoten> getBesetztesGebiet(Knoten knoten) {
 
-	public HashSet<Knoten> rekGBG(Knoten rekKnoten, Knoten rekVorherigerKnoten) {
-		HashSet<Knoten> retrn = new HashSet<Knoten>();
-		String tmpSeiteStr = rekKnoten.seite.toString();
-		HashSet<Knoten> tmpSet = getNachbarschaft(rekKnoten);
-		if (rekVorherigerKnoten != null) {
-			tmpSet.remove(rekVorherigerKnoten);
-		}
-		for (Knoten i : tmpSet) {
-			if (i.seite.toString() == tmpSeiteStr) {
-				retrn.add(i);
-				for (Knoten j : rekGBG(i, rekKnoten)) {
-					retrn.add(j);
-				}
-			}
-		}
-		return retrn;
-	}
+        return rekGBG(knoten, new HashSet<Knoten>());
+    }
+
+    private HashSet<Knoten> rekGBG (Knoten rekKnoten,HashSet retrn){
+
+        retrn.add(rekKnoten);
+        for(Knoten i:getNachbarschaft(rekKnoten)){
+            if(i.seite == rekKnoten.seite && !(retrn.contains(i))){
+                rekGBG(i,retrn);
+            }
+        }
+
+        return retrn;
+    }
+
 
 	/**
 	 * Sollte eig funktionieren, wenn du getBesetztesGebiet() funktioniert.
@@ -178,6 +174,7 @@ public class Graph {
 		}
 		return true;
 	}
+
 
 	/**
 	 * Funktion, die die eigenen Staedte direkt zaehlt. Bei neutralen Staedten wird rekursiv gecheckt,
