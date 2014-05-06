@@ -1,7 +1,6 @@
 package Main;
 
-import Graph.Graph;
-import Graph.Seite;
+import Graph.*;
 
 /**
  * Projekt: Rom und Karthago
