@@ -84,12 +84,7 @@ public class Graph {
 				retrn.add(temp);
 			}
 		}
-
-		for (Knoten checkKnoten : retrn) {
-			if (knotenListe.contains(checkKnoten)) {
-				retrn.remove(checkKnoten);
-			}
-		}
+		retrn.removeAll(knotenListe);
 		return retrn;
 	}
 
@@ -135,44 +130,12 @@ public class Graph {
 	private HashSet<Knoten> checkNachbarschaft(Knoten knot, Seite spieler){
 		HashSet<Knoten> umzingeltesGebiet = getBesetztesGebiet(knot);
 		HashSet<Knoten> umzingelndeNachbarn = getNachbarschaft(umzingeltesGebiet);
-		for(Knoten i:umzingelndeNachbarn){
+		for(Knoten i : umzingelndeNachbarn){
 			if(i.seite != spieler){
 				return new HashSet<Knoten>();
 			}
 		}
 		return umzingeltesGebiet;
-	}
-
-
-
-	/**
-	 * Funktion, die ueber saemtliche Staedte der Map iteriert und alle eigenen Staedte direkt hinzufuegt.
-	 * Bei neutralen Staedten werden alle direkten Nachbarn gecheckt und sobald einer dieser Nachbarn nicht
-	 * nicht von der Eigenen Seite besetzt ist, gibt es keinen Punkt.
-	 * <p>
-	 * Ansatz: Alle direkten Nachbarn muessen von einem selbst besetzt sein.
-	 *
-	 * @param spieler
-	 * @return
-	 */
-	public int punkteStandFuer(Seite spieler) {
-		int retrn = 0;
-		for (Knoten i : l_knoten) {
-			if (i.seite == spieler || i.seite == Seite.Neutral && einfacherNachbarCheck(i,spieler)) {
-				retrn += 1;
-			}
-		}
-		return retrn;
-	}
-
-	public boolean einfacherNachbarCheck(Knoten knot, Seite seite) {
-		HashSet<Knoten> tempNachbarn = getNachbarschaft(knot);
-		for (Knoten i : tempNachbarn) {
-			if (i.seite != seite) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 
