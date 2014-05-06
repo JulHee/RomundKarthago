@@ -1,3 +1,8 @@
+package Main;
+
+import Graph.Graph;
+import Graph.Seite;
+
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth

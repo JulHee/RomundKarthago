@@ -1,5 +1,7 @@
+package Test;
 import org.junit.Test;
 
+import Graph.Graph;
 import static org.junit.Assert.*;
 
 /**
