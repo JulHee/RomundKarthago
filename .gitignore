@@ -2,3 +2,6 @@
 out/
 RomUndKathargo.iml
 romundkathargoswp.iml
+/bin
+.classpath
+.project
