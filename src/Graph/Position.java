@@ -1,3 +1,4 @@
+package Graph;
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
@@ -5,8 +6,8 @@
  * Year : 2014
  */
 public class Position {
-    final int x;
-    final int y;
+    public final int x;
+    public final int y;
 
     public Position(int x, int y) {
         this.x = x;

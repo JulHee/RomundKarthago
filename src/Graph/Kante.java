@@ -1,3 +1,4 @@
+package Graph;
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
@@ -8,8 +9,8 @@
 
 public class Kante {
 
-    Knoten  punkt1;
-    Knoten  punkt2;
+    public Knoten  punkt1;
+    public Knoten  punkt2;
 
     public Kante(Knoten punkt1, Knoten punkt2) {
         this.punkt1 = punkt1;

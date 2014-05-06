@@ -1,3 +1,4 @@
+package Graph;
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
@@ -7,7 +8,7 @@
 public class Knoten {
     public int  id;
     public Seite seite;
-    Position position;
+    public Position position;
 
     public Knoten(int id, Seite seite,Position position){
         this.id = id;
