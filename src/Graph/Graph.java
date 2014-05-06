@@ -139,46 +139,6 @@ public class Graph {
 		return umzingeltesGebiet;
 	}
 
-
-	/**
-	 * Funktion, die die eigenen Staedte direkt zaehlt. Bei neutralen Staedten wird rekursiv gecheckt,
-	 * ob die Stadt von der eigenen Seite umzingelt ist. Die muessen jedoch keine direkten Nachbarn sein.
-	 * <p>
-	 * Ansatz: Neutrale Staedte geben auch dann Punkte, wenn sie nicht von ihren direkten Nachbar umzingelt sind,
-	 * sondern ueber mehrere andere neutrale Staedte insgesamt umzingelt sind.
-	 *
-	 * @param spieler
-	 * @return
-	 */
-	public int recPunkteStandFuer(Seite spieler) {
-		HashSet<Knoten> punkteStaedte = new HashSet<Knoten>();
-		for (Knoten i : l_knoten) {
-			if (i.seite == spieler) {
-				punkteStaedte.add(i);
-			} else if (i.seite == Seite.Neutral && !punkteStaedte.contains(i)) {
-				punkteStaedte.addAll(recPunkteNeutraleNachbarn(i, spieler));
-			}
-		}
-		return punkteStaedte.size();
-	}
-
-	private HashSet<Knoten> recPunkteNeutraleNachbarn(Knoten knot, Seite spieler) {
-		HashSet<Knoten> tempNachbarn = getNachbarschaft(knot);
-		HashSet<Knoten> countNachbarn = new HashSet<Knoten>();
-		for (Knoten i : tempNachbarn) {
-			if (i.seite != spieler) {
-				if (i.seite == Seite.Neutral && !countNachbarn.contains(i)) {
-					countNachbarn.addAll(recPunkteNeutraleNachbarn(i, spieler));
-				} else {
-					return new HashSet<Knoten>();
-				}
-			}
-		}
-		countNachbarn.add(knot);
-		return countNachbarn;
-	}
-
-
 	public Knoten findKnoten(int id) {
 		for (Knoten i : l_knoten) {
 			if (i.id == id) {
