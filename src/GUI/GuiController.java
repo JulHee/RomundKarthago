@@ -1,28 +1,28 @@
 package GUI;
 
+/**
+ * Projekt: RomUndKathargo
+ * Author : Julian Heeger
+ * Date : 07.05.14
+ * Year : 2014
+ */
+
 import Graph.*;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.stage.Stage;
 
 import java.util.LinkedList;
 
 
-/**
- * Projekt: Rom und Karthago
- * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
- * Date : 26.04.14
- * Year : 2014
- */
-public class Oberflaeche extends Application {
+public class GuiController {
 
     // Anlegen des Graphen
 
@@ -59,26 +59,6 @@ public class Oberflaeche extends Application {
 
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        initial();
-
-        // Optionen des JavaFX setzen
-
-        primaryStage.setTitle("Graph");
-        Pane root = new Pane();
-
-        root.getChildren().addAll(paths);
-        root.getChildren().addAll(buttons);
-
-
-        // Abschließend Form zeigen
-
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 600, 600));
-        primaryStage.show();
-    }
-
     private Button buttonalegen(Knoten knoten) {
         final Button temp = new Button();
         temp.setText(String.valueOf(knoten.id) + " " + knoten.seite.toString());
@@ -113,7 +93,29 @@ public class Oberflaeche extends Application {
     }
 
     private void changelabel(Button button) {
-        button.setText("Klicked");
+        ta_log.appendText(button.getText() + "\n");
     }
+
+
+    // Code für die Oberfläche
+
+    @FXML
+    private TextArea ta_log;
+
+    @FXML
+    private Button bt_start;
+
+    @FXML
+    private Pane map;
+
+    @FXML
+    void bt_start_click(ActionEvent event) {
+        initial();
+        map.getChildren().addAll(paths);
+        map.getChildren().addAll(buttons);
+        ta_log.appendText("Die Daten wurden geladen \n");
+
+    }
+
 
 }
