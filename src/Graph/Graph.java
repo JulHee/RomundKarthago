@@ -27,7 +27,7 @@ public class Graph {
 
 	public void read() throws Exception {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(path));
+			BufferedReader br = new BufferedReader(new FileReader(getPath()));
 			LinkedList<String> datei = new LinkedList<String>();
 			String zeile;
 			if ((zeile = br.readLine()) != null) {
@@ -48,7 +48,7 @@ public class Graph {
 						Knoten nach = findKnoten(Integer.parseInt(split[2]));
 						l_kante.add(new Kante(von, nach));
 					} else {
-						throw new Exception("Fehler in der Struktur der Datei:" + path);
+						throw new Exception("Fehler in der Struktur der Datei:" + getPath());
 					}
 				}
 			}
@@ -174,6 +174,14 @@ public class Graph {
 		for (Kante i : l_kante) {
 			System.out.println(i.toString());
 		}
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 
