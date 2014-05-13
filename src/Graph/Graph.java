@@ -175,6 +175,13 @@ public class Graph {
 			System.out.println(i.toString());
 		}
 	}
+    public String convertToString(){
+        String temp = "";
+        for (Knoten k : l_knoten){
+            temp = temp + k.seite.toString();
+        }
+        return temp;
+    }
 
 	public String getPath() {
 		return path;
