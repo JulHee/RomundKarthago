@@ -115,5 +115,8 @@ public class Oberflaeche extends Application {
     private void changelabel(Button button) {
         button.setText("Klicked");
     }
+    public static void main(String[] args) {
+		launch(args);
+	}
 
 }

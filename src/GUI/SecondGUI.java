@@ -30,6 +30,9 @@ public class SecondGUI extends Application {
             Logger.getLogger(SecondGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public static void main(String[] args) {
+		launch(args);
+	}
 
 
 }
