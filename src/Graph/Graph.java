@@ -191,5 +191,17 @@ public class Graph {
 		this.path = path;
 	}
 
+    public Graph spielSituatonUeberführen(Graph g,Zug z) {
+        try {
+            if (g.findKnoten(z.getStadt()).seite == Seite.Neutral) {
+                g.findKnoten(z.getStadt()).seite = z.getSeite();
 
+            }
+            return g;
+        } catch (Exception e) {
+            System.out.println(e);
+            return g;
+        }
+
+    }
 }
