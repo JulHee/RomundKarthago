@@ -183,6 +183,16 @@ public class Graph {
         return temp;
     }
 
+    public String convertToString2(){
+        String temp = "";
+        for(int i=0;i<l_knoten.size();i++) {
+            for (Knoten k : l_knoten) {
+                if(k.id==i){temp = temp + k.seite.toString();}
+            }
+        }
+        return temp;
+    }
+
 	public String getPath() {
 		return path;
 	}
@@ -191,7 +201,7 @@ public class Graph {
 		this.path = path;
 	}
 
-    public Graph spielSituatonUeberführen(Graph g,Zug z) {
+    public Graph spielSituatonUeberfuehren(Graph g,Zug z) {
         try {
             if (g.findKnoten(z.getStadt()).seite == Seite.Neutral) {
                 g.findKnoten(z.getStadt()).seite = z.getSeite();
