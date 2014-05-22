@@ -21,6 +21,9 @@ public class Zug {
             try{
                 this.seite = readSeite(temp[0]);
                 this.stadt = Integer.parseInt(temp[1]);
+                if (this.seite == null){
+                    throw new ExceptionInInitializerError("Fehler beim erstellen des Zuges, ein Wert ist nicht gesetzt");
+                }
             } catch (Exception ex){
                 System.out.println(ex.getMessage());
             }
