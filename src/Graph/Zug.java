@@ -1,5 +1,9 @@
 package Graph;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 /**
  * Projekt: RomUndKathargo
  * Author : Julian Heeger
@@ -48,6 +52,14 @@ public class Zug {
         }
         return resu;
     }
+    public static Zug readZugFile(String path) throws Exception{
+    	BufferedReader reado = new BufferedReader(new FileReader(path));
+    	String ZugZeile;
+    	if ((ZugZeile = reado.readLine()) != null){
+    		Zug zug = new Zug(ZugZeile);
+    		return zug;
+    	} else throw new Exception("File not correct");
+    };
 
     public Seite getSeite() {
         return seite;
@@ -64,4 +76,5 @@ public class Zug {
                 ", stadt=" + stadt +
                 '}';
     }
+    
 }

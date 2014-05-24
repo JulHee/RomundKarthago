@@ -203,7 +203,9 @@ public class Graph {
 
     public Graph spielSituatonUeberfuehren(Graph g,Zug z) {
         try {
-            if (g.findKnoten(z.getStadt()).seite == Seite.Neutral) {
+            if (g.findKnoten(z.getStadt()) == null){
+            	return g;
+            }else if (g.findKnoten(z.getStadt()).seite == Seite.Neutral) {
                 g.findKnoten(z.getStadt()).seite = z.getSeite();
 
             }
@@ -214,4 +216,6 @@ public class Graph {
         }
 
     }
+    
+    
 }
