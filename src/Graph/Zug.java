@@ -35,6 +35,14 @@ public class Zug {
         }
     }
 
+    /**
+     * Erzeugt aus einem String eine enumeratione Seite
+     *
+     * @param x Die Seite als String
+     * @return Die Seite
+     * @throws Exception Ungültiger String
+     */
+
     private Seite readSeite(String x) throws Exception {
         Seite resu;
         if (x.equals("N")) {
@@ -52,6 +60,13 @@ public class Zug {
         }
         return resu;
     }
+
+    /**
+     * Liest aus einer Datei einen Zug
+     * @param path Pfad zur Datei
+     * @return Einen Zug
+     * @throws Exception Falls die Datei nicht der norm enspricht
+     */
     public static Zug readZugFile(String path) throws Exception{
     	BufferedReader reado = new BufferedReader(new FileReader(path));
     	String ZugZeile;
