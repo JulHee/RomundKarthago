@@ -14,8 +14,9 @@ public class Run {
 	public static void main(String[] args) throws Exception{
 
 		Graph graph = new Graph();
-		/*
+
         graph.read();
+        /*
         graph.ausgeben();
         Zug zug = new Zug("C 1");
         Zug zug_org = new Zug(Seite.Kathargo,2);
@@ -34,7 +35,6 @@ public class Run {
 		String Zugpath = "ext/Zug1.txt";
 		String Graphpath = "ext/map2.txt";
 		Transition(Graphpath,Zugpath);
-
 	}
 	public static void Transition (String Graphpath,String Move) throws Exception{
 		Graph graph = new Graph();

@@ -1,7 +1,7 @@
 package Test;
 import org.junit.Test;
 
-import Graph.Graph;
+import Graph.*;
 import static org.junit.Assert.*;
 
 /**
@@ -32,5 +32,20 @@ public class GraphTest {
         Graph myGraph = new Graph();
         myGraph.read();
         assertTrue(myGraph.findKnoten(5) != null);
+    }
+
+    @Test
+    public void testconvertToString() throws Exception{
+        Graph myGraph = new Graph();
+        myGraph.read();
+        assertEquals(myGraph.convertToString(),"NCNRRNRNNN");
+    }
+    @Test
+    public void testspielSituatonUeberfuehren() throws Exception{
+        Graph myGraph = new Graph();
+        Zug myZug = new Zug("R 2");
+        myGraph.read();
+        Graph newGraph = myGraph.spielSituatonUeberfuehren(myGraph,myZug);
+        assertEquals(newGraph.convertToString(),"NRNRNNNCRR");
     }
 }
