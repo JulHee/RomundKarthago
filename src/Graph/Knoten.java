@@ -24,5 +24,8 @@ public class Knoten {
                 ", position=" + position.toString() +
                 '}';
     }
+    public void setSeite(Seite seite) {
+        this.seite = seite;
+    }
 
 }

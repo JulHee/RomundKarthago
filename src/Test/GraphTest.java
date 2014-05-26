@@ -38,7 +38,7 @@ public class GraphTest {
     public void testconvertToString() throws Exception{
         Graph myGraph = new Graph();
         myGraph.read();
-        assertEquals(myGraph.convertToString(),"NCNRRNRNNN");
+        assertEquals("NNNNRRRNNC",myGraph.convertToString2());
     }
     @Test
     public void testspielSituatonUeberfuehren() throws Exception{
@@ -46,6 +46,6 @@ public class GraphTest {
         Zug myZug = new Zug("R 2");
         myGraph.read();
         Graph newGraph = myGraph.spielSituatonUeberfuehren(myGraph,myZug);
-        assertEquals(newGraph.convertToString(),"NRNRNNNCRR");
+        assertEquals("NNRNRRRNNC",newGraph.convertToString2());
     }
 }

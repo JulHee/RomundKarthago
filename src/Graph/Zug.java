@@ -36,7 +36,7 @@ public class Zug {
     }
 
     /**
-     * Erzeugt aus einem String eine enumeratione Seite
+     * Erzeugt aus einem String eine enumeration Seite
      *
      * @param x Die Seite als String
      * @return Die Seite

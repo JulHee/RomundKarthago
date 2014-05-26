@@ -134,7 +134,7 @@ public class Graph {
      * diese neutralen Staedte gezaehlt werden.
      *
      * @param spieler
-     * @return
+     * @return Punktestand
      */
     public int besetztePunkteStandFuer(Seite spieler) {
         HashSet<Knoten> punkteStaedte = new HashSet<Knoten>();
@@ -204,11 +204,11 @@ public class Graph {
 
     public Graph spielSituatonUeberfuehren(Graph g, Zug z) {
         try {
-            if (g.findKnoten(z.getStadt()) == null) {
+            Knoten aktKnoten = g.findKnoten(z.getStadt());
+            if ((aktKnoten) == null) {
                 return g;
-            } else if (g.findKnoten(z.getStadt()).seite == Seite.Neutral) {
-                g.findKnoten(z.getStadt()).seite = z.getSeite();
-
+            } else if (aktKnoten.seite == Seite.Neutral) {
+                    aktKnoten.setSeite(z.getSeite());
             }
             return g;
         } catch (Exception e) {

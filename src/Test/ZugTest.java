@@ -19,4 +19,6 @@ public class ZugTest {
         Zug zug = new Zug(test);
         assertNull("Object wurde nicht erzeugt",zug.getSeite());
     }
+
+
 }
