@@ -1,0 +1,17 @@
+.idea/
+out/
+RomUndKathargo.iml
+romundkathargoswp.iml
+/bin
+.classpath
+.project
+
+#Ab hier für das Repository auf dem Uni Server
+romundkathargoswp/.idea/
+romundkathargoswp/out/
+romundkathargoswp/romundkathargoswpp.iml
+romundkathargoswp/romundkathargoswp.iml
+romundkathargoswp/RomUndKathargo.iml
+romundkathargoswp/bin
+romundkathargoswp/.classpath
+romundkathargoswp/.project
