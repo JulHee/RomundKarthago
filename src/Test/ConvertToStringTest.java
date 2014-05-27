@@ -11,24 +11,24 @@ public class ConvertToStringTest {
     public void testKonvertierung1()throws  Exception{
         graph.setPath("ext/map.txt");
         graph.read();
-        assertEquals ("CRNNNNRNNC",graph.convertToString2());
+        assertEquals ("CRNNNNRNNC",graph.convertToString());
     }
     @Test
     public void testKonvertierung2()throws  Exception{
         graph.setPath("ext/map2.txt");
         graph.read();
-        assertEquals ("NNNNRRRNNC",graph.convertToString2());
+        assertEquals ("NNNNRRRNNC",graph.convertToString());
     }
     @Test
     public void testKonvertierung3()throws  Exception{
         graph.setPath("ext/map3.txt");
         graph.read();
-        assertEquals ("CNNR",graph.convertToString2());
+        assertEquals ("CNNR",graph.convertToString());
     }
     @Test
     public void testKonvertierung4()throws  Exception{
         graph.setPath("ext/map4.txt");
         graph.read();
-        assertEquals ("NNNNRRRNNC",graph.convertToString2());
+        assertEquals ("NNNNRRRNNC",graph.convertToString());
     }
 }

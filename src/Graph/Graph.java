@@ -245,14 +245,6 @@ public class Graph {
 
     public String convertToString() {
         String temp = "";
-        for (Knoten k : l_knoten) {
-            temp = temp + k.seite.toString();
-        }
-        return temp;
-    }
-
-    public String convertToString2() {
-        String temp = "";
         for (int i = 0; i < l_knoten.size(); i++) {
             for (Knoten k : l_knoten) {
                 if (k.id == i) {
