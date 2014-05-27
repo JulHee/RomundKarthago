@@ -1,5 +1,7 @@
 package Graph;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -205,17 +207,48 @@ public class Graph {
     public Graph spielSituatonUeberfuehren(Graph g, Zug z) {
         try {
             Knoten aktKnoten = g.findKnoten(z.getStadt());
-            if ((aktKnoten) == null) {
+            if (aktKnoten == null) {
                 return g;
             } else if (aktKnoten.seite == Seite.Neutral) {
-                    aktKnoten.setSeite(z.getSeite());
+                HashSet<Knoten> nachbarn = getNachbarschaft(aktKnoten);
+                Seite gegner = z.getSeite() == Seite.Kathargo ? Seite.Kathargo : Seite.Rom;
+
+                // Checken ob die Stadt komplett umzingelt ist
+                Boolean istGegner = true;
+                for (Knoten k : nachbarn) {
+                    if (k.seite != gegner) istGegner = false;
+                }
+                if (istGegner) {
+                    return g;
+                }
+                aktKnoten.setSeite(z.getSeite());
+
+                // Prüfen ob andere Stadt dadruch aushungert
+                for (Knoten k : nachbarn) {
+                   k.seite = checkAushungern(k);
+                }
+                aktKnoten.setSeite(z.getSeite());
             }
             return g;
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return g;
         }
 
+    }
+
+    private Seite checkAushungern(Knoten k) {
+        HashSet<Knoten> neueNachbarn = getNachbarschaft(k);
+        boolean istGegner = true;
+        Seite gegner = k.seite == Seite.Kathargo ? Seite.Kathargo : Seite.Rom;
+        for (Knoten kn : neueNachbarn) {
+            if (kn.seite != gegner) istGegner = false;
+        }
+        if (istGegner) {
+            return Seite.Neutral;
+        } else {
+            return k.seite;
+        }
     }
 
     /**
