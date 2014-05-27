@@ -5,6 +5,7 @@ romundkathargoswp.iml
 /bin
 .classpath
 .project
+<<<<<<< HEAD
 
 #Ab hier für das Repository auf dem Uni Server
 romundkathargoswp/.idea/
@@ -15,3 +16,5 @@ romundkathargoswp/RomUndKathargo.iml
 romundkathargoswp/bin
 romundkathargoswp/.classpath
 romundkathargoswp/.project
+=======
+>>>>>>> f6fe22debd7ebea79a8fee8952a6a78456d74525
