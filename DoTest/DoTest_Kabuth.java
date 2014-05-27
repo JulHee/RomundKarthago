@@ -1,4 +1,4 @@
-public class DoTest {
+public class DoTest_Kabuth {
 	// Why test?
 	//
 	// - Because you never know what a program does until you run it,
