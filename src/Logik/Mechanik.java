@@ -8,13 +8,14 @@ import Graph.*;
 public class Mechanik {
 
     Graph myGraph;
-
+    String path;
     /**
      * Konstruktor zur Instanzierung des Graphen
      */
-    public Mechanik() {
+    public Mechanik(String p) {
+    	path = p;
         myGraph = new Graph();
-        myGraph.setPath("ext/GameBoard.txt");
+        myGraph.setPath(path);
         myGraph.read();
     }
 
