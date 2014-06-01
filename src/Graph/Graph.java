@@ -27,7 +27,7 @@ public class Graph {
      *
      * @throws Exception Fehler, falls die Datei nicht den richtlinien entspricht.
      */
-    public void read() throws Exception {
+    public void read() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(getPath()));
             LinkedList<String> datei = new LinkedList<String>();
@@ -57,6 +57,9 @@ public class Graph {
             }
         } catch (IOException ex) {
             System.out.printf("Fehler beim lesen einer Zeile der Datei");
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
         }
     }
 
@@ -228,7 +231,7 @@ public class Graph {
                 aktKnoten.setSeite(z.getSeite());
 
                 // Prüfen ob andere Stadt dadruch aushungert
-                // TODO Achtrung wegen den zufallmäßigen Durchlauf des Nachbarset wird vllt unterschiedlich die Stadt ausgehungert
+                // TODO Achtung wegen den zufallmäßigen Durchlauf des Nachbarset wird vllt unterschiedlich die Stadt ausgehungert
 
 
                 for (Knoten k : nachbarn) {

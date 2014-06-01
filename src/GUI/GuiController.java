@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -99,22 +100,22 @@ public class GuiController {
 
     // Code für die Oberfläche
 
+
     @FXML
     private TextArea ta_log;
 
     @FXML
-    private Button bt_start;
+    private MenuItem mi_load;
 
     @FXML
     private Pane map;
 
     @FXML
-    void bt_start_click(ActionEvent event) {
+    void mi_load(ActionEvent event) {
         initial();
         map.getChildren().addAll(paths);
         map.getChildren().addAll(buttons);
         ta_log.appendText("Die Daten wurden geladen \n");
-
     }
 
 

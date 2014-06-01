@@ -21,11 +21,4 @@ public class Run {
         Graph newGraph = graph.ssuf(graph,new Zug("R 2"));
         System.out.println(newGraph.convertToString());
 	}
-	public static void Transition (String Graphpath,String Move) throws Exception{
-		Graph graph = new Graph();
-		Zug zug = Zug.readZugFile(Move);
-		graph.setPath(Graphpath);
-		graph.read();
-		graph.ssuf(graph, zug).ausgeben();
-	};
 }
