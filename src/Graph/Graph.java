@@ -242,8 +242,13 @@ public class Graph {
             HashSet<Knoten> neueNachbarn = getNachbarschaft(k);
             boolean istGegner = true;
 
-            // Setzt den Gegner des Knotens. Funktionsweise:   (Condition) ? True : False
-            Seite gegner = k.seite == Seite.Kathargo ? Seite.Kathargo : Seite.Rom;
+            Seite gegner;
+
+            if (k.seite == Seite.Kathargo){
+                gegner = Seite.Rom;
+            } else {
+                gegner = Seite.Kathargo;
+            }
 
             for (Knoten kn : neueNachbarn) {
                 if (kn.seite != gegner) istGegner = false;
