@@ -209,7 +209,13 @@ public class Graph {
                 return g;
             } else if (aktKnoten.seite == Seite.Neutral) {
                 HashSet<Knoten> nachbarn = getNachbarschaft(aktKnoten);
-                Seite gegner = z.getSeite() == Seite.Kathargo ? Seite.Kathargo : Seite.Rom;
+                Seite gegner;
+
+                if (z.getSeite() == Seite.Kathargo){
+                    gegner = Seite.Rom;
+                } else {
+                    gegner = Seite.Kathargo;
+                }
 
                 // Checken ob die Stadt komplett umzingelt ist
                 Boolean istGegner = true;
@@ -222,6 +228,9 @@ public class Graph {
                 aktKnoten.setSeite(z.getSeite());
 
                 // Prüfen ob andere Stadt dadruch aushungert
+                // TODO Achtrung wegen den zufallmäßigen Durchlauf des Nachbarset wird vllt unterschiedlich die Stadt ausgehungert
+
+
                 for (Knoten k : nachbarn) {
                    k.seite = checkAushungern(k);
                 }

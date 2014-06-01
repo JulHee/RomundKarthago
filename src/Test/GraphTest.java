@@ -74,6 +74,6 @@ public class GraphTest {
         Zug myZug = new Zug("R 1");
         myGraph.read();
         Graph newGraph = myGraph.ssuf(myGraph,myZug);
-        assertEquals("NRCN",newGraph.convertToString());
+        assertEquals("CNCN",newGraph.convertToString());
     }
 }

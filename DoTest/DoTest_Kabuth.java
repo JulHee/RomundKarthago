@@ -149,8 +149,6 @@ public class DoTest_Kabuth {
 	// Step 8: If you can think of some boundary conditions,
 	// write some tests for those as well. If they fail, then
 	// change the implementation of `sort` until they pass.
-
-//TODO !
 	
 	// Exercise 3: The real deal
 	// =========================
