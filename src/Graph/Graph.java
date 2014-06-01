@@ -235,6 +235,12 @@ public class Graph {
 
     }
 
+    /**
+     * Prüft ob ein Knoten aushungert oder nicht
+     * @param k Knoten der geprüft werden soll
+     * @return Seite die der Knoten nach dem Aushungern hat
+     */
+
     private Seite checkAushungern(Knoten k) {
         if (k.seite == Seite.Neutral){
             return Seite.Neutral;
