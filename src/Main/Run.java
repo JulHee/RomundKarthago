@@ -18,7 +18,7 @@ public class Run {
         graph.read();
 
         System.out.println(graph.convertToString());
-        Graph newGraph = graph.spielSituatonUeberfuehren(graph,new Zug("R 2"));
+        Graph newGraph = graph.ssuf(graph,new Zug("R 2"));
         System.out.println(newGraph.convertToString());
 	}
 	public static void Transition (String Graphpath,String Move) throws Exception{
@@ -26,6 +26,6 @@ public class Run {
 		Zug zug = Zug.readZugFile(Move);
 		graph.setPath(Graphpath);
 		graph.read();
-		graph.spielSituatonUeberfuehren(graph, zug).ausgeben();
+		graph.ssuf(graph, zug).ausgeben();
 	};
 }

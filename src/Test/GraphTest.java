@@ -45,7 +45,7 @@ public class GraphTest {
         Graph myGraph = new Graph();
         Zug myZug = new Zug("R 2");
         myGraph.read();
-        Graph newGraph = myGraph.spielSituatonUeberfuehren(myGraph,myZug);
+        Graph newGraph = myGraph.ssuf(myGraph,myZug);
         assertEquals("NNRNRRRNNC",newGraph.convertToString());
     }
 }
