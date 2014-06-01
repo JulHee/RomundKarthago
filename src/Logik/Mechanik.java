@@ -8,17 +8,25 @@ import Graph.*;
 public class Mechanik {
 
     Graph myGraph;
-    String path;
     /**
      * Konstruktor zur Instanzierung des Graphen
      */
-    public Mechanik(String p) {
-    	path = p;
+    public Mechanik() {
+    	
+    }
+    /*
+     * Initialisiert den Start Graphen mit welchem
+     * das Spiel begonnen wird
+     */
+    public void setMGraph(String path){
         myGraph = new Graph();
         myGraph.setPath(path);
         myGraph.read();
     }
-
+    /*
+     * Funktion zum einlesen von Graph und Zug aus einer Datei
+     * gibt den anschließenden veränderten Graphen aus
+     */
     public static void Transition (String Graphpath,String Move) throws Exception{
         Graph graph = new Graph();
         Zug zug = Zug.readZugFile(Move);
