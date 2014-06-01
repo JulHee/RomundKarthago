@@ -236,16 +236,23 @@ public class Graph {
     }
 
     private Seite checkAushungern(Knoten k) {
-        HashSet<Knoten> neueNachbarn = getNachbarschaft(k);
-        boolean istGegner = true;
-        Seite gegner = k.seite == Seite.Kathargo ? Seite.Kathargo : Seite.Rom;
-        for (Knoten kn : neueNachbarn) {
-            if (kn.seite != gegner) istGegner = false;
-        }
-        if (istGegner) {
+        if (k.seite == Seite.Neutral){
             return Seite.Neutral;
         } else {
-            return k.seite;
+            HashSet<Knoten> neueNachbarn = getNachbarschaft(k);
+            boolean istGegner = true;
+
+            // Setzt den Gegner des Knotens. Funktionsweise:   (Condition) ? True : False
+            Seite gegner = k.seite == Seite.Kathargo ? Seite.Kathargo : Seite.Rom;
+
+            for (Knoten kn : neueNachbarn) {
+                if (kn.seite != gegner) istGegner = false;
+            }
+            if (istGegner) {
+                return Seite.Neutral;
+            } else {
+                return k.seite;
+            }
         }
     }
 
