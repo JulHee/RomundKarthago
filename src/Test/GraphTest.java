@@ -41,11 +41,39 @@ public class GraphTest {
         assertEquals("NNNNRRRNNC",myGraph.convertToString());
     }
     @Test
-    public void testspielSituatonUeberfuehren() throws Exception{
+    public void testssuf_map01() throws Exception{
         Graph myGraph = new Graph();
+        myGraph.setPath("ext/0_3.map.txt");
         Zug myZug = new Zug("R 2");
         myGraph.read();
         Graph newGraph = myGraph.ssuf(myGraph,myZug);
-        assertEquals("NNRNRRRNNC",newGraph.convertToString());
+        assertEquals("CNRR",newGraph.convertToString());
+    }
+    @Test
+    public void testssuf_map02() throws Exception{
+        Graph myGraph = new Graph();
+        myGraph.setPath("ext/0_3.map.txt");
+        Zug myZug = new Zug("C 2");
+        myGraph.read();
+        Graph newGraph = myGraph.ssuf(myGraph,myZug);
+        assertEquals("CNCN",newGraph.convertToString());
+    }
+    @Test
+    public void testssuf_map03() throws Exception{
+        Graph myGraph = new Graph();
+        myGraph.setPath("ext/0_3.map.txt");
+        Zug myZug = new Zug("R 3");
+        myGraph.read();
+        Graph newGraph = myGraph.ssuf(myGraph,myZug);
+        assertEquals("CNCN",newGraph.convertToString());
+    }
+    @Test
+    public void testssuf_map04() throws Exception{
+        Graph myGraph = new Graph();
+        myGraph.setPath("ext/0_3.map.txt");
+        Zug myZug = new Zug("R 1");
+        myGraph.read();
+        Graph newGraph = myGraph.ssuf(myGraph,myZug);
+        assertEquals("NRCN",newGraph.convertToString());
     }
 }
