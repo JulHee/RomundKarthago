@@ -61,7 +61,7 @@ public class GraphTest {
     @Test
     public void testssuf_map03() throws Exception{
         Graph myGraph = new Graph();
-        myGraph.setPath("ext/0_3.map.txt");
+        myGraph.setPath("ext/0_3.map.02.txt");
         Zug myZug = new Zug("R 3");
         myGraph.read();
         Graph newGraph = myGraph.ssuf(myGraph,myZug);
@@ -70,7 +70,7 @@ public class GraphTest {
     @Test
     public void testssuf_map04() throws Exception{
         Graph myGraph = new Graph();
-        myGraph.setPath("ext/0_3.map.txt");
+        myGraph.setPath("ext/0_3.map.02.txt");
         Zug myZug = new Zug("R 1");
         myGraph.read();
         Graph newGraph = myGraph.ssuf(myGraph,myZug);
