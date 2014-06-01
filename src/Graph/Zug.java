@@ -24,7 +24,11 @@ public class Zug {
         if (temp.length > 1){
             try{
                 this.seite = readSeite(temp[0]);
-                this.stadt = Integer.parseInt(temp[1]);
+                if (temp[1] == "X"){
+                    this.stadt = -1;
+                } else {
+                    this.stadt = Integer.parseInt(temp[1]);
+                }
                 if (this.seite == null){
                     throw new ExceptionInInitializerError("Fehler beim erstellen des Zuges, ein Wert ist nicht gesetzt");
                 }

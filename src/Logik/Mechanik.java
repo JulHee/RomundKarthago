@@ -8,12 +8,7 @@ import Graph.*;
 public class Mechanik {
 
     Graph myGraph;
-    /**
-     * Konstruktor zur Instanzierung des Graphen
-     */
-    public Mechanik() {
-    	
-    }
+
     /*
      * Initialisiert den Start Graphen mit welchem
      * das Spiel begonnen wird
@@ -33,7 +28,35 @@ public class Mechanik {
         graph.setPath(Graphpath);
         graph.read();
         graph.ssuf(graph, zug).ausgeben();
-    };
+    }
+
+    public String run(String zug){
+        String retrn;
+        Zug myzug = new Zug(zug);
+        if (myzug.getStadt() == -1){
+           retrn =  myGraph.convertToString();
+        } else {
+           myGraph = myGraph.ssuf(myGraph,myzug);
+            retrn =   myGraph.convertToString();
+        }
+        return retrn;
+    }
+
+    public void terminalGame(){
+        Boolean letzerZugAusgesetzt = false;
+        Boolean spiel = true;
+
+
+        while(spiel){
+
+
+
+
+        }
+
+
+
+    }
 
 
 }
