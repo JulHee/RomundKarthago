@@ -202,7 +202,7 @@ public class Graph {
         return resu;
     }
 
-    public Graph spielSituatonUeberfuehren(Graph g, Zug z) {
+    public Graph ssuf(Graph g, Zug z) {
         try {
             Knoten aktKnoten = g.findKnoten(z.getStadt());
             if (aktKnoten == null) {
