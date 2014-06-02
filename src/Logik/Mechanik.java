@@ -2,6 +2,10 @@ package Logik;
 
 import Graph.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
@@ -11,6 +15,7 @@ import Graph.*;
 public class Mechanik {
 
     Graph myGraph;
+    Boolean letzerZugAusgesetzt = false;
 
     /*
      * Initialisiert den Start Graphen mit welchem
@@ -37,7 +42,13 @@ public class Mechanik {
         String retrn;
         Zug myzug = new Zug(zug);
         if (myzug.getStadt() == -1){
-           retrn =  myGraph.convertToString();
+            if (letzerZugAusgesetzt){
+               retrn = "quit";
+            }  else {
+                retrn =  myGraph.convertToString();
+                letzerZugAusgesetzt = true;
+            }
+
         } else {
            myGraph = myGraph.ssuf(myGraph,myzug);
             retrn =   myGraph.convertToString();
@@ -46,19 +57,30 @@ public class Mechanik {
     }
 
     public void terminalGame(){
+
+        setMGraph("ext/GameBoard.txt");
+
         Boolean letzerZugAusgesetzt = false;
         Boolean spiel = true;
-
-
+        myGraph.map();
         while(spiel){
-
-
-
-
+            System.out.println("Bitte Zug angeben:");
+            try{
+                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+                String zug = bufferRead.readLine();
+                String move = run(zug);
+                if (move.equals("quit")){
+                    spiel = false;
+                    System.out.println("Spiel beendet");
+                } else {
+                    System.out.println(move);
+                }
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
-
-
-
     }
 
 

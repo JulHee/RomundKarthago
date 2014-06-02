@@ -24,7 +24,7 @@ public class Zug {
         if (temp.length > 1){
             try{
                 this.seite = readSeite(temp[0]);
-                if (temp[1] == "X"){
+                if (temp[1].equals("X")){
                     this.stadt = -1;
                 } else {
                     this.stadt = Integer.parseInt(temp[1]);
