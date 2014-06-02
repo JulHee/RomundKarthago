@@ -83,8 +83,8 @@ public class Mechanik {
             {
                 e.printStackTrace();
             }
-            System.out.println("Spiel beendet");
         }
+        System.out.println("Spiel beendet");
     }
 
 
