@@ -17,6 +17,7 @@ public class Run {
 
         Mechanik game = new Mechanik();
         game.terminalGame();
+
         //AutomatischeTest myTest = new AutomatischeTest();
         //myTest.autoTest();
 	}
