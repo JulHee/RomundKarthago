@@ -85,6 +85,8 @@ public class Mechanik {
             }
         }
         System.out.println("Spiel beendet");
+        System.out.println("Rom hat "+myGraph.besetztePunkteStandFuer(Seite.Rom)+" Punkt(e)");
+        System.out.println("Kathargo hat "+myGraph.besetztePunkteStandFuer(Seite.Kathargo)+" Punkt(e)");
     }
 
 
