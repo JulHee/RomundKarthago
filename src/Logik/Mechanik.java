@@ -3,7 +3,10 @@ package Logik;
 import Graph.*;
 
 /**
- * Created by peng0in on 01.06.2014.
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
+ * Date : 26.04.14
+ * Year : 2014
  */
 public class Mechanik {
 
