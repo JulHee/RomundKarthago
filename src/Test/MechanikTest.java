@@ -12,7 +12,7 @@ public class MechanikTest {
     public void testTransition() throws Exception {
 
     }
-
+    /*
     @Test
     public void testRun() throws Exception {
         Mechanik game = new Mechanik();
@@ -24,7 +24,7 @@ public class MechanikTest {
         game.run("C X");
         assertEquals("NCNN",game.run("R X"));
 
-    }
+    } */
 
     @Test
     public void testRun2() throws Exception {
@@ -34,7 +34,7 @@ public class MechanikTest {
         assertEquals("NRNR",game.run("R X"));
     }
 
-    @Test
+    /*@Test
     public void testRun3() throws Exception {
         Mechanik game = new Mechanik();
         game.run("R 2");
@@ -43,10 +43,20 @@ public class MechanikTest {
 
         assertEquals("CCNN",game.run("C 1"));
 
+    }*/
+    @Test
+    public void testRun4() throws Exception {
+        Mechanik game = new Mechanik();
+
+        assertEquals("CNNR",game.run("R 5"));
+
     }
 
     @Test
-    public void testTerminalGame() throws Exception {
+    public void testRun5() throws Exception {
+        Mechanik game = new Mechanik();
+
+        assertEquals("CNNR",game.run("R -1"));
 
     }
 }
