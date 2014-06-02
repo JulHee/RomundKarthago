@@ -1,6 +1,7 @@
 package Main;
 
 import Graph.*;
+import Logik.Mechanik;
 
 
 /**
@@ -13,12 +14,7 @@ public class Run {
 
 	public static void main(String[] args) throws Exception{
 
-		Graph graph = new Graph();
-        graph.setPath("ext/0_3.map.01");
-        graph.read();
-
-        System.out.println(graph.convertToString());
-        Graph newGraph = graph.ssuf(graph,new Zug("R 2"));
-        System.out.println(newGraph.convertToString());
+        Mechanik game = new Mechanik();
+        game.terminalGame();
 	}
 }

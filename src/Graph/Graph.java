@@ -328,4 +328,9 @@ public class Graph {
             System.out.println(i.toString());
         }
     }
+    public void map(){
+        for (Knoten k : l_knoten){
+            System.out.println(k.id+"("+k.seite.toString()+")");
+        }
+    }
 }
