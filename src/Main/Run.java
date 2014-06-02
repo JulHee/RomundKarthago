@@ -2,6 +2,7 @@ package Main;
 
 import Graph.*;
 import Logik.Mechanik;
+import Test.AutomatischeTest;
 
 
 /**
@@ -15,6 +16,8 @@ public class Run {
 	public static void main(String[] args) throws Exception{
 
         Mechanik game = new Mechanik();
-        game.terminalGame();
+       // game.terminalGame();
+        AutomatischeTest myTest = new AutomatischeTest();
+        myTest.autoTest();
 	}
 }

@@ -16,6 +16,7 @@ public class Mechanik {
 
     Graph myGraph;
     Boolean letzerZugAusgesetzt = false;
+    Boolean spiel = true;
 
     /*
      * Initialisiert den Start Graphen mit welchem
@@ -26,10 +27,15 @@ public class Mechanik {
         myGraph.setPath(path);
         myGraph.read();
     }
+
+    public Mechanik() {
+      setMGraph("ext/GameBoard.txt");
+    }
+
     /*
-     * Funktion zum einlesen von Graph und Zug aus einer Datei
-     * gibt den anschließenden veränderten Graphen aus
-     */
+         * Funktion zum einlesen von Graph und Zug aus einer Datei
+         * gibt den anschließenden veränderten Graphen aus
+         */
     public static void Transition (String Graphpath,String Move) throws Exception{
         Graph graph = new Graph();
         Zug zug = Zug.readZugFile(Move);
@@ -43,14 +49,19 @@ public class Mechanik {
         Zug myzug = new Zug(zug);
         if (myzug.getStadt() == -1){
             if (letzerZugAusgesetzt){
-               retrn = "quit";
+               retrn = myGraph.convertToString();
+               spiel = false;
             }  else {
                 retrn =  myGraph.convertToString();
                 letzerZugAusgesetzt = true;
             }
 
         } else {
+           String letzerZug = myGraph.convertToString();
            myGraph = myGraph.ssuf(myGraph,myzug);
+            if (letzerZug.equals(myGraph.convertToString())) {
+                letzerZugAusgesetzt = true;
+            }
             retrn =   myGraph.convertToString();
         }
         return retrn;
@@ -58,10 +69,7 @@ public class Mechanik {
 
     public void terminalGame(){
 
-        setMGraph("ext/GameBoard.txt");
-
         Boolean letzerZugAusgesetzt = false;
-        Boolean spiel = true;
         myGraph.map();
         while(spiel){
             System.out.println("Bitte Zug angeben:");
@@ -69,17 +77,13 @@ public class Mechanik {
                 BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
                 String zug = bufferRead.readLine();
                 String move = run(zug);
-                if (move.equals("quit")){
-                    spiel = false;
-                    System.out.println("Spiel beendet");
-                } else {
-                    System.out.println(move);
-                }
+                System.out.println(move);
             }
             catch(IOException e)
             {
                 e.printStackTrace();
             }
+            System.out.println("Spiel beendet");
         }
     }
 
