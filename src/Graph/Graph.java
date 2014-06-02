@@ -3,6 +3,7 @@ package Graph;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -221,20 +222,21 @@ public class Graph {
                 }
 
                 // Checken ob die Stadt komplett umzingelt ist
-                Boolean istGegner = true;
+                Boolean existiertkeinGegner = false;
                 for (Knoten k : nachbarn) {
-                    if (k.seite != gegner) istGegner = false;
+                    if (k.seite != gegner ) existiertkeinGegner = true;
                 }
-                if (istGegner) {
+                if (!existiertkeinGegner) {
                     return g;
                 }
                 aktKnoten.setSeite(z.getSeite());
 
                 // Prüfen ob andere Stadt dadruch aushungert
-                // TODO Achtung wegen den zufallmäßigen Durchlauf des Nachbarset wird vllt unterschiedlich die Stadt ausgehungert
 
+                //TODO Aushungern der Städte: Ab wann sind Städte oder Gruppen von Städten von der Außenwelt abgeschnitten ?
 
-                for (Knoten k : nachbarn) {
+                ArrayList<Knoten> sortierteNachbarn = toLinkedList(nachbarn);
+                for (Knoten k : sortierteNachbarn) {
                    k.seite = checkAushungern(k);
                 }
                 aktKnoten.setSeite(z.getSeite());
@@ -277,6 +279,24 @@ public class Graph {
                 return k.seite;
             }
         }
+    }
+
+    /**
+     * Soriert ein HashSet<Knoten> nach der ID der Knoten in eine ArrayList<Knoten>
+     * @param knotenlist Liste mit den Knoten
+     * @return Sortierte Liste mit den Knoten
+     */
+
+    private ArrayList<Knoten> toLinkedList(HashSet<Knoten> knotenlist){
+        ArrayList<Knoten> retrn = new ArrayList<Knoten>();
+        for (int i = 0; i < knotenlist.size(); i++) {
+            for (Knoten k : knotenlist) {
+                if (k.id == i) {
+                   retrn.add(k);
+                }
+            }
+        }
+        return retrn;
     }
 
     /**
