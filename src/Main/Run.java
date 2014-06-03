@@ -16,8 +16,9 @@ public class Run {
 	public static void main(String[] args) throws Exception{
 
         Mechanik game = new Mechanik();
-       // game.terminalGame();
-        AutomatischeTest myTest = new AutomatischeTest();
-        myTest.autoTest();
+        game.terminalGame();
+
+        //AutomatischeTest myTest = new AutomatischeTest();
+        //myTest.autoTest();
 	}
 }
