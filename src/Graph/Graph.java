@@ -221,22 +221,21 @@ public class Graph {
                     gegner = Seite.Kathargo;
                 }
 
-          /*      // Checken ob die Stadt komplett umzingelt ist
+               // Checken ob die Stadt komplett umzingelt ist
                 Boolean existiertkeinGegner = false;
                 for (Knoten k : nachbarn) {
                     if (k.seite != gegner ) existiertkeinGegner = true;
                 }
                 if (!existiertkeinGegner) {
                     return g;
-                }*/
+                }
                 aktKnoten.setSeite(z.getSeite());
 
                 // Prüfen ob andere Stadt dadruch aushungert
 
-                //TODO Aushungern der Städte: Ab wann sind Städte oder Gruppen von Städten von der Außenwelt abgeschnitten ?
 
                checkAushungern(aktKnoten,z.getSeite());
-
+               checkAushungern(aktKnoten,gegner);
                 }
 
             return g;

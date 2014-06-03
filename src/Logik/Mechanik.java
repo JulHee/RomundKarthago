@@ -62,6 +62,10 @@ public class Mechanik {
             if (letzerZug.equals(myGraph.convertToString())) {
                 letzerZugAusgesetzt = true;
             }
+            if (letzerZugAusgesetzt){
+                retrn = myGraph.convertToString();
+                spiel = false;
+            }
             retrn = myGraph.convertToString();
         }
         return retrn;
@@ -82,9 +86,6 @@ public class Mechanik {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            System.out.println("Spiel beendet");
-
             if (aktuellerSpieler == Seite.Rom) {
                 aktuellerSpieler = Seite.Kathargo;
             } else {
