@@ -52,36 +52,23 @@ public class AutomatischeTest {
 		outarray.add("ext/output.03.txt");
 	};
 	 */
-
-<<<<<<< HEAD
-    public void autoTest() throws Exception{
-        Mechanik myMechanik = new Mechanik();
-        Seite aktuellerSpieler = Seite.Rom;
-        lesen("ext/TerminalS3.txt","ext/output.03.txt");
-        for (int i=0; i <= sollinput.size()-1;i++){
-           String graphoutput = myMechanik.run(sollinput.get(i),aktuellerSpieler);
-           if (!graphoutput.equals(solloutput.get(i))) {
-               throw new Exception("\nUnterschiede in den Strings gefunden : \nGefunden: "+ graphoutput + "\nSollte: "+solloutput.get(i));
-           }
-            if (aktuellerSpieler == Seite.Rom) {
-                aktuellerSpieler = Seite.Kathargo;
-            } else {
-                aktuellerSpieler = Seite.Rom;
-            }
-        }
-    }
-=======
 	public void autoTest() throws Exception{
 		Mechanik myMechanik = new Mechanik();
+        Seite aktuellerSpieler = Seite.Rom;
 		lesen("ext/TerminalS2.txt","ext/output.02.txt");
 		for (int i=0; i <= sollinput.size()-1;i++){
-			String graphoutput = myMechanik.run(sollinput.get(i));
+			String graphoutput = myMechanik.run(sollinput.get(i),aktuellerSpieler);
 			if (!graphoutput.equals(solloutput.get(i))) {
 				throw new Exception("Unterschiede in den Strings gefunden : \n Gefunden: "+ graphoutput + "\n Sollte: "+solloutput.get(i));
 			}else{
 				System.out.println("Richtig: "+graphoutput);
 			}
+            if (aktuellerSpieler == Seite.Rom) {
+                aktuellerSpieler = Seite.Kathargo;
+            } else {
+                aktuellerSpieler = Seite.Rom;
+            }
 		}
 	}
->>>>>>> dd032de8b96b435cd15ec776822d509b516468b4
+
 }
