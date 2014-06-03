@@ -1,5 +1,6 @@
 package Test;
 
+import Graph.Seite;
 import org.junit.Test;
 import Logik.*;
 
@@ -29,9 +30,9 @@ public class MechanikTest {
     @Test
     public void testRun2() throws Exception {
         Mechanik game = new Mechanik();
-        game.run("R 1");
-        game.run("C 0");
-        assertEquals("NRNR",game.run("R X"));
+        game.run("1", Seite.Rom);
+        game.run("0",Seite.Kathargo);
+        assertEquals("NRNR",game.run("X",Seite.Rom));
     }
 
     /*@Test
@@ -48,7 +49,7 @@ public class MechanikTest {
     public void testRun4() throws Exception {
         Mechanik game = new Mechanik();
 
-        assertEquals("CNNR",game.run("R 5"));
+        assertEquals("CNNR",game.run("5",Seite.Rom));
 
     }
 
@@ -56,7 +57,7 @@ public class MechanikTest {
     public void testRun5() throws Exception {
         Mechanik game = new Mechanik();
 
-        assertEquals("CNNR",game.run("R -1"));
+        assertEquals("CNNR",game.run("-1",Seite.Rom));
 
     }
 }
