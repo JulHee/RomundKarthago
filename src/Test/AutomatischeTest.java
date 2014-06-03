@@ -66,12 +66,14 @@ public class AutomatischeTest {
     public void autoTest(String input, String output) throws Exception {
         Mechanik myMechanik = new Mechanik();
         Seite aktuellerSpieler = Seite.Rom;
+        sollinput = new ArrayList<String>();
+        solloutput = new ArrayList<String>();
         lesen(input, output);
         for (int i = 0; i <= sollinput.size() - 1; i++) {
             String graphoutput = myMechanik.run(sollinput.get(i), aktuellerSpieler);
             if (!graphoutput.equals(solloutput.get(i))) {
                 throw new Exception("Unterschiede in den Strings gefunden : \n Gefunden: " + graphoutput + "\n Sollte: " + solloutput.get(i)
-                +"\nin: "+ input + "\n und: "+ output);
+                +"\nin: "+ input + "\nund: "+ output);
             } else {
                 System.out.println("Richtig: " + graphoutput);
             }
