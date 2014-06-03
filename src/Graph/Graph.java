@@ -221,26 +221,24 @@ public class Graph {
                     gegner = Seite.Kathargo;
                 }
 
-                // Checken ob die Stadt komplett umzingelt ist
+          /*      // Checken ob die Stadt komplett umzingelt ist
                 Boolean existiertkeinGegner = false;
                 for (Knoten k : nachbarn) {
                     if (k.seite != gegner ) existiertkeinGegner = true;
                 }
                 if (!existiertkeinGegner) {
                     return g;
-                }
+                }*/
                 aktKnoten.setSeite(z.getSeite());
 
                 // Prüfen ob andere Stadt dadruch aushungert
 
                 //TODO Aushungern der Städte: Ab wann sind Städte oder Gruppen von Städten von der Außenwelt abgeschnitten ?
 
-                ArrayList<Knoten> sortierteNachbarn = toLinkedList(nachbarn);
-                for (Knoten k : sortierteNachbarn) {
-                   k.seite = checkAushungern(k);
+               checkAushungern(aktKnoten,z.getSeite());
+
                 }
-                aktKnoten.setSeite(z.getSeite());
-            }
+
             return g;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -255,12 +253,42 @@ public class Graph {
      * @return Seite die der Knoten nach dem Aushungern hat
      */
 
-    private Seite checkAushungern(Knoten k) {
-        if (k.seite == Seite.Neutral){
-            return Seite.Neutral;
+    private void checkAushungern(Knoten k, Seite spieler) {
+        Seite gegner;
+        if (spieler == Seite.Kathargo){
+            gegner = Seite.Rom;
+        } else {
+            gegner = Seite.Kathargo;
+        }
+        HashSet<Knoten> nachbarnumursprung = getNachbarschaft(k);
+
+        for (Knoten kn : nachbarnumursprung) {
+            if (kn.seite == gegner) {
+                HashSet<Knoten> alleeigenen = getBesetztesGebiet(kn);
+                HashSet<Knoten> gebiet = getNachbarschaft(alleeigenen);
+                boolean neutralgefunden = false;
+                for (Knoten kno : gebiet) {
+                    if (kno.seite == Seite.Neutral) {
+                        neutralgefunden = true;
+                    }
+                }
+                if (neutralgefunden == false) {
+                    for (Knoten knot : alleeigenen) {
+                        knot.seite = Seite.Neutral;
+                    }
+                }
+            }
+        }
+
+
+
+
+        /*
         } else {
             HashSet<Knoten> neueNachbarn = getNachbarschaft(k);
+            neueNachbarn.remove(k);
             boolean istGegner = true;
+            boolean neutralgefunden = false;
 
             Seite gegner;
 
@@ -271,14 +299,16 @@ public class Graph {
             }
 
             for (Knoten kn : neueNachbarn) {
-                if (kn.seite != gegner) istGegner = false;
+              //  if (kn.seite != gegner) istGegner = false;
+                if (kn.seite == Seite.Neutral) neutralgefunden = true;
             }
-            if (istGegner) {
+            if (neutralgefunden == false) {
                 return Seite.Neutral;
             } else {
                 return k.seite;
             }
         }
+        */
     }
 
     /**

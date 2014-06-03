@@ -1,5 +1,6 @@
 package Test;
 
+import Graph.Seite;
 import Logik.Mechanik;
 
 import java.io.BufferedReader;
@@ -40,12 +41,18 @@ public class AutomatischeTest {
 
     public void autoTest() throws Exception{
         Mechanik myMechanik = new Mechanik();
-        lesen("ext/TerminalS2.txt","ext/output.02.txt");
+        Seite aktuellerSpieler = Seite.Rom;
+        lesen("ext/TerminalS3.txt","ext/output.03.txt");
         for (int i=0; i <= sollinput.size()-1;i++){
-           String graphoutput = myMechanik.run(sollinput.get(i));
+           String graphoutput = myMechanik.run(sollinput.get(i),aktuellerSpieler);
            if (!graphoutput.equals(solloutput.get(i))) {
-               throw new Exception("Unterschiede in den Strings gefunden : \n Gefunden: "+ graphoutput + "\n Sollte: "+solloutput.get(i));
+               throw new Exception("\nUnterschiede in den Strings gefunden : \nGefunden: "+ graphoutput + "\nSollte: "+solloutput.get(i));
            }
+            if (aktuellerSpieler == Seite.Rom) {
+                aktuellerSpieler = Seite.Kathargo;
+            } else {
+                aktuellerSpieler = Seite.Rom;
+            }
         }
     }
 }

@@ -22,21 +22,21 @@ public class Mechanik {
      * Initialisiert den Start Graphen mit welchem
      * das Spiel begonnen wird
      */
-    public void setMGraph(String path){
+    public void setMGraph(String path) {
         myGraph = new Graph();
         myGraph.setPath(path);
         myGraph.read();
     }
 
     public Mechanik() {
-      setMGraph("ext/GameBoard.txt");
+        setMGraph("ext/GameBoard.txt");
     }
 
     /*
          * Funktion zum einlesen von Graph und Zug aus einer Datei
          * gibt den anschließenden veränderten Graphen aus
          */
-    public static void Transition (String Graphpath,String Move) throws Exception{
+    public static void Transition(String Graphpath, String Move) throws Exception {
         Graph graph = new Graph();
         Zug zug = Zug.readZugFile(Move);
         graph.setPath(Graphpath);
@@ -44,46 +44,51 @@ public class Mechanik {
         graph.ssuf(graph, zug).ausgeben();
     }
 
-    public String run(String zug){
+    public String run(String zug, Seite spieler) {
         String retrn;
         Zug myzug = new Zug(zug);
-        if (myzug.getStadt() == -1){
-            if (letzerZugAusgesetzt){
-               retrn = myGraph.convertToString();
-               spiel = false;
-            }  else {
-                retrn =  myGraph.convertToString();
+        if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
+            if (letzerZugAusgesetzt) {
+                retrn = myGraph.convertToString();
+                spiel = false;
+            } else {
+                retrn = myGraph.convertToString();
                 letzerZugAusgesetzt = true;
             }
 
         } else {
-           String letzerZug = myGraph.convertToString();
-           myGraph = myGraph.ssuf(myGraph,myzug);
+            String letzerZug = myGraph.convertToString();
+            myGraph = myGraph.ssuf(myGraph, myzug);
             if (letzerZug.equals(myGraph.convertToString())) {
                 letzerZugAusgesetzt = true;
             }
-            retrn =   myGraph.convertToString();
+            retrn = myGraph.convertToString();
         }
         return retrn;
     }
 
-    public void terminalGame(){
+    public void terminalGame() {
+        Seite aktuellerSpieler = Seite.Rom;
 
         Boolean letzerZugAusgesetzt = false;
         myGraph.map();
-        while(spiel){
+        while (spiel) {
             System.out.println("Bitte Zug angeben:");
-            try{
+            try {
                 BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
                 String zug = bufferRead.readLine();
-                String move = run(zug);
+                String move = run(zug, aktuellerSpieler);
                 System.out.println(move);
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             System.out.println("Spiel beendet");
+
+            if (aktuellerSpieler == Seite.Rom) {
+                aktuellerSpieler = Seite.Kathargo;
+            } else {
+                aktuellerSpieler = Seite.Rom;
+            }
         }
     }
 
