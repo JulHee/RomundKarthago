@@ -82,7 +82,7 @@ public class Mechanik {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-<<<<<<< HEAD
+
             System.out.println("Spiel beendet");
 
             if (aktuellerSpieler == Seite.Rom) {
@@ -90,8 +90,7 @@ public class Mechanik {
             } else {
                 aktuellerSpieler = Seite.Rom;
             }
-=======
->>>>>>> dd032de8b96b435cd15ec776822d509b516468b4
+
         }
         System.out.println("Spiel beendet");
         System.out.println("Rom hat "+myGraph.besetztePunkteStandFuer(Seite.Rom)+" Punkt(e)");
