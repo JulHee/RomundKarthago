@@ -60,12 +60,13 @@ public class Mechanik {
             String letzerZug = myGraph.convertToString();
             myGraph = myGraph.ssuf(myGraph, myzug);
             if (letzerZug.equals(myGraph.convertToString())) {
+                if (letzerZugAusgesetzt){
+                    spiel = false;
+                }
                 letzerZugAusgesetzt = true;
+
             }
-            if (letzerZugAusgesetzt){
-                retrn = myGraph.convertToString();
-                spiel = false;
-            }
+
             retrn = myGraph.convertToString();
         }
         return retrn;
