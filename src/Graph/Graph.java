@@ -22,6 +22,8 @@ public class Graph {
 	// Konstrukte zum speichern der Informationen bzgl. des Graphen
 	public HashSet<Knoten> l_knoten = new HashSet<Knoten>();
 	public HashSet<Kante> l_kante = new HashSet<Kante>();
+    private ArrayList<String> history = new ArrayList<String>();
+    private boolean letzerZugAusgesetzt = false;
 
 	/**
 	 * Ließt eine Datei ein und erstellt daraus einen Graphen.
@@ -30,6 +32,7 @@ public class Graph {
 	 */
 	public void read() {
 		try {
+            reset();
 			BufferedReader br = new BufferedReader(new FileReader(getPath()));
 			LinkedList<String> datei = new LinkedList<String>();
 			String zeile;
@@ -63,6 +66,16 @@ public class Graph {
 			System.exit(0);
 		}
 	}
+
+    /**
+     * Setz alle Werte einer vorherigen Spiels zurück
+     */
+    private void reset(){
+        l_knoten.clear();
+        l_kante.clear();
+        history.clear();
+        letzerZugAusgesetzt = false;
+    }
 
 	/**
 	 * Konvertiert die Knoten in ein Set
@@ -206,6 +219,13 @@ public class Graph {
 		return resu;
 	}
 
+    /**
+     * Anwenden eines Zuges auf einen Graphen g
+     * @param g  Der Graph g auf den z angewendet werden soll
+     * @param z  Der Zug
+     * @return Der neue Graph nachdem der Zug angewendet wurde
+     */
+
 	public Graph ssuf(Graph g, Zug z) {
 		try {
 			Knoten aktKnoten = g.findKnoten(z.getStadt());
@@ -246,6 +266,61 @@ public class Graph {
 		}
 
 	}
+
+    //TODO Errorcode 3 muss eingefügt werden druch prüfen in der history
+
+    /**
+     * Führt den Zug aus und gibt einen Errorcode aus, der weiter geleitet wird
+     * Errorcode = 0: Alles in Ordnung
+     * Errorcode = 1: Zug wurde ausgesetzt
+     * Errorcode = 2: Beende Spiel
+     * Errorcode = 3: Stellung wiederholt
+     * @param zug
+     * @param spieler
+     * @return
+     */
+
+    public Zustand run(String zug,Seite spieler){
+        String retrn;
+        Zustand retrnZustand = new Zustand(0);
+        Zug myzug = new Zug(zug);
+        if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
+            if (letzerZugAusgesetzt) {
+                retrnZustand.setName(this.convertToString());
+                retrnZustand.setErrorcode(2);
+            } else {
+                retrnZustand.setName(this.convertToString());
+                retrnZustand.setErrorcode(1);
+                letzerZugAusgesetzt = true;
+            }
+
+        } else {
+            String letzerZug = this.convertToString();
+            ssuf(myzug);
+            if (letzerZug.equals(this.convertToString())) {
+                if (letzerZugAusgesetzt){
+                    retrnZustand.setErrorcode(2);
+                }
+                retrnZustand.setErrorcode(1);
+                letzerZugAusgesetzt = true;
+
+            }
+
+            retrnZustand.setName(this.convertToString());
+        }
+        history.add(retrnZustand.getName());
+        return retrnZustand;
+    }
+
+    /**
+     * Anwenden der Funktion ssuf mit der eigenen Klasse
+     * @param z  Der Zug
+     * @return Der neue Graph nach dem Zug
+     */
+
+    public Graph ssuf (Zug z){
+      return  ssuf(this,z);
+    }
 
 	/**
 	 * Prüft ob ein Knoten aushungert oder nicht

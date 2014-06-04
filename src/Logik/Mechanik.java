@@ -44,32 +44,29 @@ public class Mechanik {
         graph.ssuf(graph, zug).ausgeben();
     }
 
-    public String run(String zug, Seite spieler) {
-        String retrn;
-        Zug myzug = new Zug(zug);
-        if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
-            if (letzerZugAusgesetzt) {
-                retrn = myGraph.convertToString();
-                spiel = false;
-            } else {
-                retrn = myGraph.convertToString();
-                letzerZugAusgesetzt = true;
-            }
-
+    public String auswerten(String zug, Seite spieler){
+        String error;
+        Zustand retrnZustand =  myGraph.run(zug,spieler);
+        if (retrnZustand.getName() == null | retrnZustand.getErrorcode() == null) {
+            error= ("Fehler dem Zustand");
         } else {
-            String letzerZug = myGraph.convertToString();
-            myGraph = myGraph.ssuf(myGraph, myzug);
-            if (letzerZug.equals(myGraph.convertToString())) {
-                if (letzerZugAusgesetzt){
+            switch (retrnZustand.getErrorcode()) {
+                case 0:
+                    return retrnZustand.getName();
+             //   break;
+                case 1:
+                    return retrnZustand.getName();
+             //   break;
+                case 2:
                     spiel = false;
-                }
-                letzerZugAusgesetzt = true;
-
+                    return retrnZustand.getName();
+             //   break;
+                default:
+                    error= "Error";
+                    break;
             }
-
-            retrn = myGraph.convertToString();
         }
-        return retrn;
+        return error;
     }
 
     public void terminalGame() {
@@ -82,7 +79,7 @@ public class Mechanik {
             try {
                 BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
                 String zug = bufferRead.readLine();
-                String move = run(zug, aktuellerSpieler);
+                String move = auswerten(zug, aktuellerSpieler);
                 System.out.println(move);
             } catch (IOException e) {
                 e.printStackTrace();
