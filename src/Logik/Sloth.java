@@ -3,9 +3,17 @@ package Logik;
 import Graph.*;
 
 /**
- * Created by Acer on 10.06.2014.
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
+ * Date : 10.06.14
+ * Year : 2014
  */
+
 public class Sloth extends AIPlayer {
+    public Sloth(Seite s) {
+      meineSeite = s;
+    }
+
     @Override
     Zug nextZug() {
         Zug erg = new Zug(meineSeite,berechneZugStadt());
@@ -21,5 +29,4 @@ private Integer berechneZugStadt(){
         return erg;
     }
 
-    void setMeineSeite(Seite s){meineSeite=s;}
 }

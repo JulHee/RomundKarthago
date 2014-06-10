@@ -95,5 +95,14 @@ public class Zug {
                 ", stadt=" + stadt +
                 '}';
     }
+
+    /**
+     * Erzeugt das String Format wie es in z.B. Graph gefordert wird.
+     * @return Format des Zuges als abkürzung
+     */
+
+    public String toFormat(){
+        return seite.toString() + " " + stadt;
+    }
     
 }

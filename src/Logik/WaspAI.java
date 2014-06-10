@@ -5,16 +5,21 @@ import Graph.Zug;
 
 
 /**
- * Created by Acer on 09.06.2014.
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
+ * Date : 10.06.14
+ * Year : 2014
  */
+
 public class WaspAI  extends AIPlayer {
+
+    public WaspAI(Seite s) {
+        meineSeite = s;
+    }
 
     public Zug nextZug() {
 
-        Zug erg = new Zug("0"+meineSeite.toString());
+        Zug erg = new Zug("0" + meineSeite.toString());
         return erg;
     }
-    void setMeineSeite(Seite s){meineSeite=s;}
-
-
 }

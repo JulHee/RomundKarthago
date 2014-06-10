@@ -64,6 +64,8 @@ public class Mechanik {
                 case 2:
                     spiel = false;
                     return retrnZustand.getName();
+                case 3:
+                    return retrnZustand.getName();
              //   break;
                 default:
                     error= "Error";
