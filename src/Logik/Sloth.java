@@ -11,20 +11,21 @@ import Graph.*;
 
 public class Sloth extends AIPlayer {
     public Sloth(Seite s) {
-      meineSeite = s;
+        meineSeite = s;
     }
 
-    @Override
     Zug nextZug() {
-        Zug erg = new Zug(meineSeite,berechneZugStadt());
+        Zug erg = new Zug(meineSeite, berechneZugStadt());
         return erg;
     }
 
-private Integer berechneZugStadt(){
-        int erg=-1;
+    private Integer berechneZugStadt() {
+        int erg = -1;
         Graph graph = mechanik.getMyGraph();
-        for(Knoten k : graph.toArrayList(graph.l_knoten) ){
-            if(k.getSeite() == Seite.Neutral){erg=k.id;}
+        for (Knoten k : graph.toArrayList(graph.l_knoten)) {
+            if (k.getSeite() == Seite.Neutral) {
+                erg = k.id;
+            }
         }
         return erg;
     }

@@ -15,6 +15,7 @@ import Logik.Mechanik;
 public abstract class AIPlayer {
     protected Mechanik mechanik;
     protected Seite meineSeite;
+
     abstract Zug nextZug();
 
 }

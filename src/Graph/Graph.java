@@ -14,7 +14,7 @@ import java.util.LinkedList;
  * Year : 2014
  */
 
-public class Graph {
+public class Graph implements Cloneable{
 
     // Relativer Pfad zur Datei zum lesen einer Beispieldatei
     private String path = "ext/map2.txt";
@@ -435,6 +435,19 @@ public class Graph {
     public void map() {
         for (Knoten k : l_knoten) {
             System.out.println(k.id + "(" + k.seite.toString() + ")");
+        }
+    }
+
+    @Override
+    public Graph clone()
+    {
+        try
+        {
+            return (Graph) super.clone();
+        }
+        catch ( CloneNotSupportedException e ) {
+            // Kann eigentlich nicht passieren, da Cloneable
+            throw new InternalError();
         }
     }
 }

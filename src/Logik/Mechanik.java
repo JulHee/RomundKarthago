@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
  * Date : 26.04.14
  * Year : 2014
  */
-public class Mechanik {
+public class Mechanik implements Cloneable{
 
     public Graph getMyGraph() {
         return myGraph;
@@ -100,6 +100,19 @@ public class Mechanik {
         System.out.println("Spiel beendet");
         System.out.println("Rom hat "+myGraph.besetztePunkteStandFuer(Seite.Rom)+" Punkt(e)");
         System.out.println("Kathargo hat "+myGraph.besetztePunkteStandFuer(Seite.Kathargo)+" Punkt(e)");
+    }
+
+    @Override
+    public Mechanik clone()
+    {
+        try
+        {
+            return (Mechanik) super.clone();
+        }
+        catch ( CloneNotSupportedException e ) {
+            // Kann eigentlich nicht passieren, da Cloneable
+            throw new InternalError();
+        }
     }
 
 
