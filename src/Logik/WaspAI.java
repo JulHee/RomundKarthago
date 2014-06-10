@@ -14,6 +14,7 @@ public class WaspAI  extends AIPlayer {
         Zug erg = new Zug("0"+meineSeite.toString());
         return erg;
     }
+    void setMeineSeite(Seite s){meineSeite=s;}
 
 
 }

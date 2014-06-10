@@ -20,4 +20,6 @@ private Integer berechneZugStadt(){
         }
         return erg;
     }
+
+    void setMeineSeite(Seite s){meineSeite=s;}
 }
