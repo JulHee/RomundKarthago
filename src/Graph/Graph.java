@@ -362,7 +362,7 @@ public class Graph {
 	 * @return Sortierte Liste mit den Knoten
 	 */
 
-	private ArrayList<Knoten> toLinkedList(HashSet<Knoten> knotenlist){
+	public ArrayList<Knoten> toArrayList(HashSet<Knoten> knotenlist){
 		ArrayList<Knoten> retrn = new ArrayList<Knoten>();
 		for (int i = 0; i < knotenlist.size(); i++) {
 			for (Knoten k : knotenlist) {

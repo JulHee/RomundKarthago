@@ -28,4 +28,5 @@ public class Knoten {
         this.seite = seite;
     }
 
+    public Seite getSeite() { return seite;}
 }

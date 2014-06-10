@@ -14,6 +14,10 @@ import java.io.InputStreamReader;
  */
 public class Mechanik {
 
+    public Graph getMyGraph() {
+        return myGraph;
+    }
+
     Graph myGraph;
     Boolean letzerZugAusgesetzt = false;
     Boolean spiel = true;
