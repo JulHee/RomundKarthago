@@ -32,7 +32,7 @@ public class optionalAI extends AIPlayer{
 	 * Berechnung des Wertes durch:
 	 * 
 	 * -mehrere mögliche Züge bewerten und besten ermitteln (wie?) TODO Zugbewertung Zvalue
-	 * -zusammenhängende Ketten einer Seite ermitteln + check ob "sicher" (vor Aushungerung) TODO Kettenfunktion getchainz
+	 * -zusammenhängende Ketten einer Seite ermitteln + check ob "sicher" (vor Aushungerung) TODO Kettenfunktion getchainz testen
 	 * -Gegnerketten beachten (nur 1 Neutraler Nachbar -> sofort besetzen -> Gegner hungert aus TODO Gegnerketten
 	 * -je weiter vom Gegner entfernt, desto mehr Platz für Ausbreitung/ sammeln von Punkten TODO Entfernung berechnen
 	 * -allgemein mögliche Stellungen bevorzugen, welche viele Neutrale Nachbarn haben	TODO Stadt-Sicherheit bewerten 
@@ -48,7 +48,7 @@ public class optionalAI extends AIPlayer{
 	Graph myGraph = mechanik.getMyGraph();
 	ArrayList<ArrayList<Knoten>> Rchainz;
 	ArrayList<ArrayList<Knoten>> Kchainz;
-	
+
 
 	/**
 	 * Berechnung, wie "gut" ein Zug zu bewerten ist.
@@ -72,16 +72,25 @@ public class optionalAI extends AIPlayer{
 			if (a.getSeite() == Seite.Neutral){
 				zaehl+=1;
 			}else{
-				ArrayList<Knoten> chain = new ArrayList<Knoten>();
 				Seite site = a.getSeite();
-				kette(chain,site,a);
 				if(site==Seite.Rom){
-					Rchainz.add(chain);
-				}else{
-					Kchainz.add(chain);
+					if(used(a,Rchainz)){
+					}else{
+						ArrayList<Knoten> chain = new ArrayList<Knoten>();
+						kette(chain,site,a);
+						Rchainz.add(chain);
+					}
+				}else if(site==Seite.Kathargo){
+					if(used(a,Kchainz)){
+					}else{
+						ArrayList<Knoten> chain = new ArrayList<Knoten>();
+						kette(chain,site,a);
+						Kchainz.add(chain);
+					}
 				}
 			}
 		};
+		System.out.println(zaehl);
 	};
 	/**
 	 * HilfsFunktion zur Erstellen der einzelnen Ketten als 
@@ -92,17 +101,33 @@ public class optionalAI extends AIPlayer{
 	 * @param knot	zu betracchtendes Kettenglied
 	 * @return ArrayList<Knoten>
 	 */
-	//TODO Testen ob Knoten bereits betrachtet (letzter Knoten -> in Nachbarschaft von jetzigem)
 	public void kette(ArrayList<Knoten> temp,Seite seite,Knoten knot){
-		if(temp.contains(knot)) 
-		temp.add(knot);
-		HashSet<Knoten> blubb = myGraph.getNachbarschaft(knot);
-		for(Knoten x: blubb){
-			if(x.getSeite()== seite){
-				kette(temp,seite,x);
+		if(temp.contains(knot)){
+			System.out.println("Just a Test Term to say");  // später entfernen!!!
+		}else{
+			temp.add(knot);
+			HashSet<Knoten> blubb = myGraph.getNachbarschaft(knot);
+			for(Knoten x: blubb){
+				if(x.getSeite()== seite){
+					kette(temp,seite,x);
+				}
 			}
 		};
-		
 	};
-	
+	/**
+	 * Hilfsfunktion um mehrfache Überprüfung von bereits verwendeten 
+	 * Knoten zu vermeiden
+	 * 
+	 * @param u zu testender Knoten
+	 * @param p zu testende ArrayList von ArrayList
+	 */
+	public boolean used(Knoten u,ArrayList<ArrayList<Knoten>> p){
+		for(ArrayList<Knoten> a: p){
+			if(a.contains(u)){
+				return true;
+			}
+		};
+		return false;
+	};
+
 }
