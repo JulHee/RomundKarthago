@@ -8,7 +8,7 @@ import Graph.*;
  *
  */
 
-// TODO --- komplette AI noch in Arbeit!
+// komplette AI noch in Arbeit!
 
 
 public class optionalAI extends AIPlayer{
@@ -19,7 +19,7 @@ public class optionalAI extends AIPlayer{
 
 	@Override
 	Zug nextZug() {
-		// TODO Auto-generated method stub
+		// TODO allgemeine Def. nextZug
 		return null;
 	}
 	/*
@@ -28,7 +28,14 @@ public class optionalAI extends AIPlayer{
 	 * 
 	 * Berechnung des Wertes durch:
 	 * 
-	 * -zusammenhängende Ketten einer Seite ermitteln + check ob "sicher" (vor Aushungerung)
+	 * -mehrere mögliche Züge bewerten und besten ermitteln (wie?) TODO Zugbewertung Zvalue
+	 * -zusammenhängende Ketten einer Seite ermitteln + check ob "sicher" (vor Aushungerung) TODO Kettenfunktion getchainz
+	 * -Gegnerketten beachten (nur 1 Neutraler Nachbar -> sofort besetzen -> Gegner hungert aus TODO Gegnerketten
+	 * -je weiter vom Gegner entfernt, desto mehr Platz für Ausbreitung/ sammeln von Punkten TODO Entfernung berechnen
+	 * -allgemein mögliche Stellungen bevorzugen, welche viele Neutrale Nachbarn haben	TODO Stadt-Sicherheit bewerten 
+	 * -letzten Züge des Gegners beachten: Züge nah an eigenene Ketten -> Gefahr -> Reaktion? TODO Reaktion auf Geg. Züge
+	 * 
+	 * 
 	 * 
 	 * 
 	 */
@@ -42,5 +49,15 @@ public class optionalAI extends AIPlayer{
 		double value = 0.0;
 		return value;
 	};
-
+	// nicht fertig!
+	/**
+	 * Bestimmung der Ketten zusammenhängender Städte einer Fraktion
+	 * 
+	 */
+	public void getchainz(){
+		Graph myGraph = mechanik.getMyGraph();
+		for(Knoten a: myGraph.l_knoten){
+			myGraph.getNachbarschaft(a);
+		}
+	}
 }

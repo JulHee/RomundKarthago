@@ -165,6 +165,12 @@ public class Graph implements Cloneable{
         return punkteStaedte.size();
     }
 
+    /**
+     * checkNachbarschaft gibt alle Städte zurück, die Punkte einbringen.
+     * @param knot
+     * @param spieler
+     * @return ein HashSet von Knoten 
+     */
     private HashSet<Knoten> checkNachbarschaft(Knoten knot, Seite spieler) {
         HashSet<Knoten> umzingeltesGebiet = getBesetztesGebiet(knot);
         HashSet<Knoten> umzingelndeNachbarn = getNachbarschaft(umzingeltesGebiet);
