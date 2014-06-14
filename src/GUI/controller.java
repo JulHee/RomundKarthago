@@ -14,20 +14,32 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.stage.FileChooser;
+import logik.Mechanik;
 
+import java.io.File;
 import java.util.LinkedList;
 
 
-public class GuiController {
+public class controller {
+
+    // FileChooser zum auswählen der Map
+    FileChooser filechooser = new FileChooser();
 
     // Anlegen des Graphen
 
-    private Graph graph = new Graph();
+    private Mechanik mechanik = new Mechanik();
+
+    // Spieler der am Zug ist
+
+    private Seite spieler = Seite.Rom;
+
 
     // Button und Path die bei Laufzeit erstellt wird
 
@@ -39,22 +51,59 @@ public class GuiController {
     private double HEIGHT = 25;
     private double WIDTH = 40;
 
+    // Code für die Oberfläche
+
+    @FXML
+    private MenuItem mi_quit;
+
+    @FXML
+    private TextField tf_zug;
+
+    @FXML
+    private Button bt_zug;
+
+    @FXML
+    private TextArea ta_log;
+
+    @FXML
+    private MenuItem mi_load;
+
+    @FXML
+    private Pane map;
+
+    @FXML
+    void mi_quit_onclick(ActionEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
+    void mi_load(ActionEvent event) {
+        File file = filechooser.showOpenDialog(null);
+        if (file != null) {
+            mechanik.getMyGraph().setPath(file.getAbsolutePath());
+        }
+        initial();
+        map.getChildren().addAll(paths);
+        map.getChildren().addAll(buttons);
+        ta_log.appendText("Die Daten wurden geladen \n");
+    }
+
     private void initial() {
         try {
-            this.graph.read();
+            mechanik.getMyGraph().read();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 
         // Linien hinzufügen
 
-        for (Kante i : graph.l_kante) {
+        for (Kante i : mechanik.getMyGraph().l_kante) {
             paths.add(pathanlegen(i, WIDTH, HEIGHT));
         }
 
         // Buttons hinzufügen
 
-        for (Knoten i : graph.l_knoten) {
+        for (Knoten i : mechanik.getMyGraph().l_knoten) {
             buttons.add(buttonalegen(i));
         }
 
@@ -69,7 +118,7 @@ public class GuiController {
             @Override
             public void handle(ActionEvent e) {
                 System.out.println(temp.getText());
-                changelabel(temp);
+                zugmachen(temp);
             }
         });
         return temp;
@@ -93,30 +142,33 @@ public class GuiController {
         return path;
     }
 
-    private void changelabel(Button button) {
+    /**
+     * Gibt die andere den Aktuellen Spieler als Seite zurück und setzt direkt die andere Seite als aktiv
+     * @return Aktueller Spieler
+     */
+
+    private Seite aktuellerSpieler(){
+        Seite tmp = spieler;
+        spieler = spieler == Seite.Rom ? Seite.Kathargo : Seite.Rom;
+        return tmp;
+    }
+
+    private void zugmachen(Button button) {
         ta_log.appendText(button.getText() + "\n");
+        Seite spieler = aktuellerSpieler();
+        ta_log.appendText("Es spielt: "+spieler.toString());
+        String belegung = mechanik.auswerten(String.valueOf(button.getText().charAt(0)) +" "+spieler.toString() ,spieler);
+        ta_log.appendText(belegung);
+        changebuttons(belegung);
+    }
+
+    private void changebuttons(String s){
+       for (int i=0;i <= s.length();i++){
+            buttons.get(i).setText(i+" "+s.charAt(i));
+        }
     }
 
 
-    // Code für die Oberfläche
-
-
-    @FXML
-    private TextArea ta_log;
-
-    @FXML
-    private MenuItem mi_load;
-
-    @FXML
-    private Pane map;
-
-    @FXML
-    void mi_load(ActionEvent event) {
-        initial();
-        map.getChildren().addAll(paths);
-        map.getChildren().addAll(buttons);
-        ta_log.appendText("Die Daten wurden geladen \n");
-    }
 
 
 }
