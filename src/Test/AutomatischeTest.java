@@ -1,13 +1,12 @@
 package Test;
 
-import Graph.Seite;
-import Logik.Mechanik;
+import core.Seite;
+import logik.Mechanik;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Projekt: RomUndKathargo

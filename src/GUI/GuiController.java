@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 /**
  * Projekt: RomUndKathargo
@@ -7,7 +7,7 @@ package GUI;
  * Year : 2014
  */
 
-import Graph.*;
+import core.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

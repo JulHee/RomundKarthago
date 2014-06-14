@@ -1,9 +1,9 @@
-package Logik;
+package logik;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import Graph.*;
+import core.*;
 
 /**
  * optionale KI fuer Ki - Turnier

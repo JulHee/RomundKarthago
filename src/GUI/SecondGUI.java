@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 /**
  * Projekt: RomUndKathargo
@@ -24,7 +24,7 @@ public class SecondGUI extends Application {
             VBox page = (VBox) FXMLLoader.load(getClass().getResource("gui.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Graph");
+            primaryStage.setTitle("core");
             primaryStage.show();
         } catch (Exception ex) {
             Logger.getLogger(SecondGUI.class.getName()).log(Level.SEVERE, null, ex);

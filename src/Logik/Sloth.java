@@ -1,6 +1,6 @@
-package Logik;
+package logik;
 
-import Graph.*;
+import core.*;
 
 /**
  * Projekt: Rom und Karthago

@@ -1,6 +1,6 @@
-package GUI;
+package gui;
 
-import Graph.*;
+import core.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -65,7 +65,7 @@ public class Oberflaeche extends Application {
 
         // Optionen des JavaFX setzen
 
-        primaryStage.setTitle("Graph");
+        primaryStage.setTitle("core");
         Pane root = new Pane();
 
         root.getChildren().addAll(paths);

@@ -1,6 +1,6 @@
 package Test;
 
-import Graph.Zug;
+import core.Zug;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -6,8 +6,8 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-import Graph.Graph;
-import Graph.Knoten;
+import core.Graph;
+import core.Knoten;
 
 public class NeighbourhoodVertexSet {
 	Graph graph = new Graph();

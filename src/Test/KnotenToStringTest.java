@@ -1,10 +1,10 @@
 package Test;
 import org.junit.Test;
 
-import Graph.*;
+import core.*;
 import static org.junit.Assert.*;
 /**
- * Created by  Jörn Kabuth on 22.05.2014.
+ * Created by  Jï¿½rn Kabuth on 22.05.2014.
  */
 public class KnotenToStringTest {
 	Knoten knoten1 = new Knoten(3,Seite.Neutral,new Position(30,40));

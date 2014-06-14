@@ -1,10 +1,6 @@
 package Test;
 
 import org.junit.Test;
-import Logik.*;
-
-
-import static org.junit.Assert.*;
 
 public class MechanikTest {
 

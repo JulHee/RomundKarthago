@@ -1,7 +1,7 @@
-package Logik;
+package logik;
 
-import Graph.Seite;
-import Graph.Zug;
+import core.Seite;
+import core.Zug;
 
 
 /**

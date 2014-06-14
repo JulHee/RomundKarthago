@@ -1,4 +1,4 @@
-package Graph;
+package core;
 
 /**
  * Projekt: RomUndKathargo

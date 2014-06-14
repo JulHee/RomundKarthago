@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-import Graph.*;
+import core.*;
 
 public class ConnectedComp {
 	Graph graph = new Graph();

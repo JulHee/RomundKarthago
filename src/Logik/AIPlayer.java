@@ -1,8 +1,7 @@
-package Logik;
+package logik;
 
-import Graph.Seite;
-import Graph.Zug;
-import Logik.Mechanik;
+import core.Seite;
+import core.Zug;
 
 
 /**

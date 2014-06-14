@@ -1,7 +1,3 @@
-package Main;
-
-import Graph.*;
-import Logik.Mechanik;
 import Test.AutomatischeTest;
 
 

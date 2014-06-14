@@ -1,6 +1,6 @@
-package Logik;
+package logik;
 
-import Graph.*;
+import core.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;

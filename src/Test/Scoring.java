@@ -6,9 +6,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import Graph.Graph;
+import core.Graph;
 
-import Graph.Seite;
+import core.Seite;
 
 public class Scoring {
 	Graph graph = new Graph();

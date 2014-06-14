@@ -1,8 +1,6 @@
-package Logik;
+package logik;
 
-import Graph.*;
-
-import java.util.*;
+import core.*;
 
 /**
  * Projekt : RomUndKathargo

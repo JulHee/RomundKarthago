@@ -1,4 +1,4 @@
-package Graph;
+package core;
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth

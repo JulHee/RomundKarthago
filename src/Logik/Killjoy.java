@@ -1,5 +1,5 @@
-package Logik;
-import Graph.*;
+package logik;
+import core.*;
 
 /**
  * Projekt : RomUndKathargo

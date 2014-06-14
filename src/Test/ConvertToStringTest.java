@@ -1,6 +1,6 @@
 package Test;
 import org.junit.Test;
-import Graph.Graph;
+import core.Graph;
 import static org.junit.Assert.*;
 /**
  * Created by  Christian Bruene  on 22.05.2014.
