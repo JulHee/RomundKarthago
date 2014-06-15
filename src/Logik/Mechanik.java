@@ -75,6 +75,30 @@ public class Mechanik implements Cloneable{
         return error;
     }
 
+	public void aiVsAiGame(AIPlayer ai1, AIPlayer ai2){
+		ai1.meineSeite = Seite.Rom;
+		ai2.meineSeite = Seite.Kathargo;
+		AIPlayer aktuellerSpieler = ai1;
+
+		Boolean letzerZugAusgesetzt = false;
+		myGraph.map();
+		while (spiel) {
+			System.out.println(aktuellerSpieler.meineSeite.toString() + " spielt folgenden Zug: ");
+			String move = auswerten(aktuellerSpieler.nextZug().toFormat(), aktuellerSpieler.meineSeite);
+			System.out.println(move);
+
+			if (aktuellerSpieler.meineSeite == Seite.Rom) {
+				aktuellerSpieler = ai2;
+			} else {
+				aktuellerSpieler = ai1;
+			}
+
+		}
+		System.out.println("Spiel beendet");
+		System.out.println("Rom hat "+myGraph.besetztePunkteStandFuer(Seite.Rom)+" Punkt(e)");
+		System.out.println("Kathargo hat "+myGraph.besetztePunkteStandFuer(Seite.Kathargo)+" Punkt(e)");
+	}
+
     public void terminalGame() {
         Seite aktuellerSpieler = Seite.Rom;
 

@@ -17,4 +17,8 @@ public abstract class AIPlayer {
 
     abstract Zug nextZug();
 
+	public String toString(){
+		return meineSeite.toString();
+	}
+
 }
