@@ -1,8 +1,8 @@
 package Test;
 
 import core.Seite;
-import logik.Mechanik;
-import logik.WaspAI;
+import Logik.Mechanik;
+import Logik.WaspAI;
 import org.junit.Test;
 
 public class WaspAITest {
