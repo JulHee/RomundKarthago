@@ -14,7 +14,7 @@ import java.util.LinkedList;
  * Year : 2014
  */
 
-public class Graph implements Cloneable{
+public class Graph{ //} implements Cloneable{
 
     // Relativer Pfad zur Datei zum lesen einer Beispieldatei
     private String path = "ext/map2.txt";
@@ -22,7 +22,12 @@ public class Graph implements Cloneable{
     // Konstrukte zum speichern der Informationen bzgl. des Graphen
     public HashSet<Knoten> l_knoten = new HashSet<Knoten>();
     public HashSet<Kante> l_kante = new HashSet<Kante>();
-    private ArrayList<String> history = new ArrayList<String>();
+
+	public ArrayList<String> getHistory() {
+		return history;
+	}
+
+	private ArrayList<String> history = new ArrayList<String>();
     private boolean letzerZugAusgesetzt = false;
 
     /**
@@ -225,7 +230,59 @@ public class Graph implements Cloneable{
         return resu;
     }
 
-    /**
+
+	/**
+	 * Führt den Zug aus und gibt einen Errorcode aus, der weiter geleitet wird
+	 * Errorcode = 0: Alles in Ordnung
+	 * Errorcode = 1: Zug wurde ausgesetzt
+	 * Errorcode = 2: Beende Spiel
+	 * Errorcode = 3: Stellung wiederholt
+	 *
+	 * @param zug
+	 * @param spieler
+	 * @return
+	 */
+
+	public Zustand run(String zug, Seite spieler) {
+		String retrn;
+		Zustand retrnZustand = new Zustand(0);
+		String letzerSpielZustand = this.convertToString();
+		Zug myzug = new Zug(zug);
+		if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
+			if (letzerZugAusgesetzt) {
+				retrnZustand.setName(this.convertToString());
+				retrnZustand.setErrorcode(2);
+			} else {
+				retrnZustand.setName(this.convertToString());
+				retrnZustand.setErrorcode(1);
+				letzerZugAusgesetzt = true;
+			}
+
+		} else if (history.contains(this.ssuf(myzug).convertToString())) {
+			retrnZustand.setErrorcode(3);
+			letzerZugAusgesetzt = true;
+			retrnZustand.setName(this.convertToString());
+
+		} else {
+			this.ssuf(myzug);
+			if (letzerSpielZustand.equals(this.convertToString())) {
+				if (letzerZugAusgesetzt) {
+					retrnZustand.setErrorcode(2);
+				}
+				retrnZustand.setErrorcode(1);
+				letzerZugAusgesetzt = true;
+
+			}
+
+			retrnZustand.setName(this.convertToString());
+		}
+		history.add(retrnZustand.getName());
+		return retrnZustand;
+	}
+
+
+
+	/**
      * Anwenden eines Zuges auf einen Graphen g
      *
      * @param g Der Graph g auf den z angewendet werden soll
@@ -272,56 +329,6 @@ public class Graph implements Cloneable{
             return g;
         }
 
-    }
-
-
-    /**
-     * Führt den Zug aus und gibt einen Errorcode aus, der weiter geleitet wird
-     * Errorcode = 0: Alles in Ordnung
-     * Errorcode = 1: Zug wurde ausgesetzt
-     * Errorcode = 2: Beende Spiel
-     * Errorcode = 3: Stellung wiederholt
-     *
-     * @param zug
-     * @param spieler
-     * @return
-     */
-
-    public Zustand run(String zug, Seite spieler) {
-        String retrn;
-        Zustand retrnZustand = new Zustand(0);
-        Zug myzug = new Zug(zug);
-        Graph temp = this.clone();
-        if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
-            if (letzerZugAusgesetzt) {
-                retrnZustand.setName(this.convertToString());
-                retrnZustand.setErrorcode(2);
-            } else {
-                retrnZustand.setName(this.convertToString());
-                retrnZustand.setErrorcode(1);
-                letzerZugAusgesetzt = true;
-            }
-
-        } else if (history.contains(temp.ssuf(temp,myzug).convertToString())) {
-            retrnZustand.setErrorcode(3);
-            letzerZugAusgesetzt = true;
-            retrnZustand.setName(this.convertToString());
-        } else {
-            String letzerZug = this.convertToString();
-            ssuf(myzug);
-            if (letzerZug.equals(this.convertToString())) {
-                if (letzerZugAusgesetzt) {
-                    retrnZustand.setErrorcode(2);
-                }
-                retrnZustand.setErrorcode(1);
-                letzerZugAusgesetzt = true;
-
-            }
-
-            retrnZustand.setName(this.convertToString());
-        }
-        history.add(retrnZustand.getName());
-        return retrnZustand;
     }
 
     /**
@@ -373,14 +380,14 @@ public class Graph implements Cloneable{
     /**
      * Soriert ein HashSet<Knoten> nach der ID der Knoten in eine ArrayList<Knoten>
      *
-     * @param knotenlist Liste mit den Knoten
+     * //@param knotenlist Liste mit den Knoten
      * @return Sortierte Liste mit den Knoten
      */
 
-    public ArrayList<Knoten> toArrayList(HashSet<Knoten> knotenlist) {
+    public ArrayList<Knoten> toArrayList() {
         ArrayList<Knoten> retrn = new ArrayList<Knoten>();
-        for (int i = 0; i < knotenlist.size(); i++) {
-            for (Knoten k : knotenlist) {
+        for (int i = 0; i < this.l_knoten.size(); i++) {
+            for (Knoten k : this.l_knoten) {
                 if (k.id == i) {
                     retrn.add(k);
                 }
@@ -445,16 +452,18 @@ public class Graph implements Cloneable{
         }
     }
 
-    @Override
+ /*   @Override
     public Graph clone()
     {
-        try
-        {
-            return (Graph) super.clone();
-        }
-        catch ( CloneNotSupportedException e ) {
-            // Kann eigentlich nicht passieren, da Cloneable
-            throw new InternalError();
-        }
-    }
+	    Graph graph = new Graph();
+
+	    for(Knoten k: this.l_knoten){
+		    graph.l_knoten.add(new Knoten(k.id,k.getSeite(),k.position));
+	    }
+	    for(Kante kante : this.l_kante){
+		    graph.l_kante.add(new Kante(kante.getPunkt1(),kante.getPunkt2()));
+	    }
+
+	    return graph;
+    }    */
 }

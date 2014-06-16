@@ -1,4 +1,4 @@
-package Logik;
+package logik;
 
 import core.Seite;
 import core.Zug;
@@ -15,10 +15,6 @@ public abstract class AIPlayer {
     protected Mechanik mechanik;
     protected Seite meineSeite;
 
-    abstract Zug nextZug();
-
-	public String toString(){
-		return meineSeite.toString();
-	}
+    abstract Zug nextZug(Mechanik mech);
 
 }

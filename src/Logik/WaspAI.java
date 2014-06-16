@@ -1,4 +1,4 @@
-package Logik;
+package logik;
 
 import core.Seite;
 import core.Zug;
@@ -13,12 +13,15 @@ import core.Zug;
 
 public class WaspAI  extends AIPlayer {
 
-    public WaspAI(Seite s) {
+	private int myCity = -1;
+
+    public WaspAI(Seite s, int city) {
         meineSeite = s;
+	    myCity = city;
     }
 
-    public Zug nextZug() {
-        Zug erg = new Zug("0" + meineSeite.toString());
+    public Zug nextZug(Mechanik mech) {
+        Zug erg = new Zug(meineSeite, myCity);
         return erg;
     }
 }

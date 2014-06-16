@@ -1,4 +1,4 @@
-package Logik;
+package logik;
 
 import core.*;
 
@@ -13,7 +13,7 @@ public class Scrooge extends AIPlayer {
         meineSeite = s;
     }
 
-    Zug nextZug() {
+    Zug nextZug(Mechanik mech) {
         return findZug();
     }
 
@@ -27,7 +27,7 @@ public class Scrooge extends AIPlayer {
         Zug retrn = null;
         Graph myGraph = mechanik.getMyGraph();
         for (Knoten k : myGraph.l_knoten) {
-            Zug temp = new Zug(meineSeite + " " + k.id);
+            Zug temp = new Zug(meineSeite, k.id);
             if (maxPunkte < getPunkte(temp, mechanik)) {
                 retrn = temp;
             }

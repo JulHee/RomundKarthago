@@ -1,5 +1,6 @@
 package Test;
 
+import core.Seite;
 import core.Zug;
 import org.junit.Test;
 
@@ -20,5 +21,17 @@ public class ZugTest {
         assertNull("Object wurde nicht erzeugt",zug.getSeite());
     }
 
+	@Test
+	public void  testKonstruktorFailSeite() throws Exception{
+		String test = "R 2";
+		Zug zug = new Zug(Seite.Rom, 2);
+		assertEquals(Seite.Rom ,zug.getSeite());
+	}
 
+	@Test
+	public void  testKonstruktorFailCity() throws Exception{
+		String test = "R 2";
+		Zug zug = new Zug(Seite.Rom, 2);
+		assertEquals(2 ,zug.getStadt());
+	}
 }

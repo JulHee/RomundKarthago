@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 /**
  * Projekt: RomUndKathargo
@@ -21,7 +21,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
-import Logik.Mechanik;
+import logik.Mechanik;
 
 import java.io.File;
 import java.util.LinkedList;

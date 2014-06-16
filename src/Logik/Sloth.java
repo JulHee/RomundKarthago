@@ -1,4 +1,4 @@
-package Logik;
+package logik;
 
 import core.*;
 
@@ -14,17 +14,16 @@ public class Sloth extends AIPlayer {
         meineSeite = s;
     }
 
-    Zug nextZug() {
-        Zug erg = new Zug(meineSeite, berechneZugStadt());
+    Zug nextZug(Mechanik mech) {
+        Zug erg = new Zug(meineSeite, berechneZugStadt(mech.getMyGraph()));
         return erg;
     }
 
-    private Integer berechneZugStadt() {
+    private int berechneZugStadt(Graph graph) {
         int erg = -1;
-        Graph graph = mechanik.getMyGraph();
-        for (Knoten k : graph.toArrayList(graph.l_knoten)) {
+        for (Knoten k : graph.toArrayList()) {
             if (k.getSeite() == Seite.Neutral) {
-                erg = k.id;
+                return k.id;
             }
         }
         return erg;

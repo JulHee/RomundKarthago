@@ -1,4 +1,4 @@
-package Logik;
+package logik;
 
 import core.*;
 
@@ -59,13 +59,23 @@ public class Mechanik implements Cloneable{
                     return retrnZustand.getName();
              //   break;
                 case 1:
+	                if(!letzerZugAusgesetzt){
+		                letzerZugAusgesetzt = true;
+	                } else{
+		                spiel = false;
+	                }
                     return retrnZustand.getName();
              //   break;
                 case 2:
                     spiel = false;
                     return retrnZustand.getName();
                 case 3:
-                    return retrnZustand.getName();
+	                if(!letzerZugAusgesetzt){
+		                letzerZugAusgesetzt = true;
+	                } else{
+		                spiel = false;
+	                }
+	                return retrnZustand.getName();
              //   break;
                 default:
                     error= "Error";
@@ -83,9 +93,9 @@ public class Mechanik implements Cloneable{
 		Boolean letzerZugAusgesetzt = false;
 		myGraph.map();
 		while (spiel) {
-			System.out.println(aktuellerSpieler.meineSeite.toString() + " spielt folgenden Zug: ");
-			String move = auswerten(aktuellerSpieler.nextZug().toFormat(), aktuellerSpieler.meineSeite);
-			System.out.println(move);
+			System.out.println(aktuellerSpieler.meineSeite.toString() + " spielt folgenden Zug: " + aktuellerSpieler.nextZug(this).toString());
+			String move = auswerten(aktuellerSpieler.nextZug(this).toFormat(), aktuellerSpieler.meineSeite);
+			System.out.println("Aktueller Spielstand: " + move);
 
 			if (aktuellerSpieler.meineSeite == Seite.Rom) {
 				aktuellerSpieler = ai2;

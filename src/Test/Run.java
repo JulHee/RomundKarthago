@@ -1,8 +1,5 @@
-package Test;
-
-import Logik.Mechanik;
-
-
+import Test.AutomatischeTest;
+import logik.Mechanik;
 
 
 /**

@@ -1,9 +1,12 @@
-package Logik;
+package logik;
+
+import core.Graph;
+import core.Knoten;
+import core.Seite;
+import core.Zug;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
-import core.*;
 
 /**
  * optionale KI fuer Ki - Turnier
@@ -21,7 +24,7 @@ public class optionalAI extends AIPlayer{
 	};
 
 	@Override
-	Zug nextZug() {
+	Zug nextZug(Mechanik mech) {
 		// TODO allgemeine Def. nextZug
 		return null;
 	}
