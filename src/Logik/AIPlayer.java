@@ -1,4 +1,4 @@
-package logik;
+package Logik;
 
 import core.Seite;
 import core.Zug;

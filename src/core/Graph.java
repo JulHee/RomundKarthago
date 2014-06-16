@@ -291,6 +291,7 @@ public class Graph implements Cloneable{
         String retrn;
         Zustand retrnZustand = new Zustand(0);
         Zug myzug = new Zug(zug);
+        Graph temp = this.clone();
         if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
             if (letzerZugAusgesetzt) {
                 retrnZustand.setName(this.convertToString());
@@ -301,7 +302,7 @@ public class Graph implements Cloneable{
                 letzerZugAusgesetzt = true;
             }
 
-        } else if (history.contains(myzug.toFormat())) {
+        } else if (history.contains(temp.ssuf(temp,myzug).convertToString())) {
             retrnZustand.setErrorcode(3);
             letzerZugAusgesetzt = true;
             retrnZustand.setName(this.convertToString());
