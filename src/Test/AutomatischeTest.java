@@ -1,7 +1,7 @@
 package Test;
 
 import core.Seite;
-import logik.Mechanik;
+import Logik.Mechanik;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

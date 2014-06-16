@@ -2,7 +2,6 @@ package core;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.lang.Integer;
 
 /**
  * Projekt: RomUndKathargo
@@ -24,7 +23,7 @@ public class Zug {
         if (temp.length > 1){
             try{
                 this.seite = readSeite(temp[0]);
-                if (temp[1].equals("X") || Integer.parseInt(temp[1]) < 0){
+                if (temp[1].equals("X")){
                     this.stadt = -1;
                 } else {
                     this.stadt = Integer.parseInt(temp[1]);

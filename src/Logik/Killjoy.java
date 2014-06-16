@@ -1,4 +1,4 @@
-package logik;
+package Logik;
 import core.*;
 
 /**
@@ -12,7 +12,7 @@ public class Killjoy extends AIPlayer {
         meineSeite = s;
     }
 
-    Zug nextZug(Mechanik mech) {
+    Zug nextZug() {
         return findZug();
     }
 
@@ -26,7 +26,7 @@ public class Killjoy extends AIPlayer {
         Zug retrn = null;
         Graph myGraph = mechanik.getMyGraph();
         for (Knoten k : myGraph.l_knoten) {
-            Zug temp = new Zug(meineSeite, k.id);
+            Zug temp = new Zug(meineSeite + " " + k.id);
             if (minPunkte > getPunkte(temp, mechanik)) {
                 retrn = temp;
             }
