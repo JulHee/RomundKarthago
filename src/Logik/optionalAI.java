@@ -15,7 +15,9 @@ import core.*;
 
 
 public class optionalAI extends AIPlayer{
-
+	
+	Mechanik mechanik = new Mechanik();
+	
 	public optionalAI(Seite s){
 		meineSeite = s;
 	};
@@ -45,9 +47,10 @@ public class optionalAI extends AIPlayer{
 	/*
 	 * Variablen für Zugriffsrechte außerhalb definiert
 	 */
-	Graph myGraph = mechanik.getMyGraph();
-	ArrayList<ArrayList<Knoten>> Rchainz;
-	ArrayList<ArrayList<Knoten>> Kchainz;
+	public Graph myGraph = mechanik.getMyGraph();
+	public ArrayList<ArrayList<Knoten>> Rchainz;
+	public ArrayList<ArrayList<Knoten>> Kchainz;
+	
 
 
 	/**
@@ -57,6 +60,7 @@ public class optionalAI extends AIPlayer{
 	public double Zvalue(){
 		double value = 0.0;
 		return value;
+
 	};
 	// nicht fertig!
 	/**
@@ -129,5 +133,23 @@ public class optionalAI extends AIPlayer{
 		};
 		return false;
 	};
-
+	/**
+	 * Funktion zur Ausgabe der Ketten auf der Konsole (testzwecke)
+	 */
+	public void getRKchainz(){
+		System.out.println("Rchain: ");
+		for(ArrayList<Knoten> a: Rchainz){
+			System.out.println("R: "+Rchainz.indexOf(a)+" ");
+			for(Knoten b: a){
+				System.out.println(b);
+			}
+		}
+		System.out.println("Kchain: ");
+		for(ArrayList<Knoten> c: Kchainz){
+			System.out.println("K: "+Kchainz.indexOf(c)+" ");
+			for(Knoten d: c){
+				System.out.println(d);
+			}
+		}
+	};
 }

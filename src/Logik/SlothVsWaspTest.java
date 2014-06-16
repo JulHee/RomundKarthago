@@ -1,4 +1,4 @@
-package logik;
+package Logik;
 
 import static org.junit.Assert.*;
 
