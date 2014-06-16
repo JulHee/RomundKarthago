@@ -2,6 +2,7 @@ package Test;
 
 import static org.junit.Assert.*;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class optionalAITest {
 	Knoten blubb2 = new Knoten(0,Seite.Kathargo,new Position(350,125));
 	ArrayList<ArrayList<Knoten>> blubb3 = new ArrayList();
 	
+	
 	@Test
 	public void usedtest1() {
 		blubb1.add(blubb2);
@@ -36,17 +38,12 @@ public class optionalAITest {
 	@Test
 	public void kettetest1(){
 		Pew.kette(blubb1, Seite.Kathargo, blubb2);
-		for(Knoten a: blubb1){
-			System.out.println(a);
-		}
+		assertTrue(blubb1.contains(blubb2));
 	}
 	@Test
 	public void kettetest2(){
-		Pew.kette(blubb1, Seite.Kathargo, blubb2);
 		blubb1.add(blubb2);
 		Pew.kette(blubb1, Seite.Kathargo, blubb2);
-		for(Knoten a: blubb1){
-			System.out.println(a);
-		}
+		assertTrue(blubb1.contains(blubb2));
 	}
 }

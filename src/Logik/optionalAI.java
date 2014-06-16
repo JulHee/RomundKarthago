@@ -107,7 +107,7 @@ public class optionalAI extends AIPlayer{
 	 */
 	public void kette(ArrayList<Knoten> temp,Seite seite,Knoten knot){
 		if(temp.contains(knot)){
-			System.out.println("Just a Test Term to say");  // später entfernen!!!
+			
 		}else{
 			temp.add(knot);
 			HashSet<Knoten> blubb = myGraph.getNachbarschaft(knot);
