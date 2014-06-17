@@ -1,6 +1,6 @@
 package test;
 
-import core.Zug;
+import core.datacontainers.Zug;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

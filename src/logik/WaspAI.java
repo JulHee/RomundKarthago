@@ -1,7 +1,7 @@
 package logik;
 
-import core.Seite;
-import core.Zug;
+import core.datacontainers.Seite;
+import core.datacontainers.Zug;
 
 
 /**

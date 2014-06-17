@@ -1,4 +1,4 @@
-package core;
+package core.datacontainers;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

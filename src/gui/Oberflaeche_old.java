@@ -1,6 +1,8 @@
 package gui;
 
 import core.*;
+import core.datacontainers.Kante;
+import core.datacontainers.Knoten;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

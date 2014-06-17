@@ -1,6 +1,6 @@
 package test;
 
-import core.Seite;
+import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.WaspAI;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package core;
+package core.datacontainers;
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth

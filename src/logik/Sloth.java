@@ -1,6 +1,9 @@
 package logik;
 
 import core.*;
+import core.datacontainers.Knoten;
+import core.datacontainers.Seite;
+import core.datacontainers.Zug;
 
 /**
  * Projekt: Rom und Karthago

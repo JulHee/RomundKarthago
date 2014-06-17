@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import core.*;
+import core.datacontainers.Knoten;
+import core.datacontainers.Seite;
+import core.datacontainers.Zug;
 
 /**
  * optionale KI fuer Ki - Turnier
@@ -23,7 +26,7 @@ public class optionalAI extends AIPlayer{
 	};
 
 	@Override
-	Zug nextZug() {
+    Zug nextZug() {
 		// TODO allgemeine Def. nextZug
 		return null;
 	}
