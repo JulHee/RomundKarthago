@@ -2,7 +2,6 @@ package Test;
 
 import static org.junit.Assert.*;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 
 import org.junit.Test;

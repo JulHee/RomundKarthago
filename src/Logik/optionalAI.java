@@ -1,4 +1,4 @@
-package Logik;
+package logik;
 
 import java.util.ArrayList;
 import java.util.HashSet;

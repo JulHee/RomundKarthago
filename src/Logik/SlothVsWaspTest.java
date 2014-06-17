@@ -1,6 +1,4 @@
-package Logik;
-
-import static org.junit.Assert.*;
+package logik;
 
 public class SlothVsWaspTest {
 

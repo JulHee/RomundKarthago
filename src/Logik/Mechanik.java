@@ -1,4 +1,4 @@
-package Logik;
+package logik;
 
 import core.*;
 

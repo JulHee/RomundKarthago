@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import core.*;
 import javafx.application.Application;
