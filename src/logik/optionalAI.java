@@ -48,8 +48,8 @@ public class optionalAI extends AIPlayer{
 	 * Variablen für Zugriffsrechte außerhalb definiert
 	 */
 	public Graph myGraph = mechanik.getMyGraph();
-	public ArrayList<ArrayList<Knoten>> Rchainz;
-	public ArrayList<ArrayList<Knoten>> Kchainz;
+	public ArrayList<ArrayList<Knoten>> Rchainz = new ArrayList<ArrayList<Knoten>>();
+	public ArrayList<ArrayList<Knoten>> Kchainz = new ArrayList<ArrayList<Knoten>>();
 	
 
 
@@ -69,8 +69,6 @@ public class optionalAI extends AIPlayer{
 	 *  
 	 */
 	public void getchainz(){
-		ArrayList<ArrayList<Knoten>> Rchainz = new ArrayList<ArrayList<Knoten>>();
-		ArrayList<ArrayList<Knoten>> Kchainz = new ArrayList<ArrayList<Knoten>>();
 		int zaehl = 0; //sinnfreie zählvariable -> Anzahl der neutralen Knoten (als Test)
 		for(Knoten a: myGraph.l_knoten){
 			if (a.getSeite() == Seite.Neutral){
