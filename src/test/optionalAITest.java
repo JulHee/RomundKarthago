@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import core.Knoten;
-import core.Position;
-import core.Seite;
+import core.datacontainers.Knoten;
+import core.datacontainers.Position;
+import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.optionalAI;
 

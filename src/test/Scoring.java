@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import core.Graph;
 
-import core.Seite;
+import core.datacontainers.Seite;
 
 public class Scoring {
 	Graph graph = new Graph();

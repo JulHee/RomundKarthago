@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.HashSet;
 
+import core.datacontainers.Knoten;
 import org.junit.Test;
 
 import core.*;

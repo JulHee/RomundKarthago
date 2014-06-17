@@ -1,6 +1,9 @@
 package logik;
 
 import core.*;
+import core.datacontainers.Seite;
+import core.datacontainers.Zug;
+import core.datacontainers.Zustand;
 
 import java.io.BufferedReader;
 import java.io.IOException;

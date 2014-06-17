@@ -1,13 +1,15 @@
 package test;
+import core.datacontainers.Knoten;
+import core.datacontainers.Position;
+import core.datacontainers.Seite;
 import org.junit.Test;
 
-import core.*;
 import static org.junit.Assert.*;
 /**
  * Created by  J�rn Kabuth on 22.05.2014.
  */
 public class KnotenToStringTest {
-	Knoten knoten1 = new Knoten(3,Seite.Neutral,new Position(30,40));
+	Knoten knoten1 = new Knoten(3, Seite.Neutral,new Position(30,40));
 	Knoten knoten2 = new Knoten(8,Seite.Kathargo,new Position(15,25));
 	Knoten knoten3 = new Knoten(15,Seite.Neutral,new Position(7,9));
 	Knoten knoten4 = new Knoten(0,Seite.Rom,new Position(0,0));

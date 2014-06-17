@@ -7,7 +7,9 @@ package gui;
  * Year : 2014
  */
 
-import core.*;
+import core.datacontainers.Kante;
+import core.datacontainers.Knoten;
+import core.datacontainers.Seite;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
