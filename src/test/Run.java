@@ -1,6 +1,6 @@
-package Test;
+package test;
 
-import Logik.Mechanik;
+import logik.Mechanik;
 
 
 

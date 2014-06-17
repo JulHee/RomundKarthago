@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -9,8 +9,8 @@ import org.junit.Test;
 import core.Knoten;
 import core.Position;
 import core.Seite;
-import Logik.Mechanik;
-import Logik.optionalAI;
+import logik.Mechanik;
+import logik.optionalAI;
 
 public class optionalAITest {
 	
