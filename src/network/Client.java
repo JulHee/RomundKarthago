@@ -1,5 +1,7 @@
 package network;
 
+import logik.AIPlayer;
+import core.datacontainers.Zug;
 import java.io.*;
 import java.net.Socket;
 
@@ -7,13 +9,19 @@ import java.net.Socket;
  * Created by Acer on 23.06.2014.
  */
 public class Client {
+    private static Boolean spielLaeuft = false;
     public static void main(String[] args){
         try{
             Socket clientR = new Socket(args[0],Integer.parseInt(args[1]));        // Socket(Server-name,Port)
-            sendGameBoard (clientR);
-            while(true){
+            sendGameBoard(clientR,"ext/map.txt");
+            spielLaeuft=true;
+            sendZug();
+            while(spielLaeuft){
+                spielLaeuft=warteAufZug();
                 sendZug();
             }
+            clientR.close();
+
             //TODO Was der Client machen soll
 
         }catch (IOException e){e.getStackTrace();}
@@ -21,16 +29,30 @@ public class Client {
 
 
 
-private void sendGameBoard(Socket clientR){
-    try {
-        BufferedReader in = new BufferedReader(new FileReader("ex/map.txt"));
+    private static void sendGameBoard(Socket clientR,String myPath){
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(myPath));
+            BufferedOutputStream out = new BufferedOutputStream(clientR.getOutputStream());
+            while(in.readLine() != null) {
+                out.write(in.readLine().getBytes());        //Die Zeilen der Map.txt werden in den OutputStream des Socket gegeben
+            }
 
-        OutputStream outS = clientR.getOutputStream();
-        BufferedOutputStream out = new BufferedOutputStream(outS);
+        }catch (IOException e){e.getStackTrace();}
+    }
 
-    }catch (IOException e){e.getStackTrace();}
-}
-private void sendZug(){
-    // TODO ZUG senden
-}
+    private static void sendZug(Socket clientR, AIPlayer spieler)throws IOException{
+        BufferedOutputStream out = new BufferedOutputStream(clientR.getOutputStream());
+        out.write(spieler.nextZug.toFormat.getBytes()); // hier wird die abstrakte Methode nextZug aufgerufen, um den Zug zu übergeben
+        // TODO abstract nextZug funktioniert nicht
+    }
+
+    /**
+     * empfängt den Zug und falls etwas nicht stimmt gibt es false zurück, wodurch das Spiel beendent wird
+     *
+     * @return Boolean
+     */
+    private static Boolean warteAufZug(){
+    return true;    //TODO bekommt einen Zug vom Server und verarbeitet ihn
+    }
+
 }
