@@ -17,7 +17,7 @@ public class Sloth extends AIPlayer {
         meineSeite = s;
     }
 
-    Zug nextZug() {
+    public Zug nextZug() {
         Zug erg = new Zug(meineSeite, berechneZugStadt());
         return erg;
     }
