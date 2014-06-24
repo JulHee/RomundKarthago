@@ -26,6 +26,7 @@ public class optionalAI extends AIPlayer{
 	};
 
 	@Override
+	public
     Zug nextZug() {
 		// TODO allgemeine Def. nextZug
 		return null;

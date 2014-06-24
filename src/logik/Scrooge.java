@@ -16,7 +16,7 @@ public class Scrooge extends AIPlayer {
         meineSeite = s;
     }
 
-    Zug nextZug() {
+    public Zug nextZug() {
         return findZug();
     }
 
