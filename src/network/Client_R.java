@@ -1,8 +1,10 @@
 package network;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -86,7 +88,7 @@ public class Client_R {
     }
 
     public void handleSocket_hum(Socket s) {
-
+	String input;
 	try {
 	    DataOutputStream out = new DataOutputStream(s.getOutputStream());
 	    DataInputStream in = new DataInputStream(s.getInputStream());
@@ -96,6 +98,22 @@ public class Client_R {
 	    for (String l : maptext) {
 		out.writeUTF(l);
 	    }
+	    while (myMechanik.getSpiel()) {
+		System.out.println("Bitte Zug angeben:");
+		try {
+		    BufferedReader bufferRead = new BufferedReader(
+			    new InputStreamReader(System.in));
+		    String zug = bufferRead.readLine();
+		    out.writeUTF(zug);
+		    String move = myMechanik.auswerten(zug, Seite.Rom);
+		    in.available();
+		    input = in.readUTF();
+		    myMechanik.auswerten(input, Seite.Kathargo);
+		} catch (IOException e) {
+		    e.getStackTrace();
+		}
+	    }
+	    s.close();
 
 	} catch (IOException e) {
 	    e.printStackTrace();
