@@ -26,6 +26,7 @@ public class Graph implements Cloneable{
     public HashSet<Kante> l_kante = new HashSet<Kante>();
     private ArrayList<String> history = new ArrayList<String>();
     private boolean letzerZugAusgesetzt = false;
+    private ArrayList<String> maptext = new ArrayList<String>();
 
     /**
      * Ließt eine Datei ein und erstellt daraus einen Graphen.
@@ -43,6 +44,7 @@ public class Graph implements Cloneable{
                 anzahl_an_Knoten = Integer.parseInt(zeile);
 
                 while ((zeile = br.readLine()) != null) {
+                    maptext.add(zeile);
                     if (zeile.startsWith("V")) {
                         String[] split = zeile.split(" ");
 
@@ -77,6 +79,7 @@ public class Graph implements Cloneable{
         l_kante.clear();
         history.clear();
         letzerZugAusgesetzt = false;
+        maptext.clear();
     }
 
     /**
@@ -458,5 +461,9 @@ public class Graph implements Cloneable{
             // Kann eigentlich nicht passieren, da Cloneable
             throw new InternalError();
         }
+    }
+
+    public ArrayList<String> getMaptext() {
+        return maptext;
     }
 }

@@ -5,6 +5,9 @@ import logik.Mechanik;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 
 /**
  * Projekt : RomUndKathargo
@@ -43,8 +46,16 @@ public class Client_R {
 
     public static void handleSocket(Socket s){
         try {
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-            BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+            DataInputStream in = new DataInputStream(s.getInputStream());
+
+            // Senden der Map
+            ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
+            for (String s : maptext){
+                out.writeUTF(s);
+            }
+
+            //
 
         } catch (IOException e) {
             e.printStackTrace();
