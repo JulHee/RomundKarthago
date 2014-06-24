@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import logik.AIPlayer;
 import logik.Mechanik;
 import core.datacontainers.Seite;
+import core.datacontainers.Zug;
 
 /**
  * Projekt : RomUndKathargo
@@ -39,7 +40,7 @@ public class Client_R {
 
     public void aigegner(AIPlayer ai) {
 	try (Socket s = new Socket(ip, port)) {
-	    handleSocket_ai(s);
+	    handleSocket_ai(s, ai);
 	} catch (IOException e) {
 	    e.getStackTrace();
 	}
@@ -53,18 +54,30 @@ public class Client_R {
 	}
     }
 
-    public void handleSocket_ai(Socket s) {
+    public void handleSocket_ai(Socket s, AIPlayer ai) {
+	String input;
 	try {
 	    DataOutputStream out = new DataOutputStream(s.getOutputStream());
 	    DataInputStream in = new DataInputStream(s.getInputStream());
 
 	    // Senden der Map
+
 	    ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
 	    for (String l : maptext) {
 		out.writeUTF(l);
 	    }
+	    while (myMechanik.getSpiel()) {
+		// Senden des Zuges
+		Zug zug = ai.nextZug();
+		out.writeUTF(zug.toFormat());
 
-	    //
+		// Auswerten des Zuges
+		myMechanik.auswerten(zug.toFormat(), Seite.Rom);
+		in.available();
+		input = in.readUTF();
+		myMechanik.auswerten(input, Seite.Kathargo);
+	    }
+	    s.close();
 
 	} catch (IOException e) {
 	    e.printStackTrace();

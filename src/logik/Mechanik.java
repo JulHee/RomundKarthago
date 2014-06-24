@@ -28,6 +28,10 @@ public class Mechanik implements Cloneable {
 	return myGraph;
     }
 
+    public Boolean getSpiel() {
+	return spiel;
+    }
+
     /*
      * Initialisiert den Start Graphen mit welchem
      * das Spiel begonnen wird
@@ -212,13 +216,13 @@ public class Mechanik implements Cloneable {
 
     }
 
-    public void game(Client_R client, String ip, Integer port) {
+    public void game(Client_R client, String ip, Integer port, AIPlayer ai) {
 	Client_R myClient = new Client_R(port, ip, this);
-	myClient.main(null);
+	myClient.aigegner(ai);
     }
 
     public void game(Server_C server, Integer port) {
-	Server_C myServer = new Server_C(port, this);
+	// Server_C myServer = new Server_C(port, this);
     }
 
     @Override
