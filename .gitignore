@@ -1,3 +1,4 @@
+.settings/
 .idea/
 out/
 RomUndKathargo.iml
@@ -6,8 +7,3 @@ romundkathargoswp.iml
 .classpath
 .project
 Repos08.iml
-<<<<<<< HEAD
-
-
-=======
->>>>>>> f6fe22debd7ebea79a8fee8952a6a78456d74525
