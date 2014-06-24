@@ -1,65 +1,92 @@
 package network;
 
-import core.datacontainers.Seite;
-import logik.Mechanik;
-
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
+
+import logik.AIPlayer;
+import logik.Mechanik;
+import core.datacontainers.Seite;
 
 /**
  * Projekt : RomUndKathargo
- * Author  : Julian Heeger
- * Date    : 24.06.14
- * Year    : 2014
+ * Author : Julian Heeger
+ * Date : 24.06.14
+ * Year : 2014
  */
 public class Client_R {
 
     Seite mySeite = Seite.Rom;
-    static Integer port = 0;
-    static String ip = "";
-    static Mechanik myMechanik;
+    private Integer port = 0;
+    private String ip = "";
+    private final Mechanik myMechanik;
 
-    public Client_R(Integer port,String ip,Mechanik m) {
-        this.port = port;
-        this.ip = ip;
-        this.myMechanik = m;
+    public Client_R(Integer port, String ip, Mechanik m) {
+	this.port = port;
+	this.ip = ip;
+	this.myMechanik = m;
     }
 
-    public static Integer getPort() {
-        return port;
+    public Integer getPort() {
+	return port;
     }
 
-    public static String getIp() {
-        return ip;
+    public String getIp() {
+	return ip;
     }
 
-    public static void main(String[] args) {
-        try(Socket s = new Socket(ip,port)) {
-            handleSocket(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void aigegner(AIPlayer ai) {
+	try (Socket s = new Socket(ip, port)) {
+	    handleSocket_ai(s);
+	} catch (IOException e) {
+	    e.getStackTrace();
+	}
     }
 
-    public static void handleSocket(Socket s){
-        try {
-            DataOutputStream out = new DataOutputStream(s.getOutputStream());
-            DataInputStream in = new DataInputStream(s.getInputStream());
+    public void humanEnemy() {
+	try (Socket s = new Socket(ip, port)) {
+	    handleSocket_hum(s);
+	} catch (IOException e) {
+	    e.getStackTrace();
+	}
+    }
 
-            // Senden der Map
-            ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
-            for (String l : maptext){
-                out.writeUTF(l);
-            }
+    public void handleSocket_ai(Socket s) {
+	try {
+	    DataOutputStream out = new DataOutputStream(s.getOutputStream());
+	    DataInputStream in = new DataInputStream(s.getInputStream());
 
-            //
+	    // Senden der Map
+	    ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
+	    for (String l : maptext) {
+		out.writeUTF(l);
+	    }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	    //
+
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+
+    }
+
+    public void handleSocket_hum(Socket s) {
+
+	try {
+	    DataOutputStream out = new DataOutputStream(s.getOutputStream());
+	    DataInputStream in = new DataInputStream(s.getInputStream());
+
+	    // Senden der Map
+	    ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
+	    for (String l : maptext) {
+		out.writeUTF(l);
+	    }
+
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
 
     }
 }
