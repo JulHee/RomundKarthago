@@ -51,8 +51,8 @@ public class Client_R {
 
             // Senden der Map
             ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
-            for (String s : maptext){
-                out.writeUTF(s);
+            for (String l : maptext){
+                out.writeUTF(l);
             }
 
             //

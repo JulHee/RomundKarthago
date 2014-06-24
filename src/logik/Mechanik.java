@@ -131,7 +131,7 @@ public class Mechanik implements Cloneable {
                 if (aktuellerSpieler == Seite.Rom) {
                     String move = auswerten(computer.nextZug().toFormat(), aktuellerSpieler);
                     System.out.println(move);
-                } else (aktuellerSpieler == Seite.Kathargo) {
+                } else if(aktuellerSpieler == Seite.Kathargo) {
                     System.out.println("Bitte Zug angeben:");
                     try {
                         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
@@ -153,7 +153,7 @@ public class Mechanik implements Cloneable {
             if (aktuellerSpieler == Seite.Kathargo) {
                 String move = auswerten(computer.nextZug().toFormat(), aktuellerSpieler);
                 System.out.println(move);
-            } else (aktuellerSpieler == Seite.Rom) {
+            } else if(aktuellerSpieler == Seite.Rom) {
                 System.out.println("Bitte Zug angeben:");
                 try {
                     BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
