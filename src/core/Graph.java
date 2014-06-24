@@ -28,6 +28,17 @@ public class Graph implements Cloneable{
     private boolean letzerZugAusgesetzt = false;
     private ArrayList<String> maptext = new ArrayList<String>();
 
+    public Graph() {}
+
+    public Graph(String path, HashSet<Knoten> l_knoten, HashSet<Kante> l_kante, ArrayList<String> history, boolean letzerZugAusgesetzt, ArrayList<String> maptext) {
+        this.path = path;
+        this.l_knoten = l_knoten;
+        this.l_kante = l_kante;
+        this.history = history;
+        this.letzerZugAusgesetzt = letzerZugAusgesetzt;
+        this.maptext = maptext;
+    }
+
     /**
      * Ließt eine Datei ein und erstellt daraus einen Graphen.
      *
@@ -451,17 +462,47 @@ public class Graph implements Cloneable{
     }
 
     @Override
-    public Graph clone()
-    {
-        try
-        {
-            return (Graph) super.clone();
-        }
-        catch ( CloneNotSupportedException e ) {
-            // Kann eigentlich nicht passieren, da Cloneable
-            throw new InternalError();
-        }
+    public Graph clone(){
+        Graph myGraph = null;
+        try{
+            myGraph =  new Graph(path,erzeugeNeueKnotenListe(l_knoten),erzeugeNeueKanteListe(l_kante),
+                    erzeugeNeueHistory(history),letzerZugAusgesetzt,  erzeugeNeueMaptext(maptext));
+        }catch ( Exception e ) {e.getStackTrace();}
+        return  myGraph;
     }
+
+    public HashSet<Knoten> erzeugeNeueKnotenListe(HashSet<Knoten> alte){
+        HashSet<Knoten> neue = new HashSet<Knoten>();
+        for(Knoten i : alte){
+            neue.add(new Knoten(i.id,i.seite,i.position));
+        }
+        return neue;
+    }
+
+    public HashSet<Kante> erzeugeNeueKanteListe(HashSet<Kante> alte){
+        HashSet<Kante> neue = new HashSet<Kante>();
+        for(Kante i : alte){
+            neue.add(new Kante(i.getPunkt1(),i.getPunkt2()));
+        }
+        return neue;
+    }
+
+    public ArrayList<String> erzeugeNeueHistory(ArrayList<String> alte){
+        ArrayList<String> neue = new ArrayList<String>();
+        for(String i : alte){
+            neue.add(i);
+        }
+        return neue;
+    }
+
+    public ArrayList<String> erzeugeNeueMaptext(ArrayList<String> alte){
+        ArrayList<String> neue = new ArrayList<String>();
+        for(String i : alte){
+            neue.add(i);
+        }
+        return neue;
+    }
+
 
     public ArrayList<String> getMaptext() {
         return maptext;
