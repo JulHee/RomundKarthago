@@ -25,8 +25,19 @@ public class Graph implements Cloneable{
     public HashSet<Knoten> l_knoten = new HashSet<Knoten>();
     public HashSet<Kante> l_kante = new HashSet<Kante>();
     private ArrayList<String> history = new ArrayList<String>();
-    private boolean letzerZugAusgesetzt = false;
+    private boolean letzterZugAusgesetzt = false;
     private ArrayList<String> maptext = new ArrayList<String>();
+
+    public Graph() {}
+
+    public Graph(String path, HashSet<Knoten> l_knoten, HashSet<Kante> l_kante, ArrayList<String> history, boolean letzterZugAusgesetzt, ArrayList<String> maptext) {
+        this.path = path;
+        this.l_knoten = l_knoten;
+        this.l_kante = l_kante;
+        this.history = history;
+        this.letzterZugAusgesetzt = letzterZugAusgesetzt;
+        this.maptext = maptext;
+    }
 
     /**
      * Ließt eine Datei ein und erstellt daraus einen Graphen.
@@ -78,7 +89,7 @@ public class Graph implements Cloneable{
         l_knoten.clear();
         l_kante.clear();
         history.clear();
-        letzerZugAusgesetzt = false;
+        letzterZugAusgesetzt = false;
         maptext.clear();
     }
 
@@ -298,28 +309,28 @@ public class Graph implements Cloneable{
         Zug myzug = new Zug(zug);
         Graph temp = this.clone();
         if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
-            if (letzerZugAusgesetzt) {
+            if (letzterZugAusgesetzt) {
                 retrnZustand.setName(this.convertToString());
                 retrnZustand.setErrorcode(2);
             } else {
                 retrnZustand.setName(this.convertToString());
                 retrnZustand.setErrorcode(1);
-                letzerZugAusgesetzt = true;
+                letzterZugAusgesetzt = true;
             }
 
         } else if (history.contains(temp.ssuf(temp,myzug).convertToString())) {
             retrnZustand.setErrorcode(3);
-            letzerZugAusgesetzt = true;
+            letzterZugAusgesetzt = true;
             retrnZustand.setName(this.convertToString());
         } else {
-            String letzerZug = this.convertToString();
+            String letzterZug = this.convertToString();
             ssuf(myzug);
-            if (letzerZug.equals(this.convertToString())) {
-                if (letzerZugAusgesetzt) {
+            if (letzterZug.equals(this.convertToString())) {
+                if (letzterZugAusgesetzt) {
                     retrnZustand.setErrorcode(2);
                 }
                 retrnZustand.setErrorcode(1);
-                letzerZugAusgesetzt = true;
+                letzterZugAusgesetzt = true;
 
             }
 
@@ -354,20 +365,20 @@ public class Graph implements Cloneable{
         } else {
             gegner = Seite.Kathargo;
         }
-        HashSet<Knoten> nachbarnumursprung = getNachbarschaft(k);
+        HashSet<Knoten> nachbarnUmUrsprung = getNachbarschaft(k);
 
-        for (Knoten kn : nachbarnumursprung) {
+        for (Knoten kn : nachbarnUmUrsprung) {
             if (kn.seite == gegner) {
-                HashSet<Knoten> alleeigenen = getBesetztesGebiet(kn);
-                HashSet<Knoten> gebiet = getNachbarschaft(alleeigenen);
-                boolean neutralgefunden = false;
+                HashSet<Knoten> alleEigenen = getBesetztesGebiet(kn);
+                HashSet<Knoten> gebiet = getNachbarschaft(alleEigenen);
+                boolean neutralGefunden = false;
                 for (Knoten kno : gebiet) {
                     if (kno.seite == Seite.Neutral) {
-                        neutralgefunden = true;
+                        neutralGefunden = true;
                     }
                 }
-                if (neutralgefunden == false) {
-                    for (Knoten knot : alleeigenen) {
+                if (neutralGefunden == false) {
+                    for (Knoten knot : alleEigenen) {
                         knot.seite = Seite.Neutral;
                     }
                 }
@@ -451,17 +462,47 @@ public class Graph implements Cloneable{
     }
 
     @Override
-    public Graph clone()
-    {
-        try
-        {
-            return (Graph) super.clone();
-        }
-        catch ( CloneNotSupportedException e ) {
-            // Kann eigentlich nicht passieren, da Cloneable
-            throw new InternalError();
-        }
+    public Graph clone(){
+        Graph myGraph = null;
+        try{
+            myGraph =  new Graph(path,erzeugeNeueKnotenListe(l_knoten),erzeugeNeueKanteListe(l_kante),
+                    erzeugeNeueHistory(history), letzterZugAusgesetzt,  erzeugeNeueMaptext(maptext));
+        }catch ( Exception e ) {e.getStackTrace();}
+        return  myGraph;
     }
+
+    public HashSet<Knoten> erzeugeNeueKnotenListe(HashSet<Knoten> alte){
+        HashSet<Knoten> neue = new HashSet<Knoten>();
+        for(Knoten i : alte){
+            neue.add(new Knoten(i.id,i.seite,i.position));
+        }
+        return neue;
+    }
+
+    public HashSet<Kante> erzeugeNeueKanteListe(HashSet<Kante> alte){
+        HashSet<Kante> neue = new HashSet<Kante>();
+        for(Kante i : alte){
+            neue.add(new Kante(i.getPunkt1(),i.getPunkt2()));
+        }
+        return neue;
+    }
+
+    public ArrayList<String> erzeugeNeueHistory(ArrayList<String> alte){
+        ArrayList<String> neue = new ArrayList<String>();
+        for(String i : alte){
+            neue.add(i);
+        }
+        return neue;
+    }
+
+    public ArrayList<String> erzeugeNeueMaptext(ArrayList<String> alte){
+        ArrayList<String> neue = new ArrayList<String>();
+        for(String i : alte){
+            neue.add(i);
+        }
+        return neue;
+    }
+
 
     public ArrayList<String> getMaptext() {
         return maptext;

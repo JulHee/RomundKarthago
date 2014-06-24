@@ -1,3 +1,4 @@
+.settings/
 .idea/
 out/
 RomUndKathargo.iml
@@ -5,5 +6,6 @@ romundkathargoswp.iml
 /bin
 .classpath
 .project
+<<<<<<< HEAD
 Repos08.iml
 RomUndKathargo.sublime-workspace
