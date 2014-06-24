@@ -18,6 +18,7 @@ public class Server {
     public static void main(String[]args){
         try {
             serverC = new ServerSocket(Integer.parseInt(args[0])); // die Portnummer wird als Komandozeilenparameter übergeben
+            //serverC.bind();                                     // SocketAdresse?
             serverC.setSoTimeout(60000);                           // die max. Wartezeit des Servers wird festgelegt
             while (spielLaeuft) {
                Socket clientR = serverC.accept();
@@ -35,6 +36,11 @@ public class Server {
         return true;    //TODO Was macht der Server mit der vorhandenne Connection, lesen,handeln,antworten
     }
 
+    /**
+     * This function get an InputStream and generates a String with its content
+     * @param is
+     * @return String
+     */
     private static String convertStreamToString(java.io.InputStream is) {
         java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";

@@ -1,7 +1,10 @@
 package network;
 
+import core.datacontainers.Seite;
 import logik.AIPlayer;
 import core.datacontainers.Zug;
+import logik.Killjoy;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -15,10 +18,11 @@ public class Client {
             Socket clientR = new Socket(args[0],Integer.parseInt(args[1]));        // Socket(Server-name,Port)
             sendGameBoard(clientR,"ext/map.txt");
             spielLaeuft=true;
-            sendZug();
+            AIPlayer player = new Killjoy(Seite.Kathargo);                      // AIPlayer wird angelegt
+            sendZug(clientR,player);
             while(spielLaeuft){
-                spielLaeuft=warteAufZug();
-                sendZug();
+                spielLaeuft=warteAufZug(clientR);
+                sendZug(clientR,player);
             }
             clientR.close();
 
@@ -36,7 +40,6 @@ public class Client {
             while(in.readLine() != null) {
                 out.write(in.readLine().getBytes());        //Die Zeilen der Map.txt werden in den OutputStream des Socket gegeben
             }
-
         }catch (IOException e){e.getStackTrace();}
     }
 
@@ -51,8 +54,8 @@ public class Client {
      *
      * @return Boolean
      */
-    private static Boolean warteAufZug(){
-    return true;    //TODO bekommt einen Zug vom Server und verarbeitet ihn
+    private static Boolean warteAufZug(Socket clientR){
+        return true;    //TODO bekommt einen Zug vom Server und verarbeitet ihn
     }
 
 }
