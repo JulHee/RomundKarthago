@@ -45,7 +45,7 @@ public class Client {
 
     private static void sendZug(Socket clientR, AIPlayer spieler)throws IOException{
         BufferedOutputStream out = new BufferedOutputStream(clientR.getOutputStream());
-        out.write(spieler.nextZug.toFormat.getBytes()); // hier wird die abstrakte Methode nextZug aufgerufen, um den Zug zu übergeben
+        out.write(spieler.nextZug().toFormat().getBytes()); // hier wird die abstrakte Methode nextZug aufgerufen, um den Zug zu übergeben
         // TODO abstract nextZug funktioniert nicht
     }
 

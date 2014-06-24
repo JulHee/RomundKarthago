@@ -15,7 +15,7 @@ public abstract class AIPlayer {
     protected Mechanik mechanik;
     protected Seite meineSeite;
 
-    abstract Zug nextZug();
+    abstract public Zug nextZug();
 
 	public String toString(){
 		return meineSeite.toString();

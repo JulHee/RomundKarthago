@@ -18,7 +18,6 @@ public class Server {
     public static void main(String[]args){
         try {
             serverC = new ServerSocket(Integer.parseInt(args[0])); // die Portnummer wird als Komandozeilenparameter übergeben
-            //serverC.bind();                                     // SocketAdresse?
             serverC.setSoTimeout(60000);                           // die max. Wartezeit des Servers wird festgelegt
             while (spielLaeuft) {
                Socket clientR = serverC.accept();
