@@ -9,10 +9,10 @@ import core.datacontainers.Seite;
 
 public class WaspAITest {
 
-	@Test
-	public void testNextZug() throws Exception {
-		Mechanik game = new Mechanik();
-		game.game(new WaspAI(Seite.Rom), new WaspAI(Seite.Kathargo));
+    @Test
+    public void testNextZug() throws Exception {
+	Mechanik game = new Mechanik("Pfad zur Map");
+	game.game(new WaspAI(Seite.Rom), new WaspAI(Seite.Kathargo));
 
-	}
+    }
 }

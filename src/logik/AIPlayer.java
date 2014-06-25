@@ -3,7 +3,6 @@ package logik;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
 
-
 /**
  * Projekt: Rom und Karthago
  * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
@@ -13,12 +12,15 @@ import core.datacontainers.Zug;
 
 public abstract class AIPlayer {
     protected Mechanik mechanik;
+    String path;
+
     protected Seite meineSeite;
 
     abstract public Zug nextZug();
 
-	public String toString(){
-		return meineSeite.toString();
-	}
+    @Override
+    public String toString() {
+	return meineSeite.toString();
+    }
 
 }

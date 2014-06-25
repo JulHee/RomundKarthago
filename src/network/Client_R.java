@@ -69,6 +69,7 @@ public class Client_R {
 		out.writeUTF(l);
 	    }
 	    while (myMechanik.getSpiel()) {
+
 		// Senden des Zuges
 		Zug zug = ai.nextZug();
 		out.writeUTF(zug.toFormat());
