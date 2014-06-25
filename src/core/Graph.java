@@ -456,7 +456,7 @@ public class Graph implements Cloneable{
     }
 
     public void map() {
-        for (Knoten k : l_knoten) {
+        for (Knoten k : toArrayList(l_knoten)) {
             System.out.println(k.id + "(" + k.seite.toString() + ")");
         }
     }
