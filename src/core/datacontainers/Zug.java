@@ -68,7 +68,7 @@ public class Zug {
      * Liest aus einer Datei einen Zug
      * @param path Pfad zur Datei
      * @return Einen Zug
-     * @throws Exception Falls die Datei nicht der norm enspricht
+     * @throws Exception Falls die Datei nicht der Norm enspricht
      */
     public static Zug readZugFile(String path) throws Exception{
     	BufferedReader reado = new BufferedReader(new FileReader(path));

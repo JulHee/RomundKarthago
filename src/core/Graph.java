@@ -272,13 +272,16 @@ public class Graph implements Cloneable{
                 if (!existiertkeinGegner) {
                     return g;
                 }
-                aktKnoten.setSeite(z.getSeite());
+                aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
 
                 // Prüfen ob andere Stadt dadruch aushungert
-
-
-                checkAushungern(aktKnoten, z.getSeite());
-                checkAushungern(aktKnoten, gegner);
+                Knoten einNachbarGegner = getEinenBenachbartenGegner(aktKnoten);
+                if(einNachbarGegner== null){
+                    checkAushungern(aktKnoten, z.getSeite());
+                }else {
+                    checkAushungern(einNachbarGegner, gegner);
+                    checkAushungern(aktKnoten, z.getSeite());
+                }
 
             }
 
@@ -384,6 +387,25 @@ public class Graph implements Cloneable{
                 }
             }
         }
+    }
+
+    /**
+     * Gibt einen benachtbarten Knoten zurück
+     * @param aktKnoten
+     * @return Knoten . Einen benachtbarten Knoten. Falls keiner existiert null
+     */
+    public Knoten getEinenBenachbartenGegner(Knoten aktKnoten){
+        Seite gegner;
+        if (aktKnoten.getSeite() == Seite.Kathargo) {
+            gegner = Seite.Rom;
+        } else {
+            gegner = Seite.Kathargo;
+        }
+
+        for(Knoten i : getNachbarschaft(aktKnoten)){
+            if(i.getSeite()==gegner)return i;
+        }
+        return  null;
     }
 
     /**
