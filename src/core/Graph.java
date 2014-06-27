@@ -15,7 +15,8 @@ import java.util.LinkedList;
  * Date : 26.04.14
  * Year : 2014
  */
-
+//TODO einige Funktionen wie zB get nachbarschaft und dadurch auch checkAushungern arbeiten auf this. somit bin ich mir nicht sicher ob das mit dem clone - Graph so richtig funktioniert
+// man kann den Graph bei diesen funktionen Parametrisieren und somit auch wechslen zwischen this und clone-Graph
 public class Graph implements Cloneable{
 
     // Relativer Pfad zur Datei zum lesen einer Beispieldatei
@@ -242,6 +243,17 @@ public class Graph implements Cloneable{
     }
 
     /**
+     * Anwenden der Funktion ssuf mit der eigenen Klasse
+     *
+     * @param z Der Zug
+     * @return Der neue Graph nach dem Zug
+     */
+
+    public Graph ssuf(Zug z) {
+        return ssuf(this, z);
+    }
+
+    /**
      * Anwenden eines Zuges auf einen Graphen g
      *
      * @param g Der Graph g auf den z angewendet werden soll
@@ -270,6 +282,7 @@ public class Graph implements Cloneable{
                     if (k.seite != gegner) existiertkeinGegner = true;
                 }
                 if (!existiertkeinGegner) {
+                    //checkAushungern(getEinenBenachbartenGegner(aktKnoten),gegner);
                     return g;
                 }
                 aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
@@ -341,17 +354,6 @@ public class Graph implements Cloneable{
         }
         history.add(retrnZustand.getName());
         return retrnZustand;
-    }
-
-    /**
-     * Anwenden der Funktion ssuf mit der eigenen Klasse
-     *
-     * @param z Der Zug
-     * @return Der neue Graph nach dem Zug
-     */
-
-    public Graph ssuf(Zug z) {
-        return ssuf(this, z);
     }
 
     /**
