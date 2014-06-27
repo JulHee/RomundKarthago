@@ -114,10 +114,10 @@ public class Graph implements Cloneable{
     public HashSet<Knoten> getNachbarschaft(Knoten knoten) {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
         for (Kante k : l_kante) {
-            if (k.getPunkt1() == knoten) {
+            if (k.getPunkt1().equals(knoten)) {
                 retrn.add(k.getPunkt2());
             }
-            if (k.getPunkt2() == knoten) {
+            if (k.getPunkt2().equals(knoten)) {
                 retrn.add(k.getPunkt1());
             }
         }
@@ -282,7 +282,7 @@ public class Graph implements Cloneable{
                     if (k.seite != gegner) existiertkeinGegner = true;
                 }
                 if (!existiertkeinGegner) {
-                    //checkAushungern(getEinenBenachbartenGegner(aktKnoten),gegner);
+                    checkAushungern(getEinenBenachbartenGegner(aktKnoten),gegner);
                     return g;
                 }
                 aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
@@ -382,7 +382,7 @@ public class Graph implements Cloneable{
                         neutralGefunden = true;
                     }
                 }
-                if (neutralGefunden == false) {
+                if (!neutralGefunden) {
                     for (Knoten knot : alleEigenen) {
                         knot.seite = Seite.Neutral;
                     }
