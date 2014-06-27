@@ -15,8 +15,7 @@ import java.util.LinkedList;
  * Date : 26.04.14
  * Year : 2014
  */
-//TODO einige Funktionen wie zB get nachbarschaft und dadurch auch checkAushungern arbeiten auf this. somit bin ich mir nicht sicher ob das mit dem clone - Graph so richtig funktioniert
-// man kann den Graph bei diesen funktionen Parametrisieren und somit auch wechslen zwischen this und clone-Graph
+
 public class Graph implements Cloneable{
 
     // Relativer Pfad zur Datei zum lesen einer Beispieldatei
@@ -113,11 +112,11 @@ public class Graph implements Cloneable{
 
     public HashSet<Knoten> getNachbarschaft(Knoten knoten) {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
-        for (Kante k : l_kante) {
-            if (k.getPunkt1().equals(knoten)) {
+        for (Kante k : this.l_kante) {
+            if (k.getPunkt1() ==knoten) {
                 retrn.add(k.getPunkt2());
             }
-            if (k.getPunkt2().equals(knoten)) {
+            if (k.getPunkt2()==knoten) {
                 retrn.add(k.getPunkt1());
             }
         }
@@ -133,8 +132,8 @@ public class Graph implements Cloneable{
 
     public HashSet<Knoten> getNachbarschaft(HashSet<Knoten> knotenListe) {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
-        for (Knoten knot : knotenListe) {
-            for (Knoten temp : getNachbarschaft(knot)) {
+        for (Knoten k : knotenListe) {
+            for (Knoten temp : getNachbarschaft(k)) {
                 retrn.add(temp);
             }
         }
@@ -425,6 +424,24 @@ public class Graph implements Cloneable{
                     retrn.add(k);
                 }
             }
+        }
+        return retrn;
+    }
+
+    /**
+     * Soriert ein HashSet<Kante> nach der ID des 1.Punktes Knoten in eine ArrayList<Knoten>
+     *
+     * @param kanteList Liste mit den Kante
+     * @return Sortierte Liste mit den Kante
+     */
+
+    public ArrayList<Kante> toArrayListKante(HashSet<Kante> kanteList) {
+        ArrayList<Kante> retrn = new ArrayList<Kante>();
+        for (int i = 0; i < kanteList.size(); i++) {
+            for(Kante k :kanteList){
+                if(k.getPunkt1().id == i) retrn.add(k);
+            }
+
         }
         return retrn;
     }
