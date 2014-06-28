@@ -29,4 +29,10 @@ public class Knoten {
     }
 
     public Seite getSeite() { return seite;}
+
+    public Boolean equals(Knoten k){
+        Boolean erg = false;
+        if(k.id == this.id)erg=true;
+        return erg;
+    }
 }

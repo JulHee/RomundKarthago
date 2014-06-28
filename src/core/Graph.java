@@ -113,10 +113,10 @@ public class Graph implements Cloneable{
     public HashSet<Knoten> getNachbarschaft(Knoten knoten) {
         HashSet<Knoten> retrn = new HashSet<Knoten>();
         for (Kante k : this.l_kante) {
-            if (k.getPunkt1() ==knoten) {
+            if (k.getPunkt1().equals(knoten)) {
                 retrn.add(k.getPunkt2());
             }
-            if (k.getPunkt2()==knoten) {
+            if (k.getPunkt2().equals(knoten)) {
                 retrn.add(k.getPunkt1());
             }
         }

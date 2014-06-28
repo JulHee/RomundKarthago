@@ -39,4 +39,17 @@ public class KantenTest {
         }
         assertEquals("1 ist gleich 1;2 ist gleich 2;",erg);
     }
+
+    @Test
+    public void vergleichTest2(){
+        Mechanik mech = new Mechanik("ext/Gameboard.txt");
+        Graph myGraph = mech.getMyGraph();
+        String erg ="";
+        for(Kante k : myGraph.toArrayListKante(myGraph.l_kante)){
+            for(Kante j : myGraph.toArrayListKante(myGraph.l_kante)) {
+                if (k.getPunkt2()==(j.getPunkt1())) erg+= k.getPunkt2().id+" ist gleich "+j.getPunkt1().id+";";
+            }
+        }
+        assertEquals("1 ist gleich 1;2 ist gleich 2;",erg);
+    }
 }
