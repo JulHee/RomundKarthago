@@ -276,11 +276,11 @@ public class Graph implements Cloneable{
                 }
 
                 // Checken ob die Stadt komplett umzingelt ist
-                Boolean existiertkeinGegner = false;
+                Boolean existiertKeinGegner = false;
                 for (Knoten k : nachbarn) {
-                    if (k.seite != gegner) existiertkeinGegner = true;
+                    if (k.seite != gegner) existiertKeinGegner = true;
                 }
-                if (!existiertkeinGegner) {
+                if (!existiertKeinGegner) {
                     checkAushungern(getEinenBenachbartenGegner(aktKnoten),gegner);
                     return g;
                 }
@@ -294,12 +294,10 @@ public class Graph implements Cloneable{
                     checkAushungern(einNachbarGegner, gegner);
                     checkAushungern(aktKnoten, z.getSeite());
                 }
-
             }
-
             return g;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.toString());
             return g;
         }
 
@@ -373,8 +371,8 @@ public class Graph implements Cloneable{
 
         for (Knoten kn : nachbarnUmUrsprung) {
             if (kn.seite == gegner) {
-                HashSet<Knoten> alleEigenen = getBesetztesGebiet(kn);
-                HashSet<Knoten> gebiet = getNachbarschaft(alleEigenen);
+                HashSet<Knoten> alleGegner = getBesetztesGebiet(kn);
+                HashSet<Knoten> gebiet = getNachbarschaft(alleGegner);
                 boolean neutralGefunden = false;
                 for (Knoten kno : gebiet) {
                     if (kno.seite == Seite.Neutral) {
@@ -382,7 +380,7 @@ public class Graph implements Cloneable{
                     }
                 }
                 if (!neutralGefunden) {
-                    for (Knoten knot : alleEigenen) {
+                    for (Knoten knot : alleGegner) {
                         knot.seite = Seite.Neutral;
                     }
                 }
