@@ -362,6 +362,7 @@ public class Graph implements Cloneable{
 
     private void checkAushungern(Knoten k, Seite spieler) {
         Seite gegner;
+        Boolean kHungertAus = true;
         if (spieler == Seite.Kathargo) {
             gegner = Seite.Rom;
         } else {
@@ -370,6 +371,7 @@ public class Graph implements Cloneable{
         HashSet<Knoten> nachbarnUmUrsprung = getNachbarschaft(k);
 
         for (Knoten kn : nachbarnUmUrsprung) {
+            if(kn.seite == Seite.Neutral){kHungertAus=false;}
             if (kn.seite == gegner) {
                 HashSet<Knoten> alleGegner = getBesetztesGebiet(kn);
                 HashSet<Knoten> gebiet = getNachbarschaft(alleGegner);
@@ -380,11 +382,15 @@ public class Graph implements Cloneable{
                     }
                 }
                 if (!neutralGefunden) {
+                    kHungertAus=false;
                     for (Knoten knot : alleGegner) {
                         knot.seite = Seite.Neutral;
                     }
                 }
             }
+        }
+        if(kHungertAus){
+            k.setSeite(Seite.Neutral);
         }
     }
 
