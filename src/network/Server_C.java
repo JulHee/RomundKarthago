@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import core.datacontainers.Seite;
+import core.datacontainers.Zug;
+import logik.AIPlayer;
 import logik.Mechanik;
 
 /**
@@ -29,12 +31,12 @@ public class Server_C {
 		this.myMechanik = mechanik;
 	}
 	/**
-	 * Funktion zum Starten des Servers(Karthago)
+	 * Funktionen zum Starten des Servers(Karthago)
 	 * Empfangen der Map mit anschließender Ausführung
 	 * des Spieles untereinader
 	 * @throws Exception
 	 */
-	public static void runserver() throws Exception{
+	public static void HumServer() throws Exception{
 		try (ServerSocket ss = new ServerSocket(port)){
 			Socket clients = ss.accept();
 			DataOutputStream out = new DataOutputStream(clients.getOutputStream());
@@ -49,19 +51,46 @@ public class Server_C {
 			//TODO Start des eigentlichen Spiels
 			/*
 			 * Mechanik in client und Server sinnlos oder?
-			 * Server sollte Mechanik haben/kontrollieren
+			 * Server sollte Mechanik haben/kontrollieren bzw gleiche Mechanic?
 			 */
 			while(myMechanik.getSpiel()){
-			System.out.println("Bitte geben Sie ihren Zug ein:");
-			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-			String zug = input.readLine();
-			out.writeUTF(zug);
-			myMechanik.auswerten(zug, mySeite);
-			in.readUTF();
+				System.out.println("Bitte geben Sie ihren Zug ein:");
+				BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+				String zug = input.readLine();
+				out.writeUTF(zug);
+				myMechanik.auswerten(zug, mySeite);
+				in.readUTF();
 			}
-			
-			
+
+
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void AIServer(AIPlayer player){
+		try (ServerSocket ss = new ServerSocket(port)){
+			Socket clients = ss.accept();
+			DataOutputStream out = new DataOutputStream(clients.getOutputStream());
+			DataInputStream in = new DataInputStream(clients.getInputStream());
+
+			//Einlesen der Map, welche vom Client gesendet wird
+			ArrayList<String> map = new ArrayList<String>();
+			String line;
+			while((line = in.readUTF()).length() > 0){
+				map.add(line);
+			}
+			//TODO Start des eigentlichen Spiels
+			/*
+			 * Mechanik in client und Server sinnlos oder?
+			 * Server sollte Mechanik haben/kontrollieren bzw gleiche Mechanic?
+			 */
+			while(myMechanik.getSpiel()){
+				Zug zug = player.nextZug();
+				out.writeUTF(zug.toFormat());
+				myMechanik.auswerten(zug.toFormat(), mySeite);
+				in.readUTF();
+			}
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
