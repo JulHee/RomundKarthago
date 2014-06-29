@@ -274,9 +274,8 @@ public class Graph implements Cloneable{
                 } else {
                     gegner = Seite.Kathargo;
                 }
-
-                // Checken ob die Stadt komplett umzingelt ist
-                Boolean existiertKeinGegner = false;
+                aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
+                Boolean existiertKeinGegner = false;                         // Checken ob die Stadt komplett umzingelt ist
                 for (Knoten k : nachbarn) {
                     if (k.seite != gegner) existiertKeinGegner = true;
                 }
@@ -284,10 +283,7 @@ public class Graph implements Cloneable{
                     checkAushungern(getEinenBenachbartenGegner(aktKnoten),gegner);
                     return g;
                 }
-                aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
-
-                // Prüfen ob andere Stadt dadruch aushungert
-                Knoten einNachbarGegner = getEinenBenachbartenGegner(aktKnoten);
+                Knoten einNachbarGegner = getEinenBenachbartenGegner(aktKnoten); // Prüfen ob andere Stadt dadruch aushungert
                 if(einNachbarGegner== null){
                     checkAushungern(aktKnoten, z.getSeite());
                 }else {
