@@ -18,4 +18,14 @@ public class ssufTest {
         myGraph.run("C 1", Seite.Kathargo);
         assertEquals("CCNN",myGraph.convertToString());
     }
+
+    @Test
+    public void test2(){
+        Mechanik mech = new Mechanik("ext/Gameboard.txt");
+        Graph myGraph = mech.getMyGraph();
+        myGraph.run("R 1", Seite.Rom);
+        myGraph.run("C 2", Seite.Kathargo);
+        assertEquals("NRCN",myGraph.convertToString());
+    }
+
 }

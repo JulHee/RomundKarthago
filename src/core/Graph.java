@@ -202,7 +202,7 @@ public class Graph implements Cloneable{
      * Generiert aus der ID des Knoten die Klasse Knoten.
      *
      * @param id ID des gesuchten Knoten
-     * @return Den Knoten
+     * @return i oder null  Knoten
      */
 
     public Knoten findKnoten(int id) {
@@ -265,7 +265,10 @@ public class Graph implements Cloneable{
             Knoten aktKnoten = g.findKnoten(z.getStadt());
             if (aktKnoten == null) {
                 return g;
-            } else if (aktKnoten.seite == Seite.Neutral) {
+            }
+            if (aktKnoten.seite == Seite.Neutral) {
+
+                aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
                 HashSet<Knoten> nachbarn = getNachbarschaft(aktKnoten);
                 Seite gegner;
 
@@ -274,23 +277,25 @@ public class Graph implements Cloneable{
                 } else {
                     gegner = Seite.Kathargo;
                 }
-                aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
-                Boolean existiertKeinGegner = false;                         // Checken ob die Stadt komplett umzingelt ist
+
+                Boolean existiertKeinGegner = true;                         // Checken ob die Stadt an einen oder mehrer Gegner grenzt
                 for (Knoten k : nachbarn) {
-                    if (k.seite != gegner) existiertKeinGegner = true;
+                    if (k.seite == gegner) existiertKeinGegner = false;
                 }
-                if (!existiertKeinGegner) {
-                    checkAushungern(getEinenBenachbartenGegner(aktKnoten),gegner);
+
+                if (existiertKeinGegner) {
+                    checkAushungernOhneGegner(aktKnoten, aktKnoten.getSeite());
                     return g;
                 }
-                Knoten einNachbarGegner = getEinenBenachbartenGegner(aktKnoten); // Prüfen ob andere Stadt dadruch aushungert
-                if(einNachbarGegner== null){
-                    checkAushungern(aktKnoten, z.getSeite());
-                }else {
-                    checkAushungern(einNachbarGegner, gegner);
-                    checkAushungern(aktKnoten, z.getSeite());
+                HashSet<Knoten> nachbarGegner = new HashSet<>();           //findet die benachbarten Gegner heraus
+                for (Knoten i : getNachbarschaft(aktKnoten)){
+                    if(i.getSeite()==gegner) nachbarGegner.add(i);
                 }
-            }
+                for (Knoten i: nachbarGegner) {
+                    checkAushungern(getEinenBenachbartenGegner(aktKnoten), gegner);  // prüft für alle benachbarten Gegner ob sie aushungern
+                }
+                checkAushungern(aktKnoten, aktKnoten.getSeite());                   // prüft für sich selbst ob man aushungert
+                }
             return g;
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -365,7 +370,7 @@ public class Graph implements Cloneable{
             gegner = Seite.Kathargo;
         }
         HashSet<Knoten> nachbarnUmUrsprung = getNachbarschaft(k);
-
+        //System.out.println("CheckPoint1");
         for (Knoten kn : nachbarnUmUrsprung) {
             if(kn.seite == Seite.Neutral){kHungertAus=false;}
             if (kn.seite == gegner) {
@@ -380,11 +385,20 @@ public class Graph implements Cloneable{
                 if (!neutralGefunden) {
                     kHungertAus=false;
                     for (Knoten knot : alleGegner) {
-                        knot.seite = Seite.Neutral;
+                        knot.setSeite(Seite.Neutral);
                     }
                 }
             }
         }
+        if(kHungertAus){
+            k.setSeite(Seite.Neutral);
+        }
+    }
+
+    private void checkAushungernOhneGegner(Knoten k, Seite spieler) {
+        Boolean kHungertAus = true;
+        HashSet<Knoten> besetztesGebiet = getBesetztesGebiet(k);
+        for (Knoten i : besetztesGebiet) if(i.seite == Seite.Neutral){kHungertAus=false;}
         if(kHungertAus){
             k.setSeite(Seite.Neutral);
         }
