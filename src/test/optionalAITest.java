@@ -1,52 +1,97 @@
 package test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import logik.Mechanik;
 import logik.optionalAI;
 
 import org.junit.Test;
 
+import core.datacontainers.Kante;
 import core.datacontainers.Knoten;
 import core.datacontainers.Position;
 import core.datacontainers.Seite;
 
 public class optionalAITest {
 
-    // Variablen zur Erzeugung der Tests
-    Mechanik mecha = new Mechanik("ext/Gameboard.txt");
-    optionalAI Pew = new optionalAI(Seite.Rom);
+	// Variablen zur Erzeugung der Test
+	optionalAI Pew = new optionalAI(Seite.Rom);
 
-    ArrayList<Knoten> blubb1 = new ArrayList();
-    Knoten blubb2 = new Knoten(0, Seite.Kathargo, new Position(350, 125));
-    ArrayList<ArrayList<Knoten>> blubb3 = new ArrayList();
+	ArrayList<Knoten> array = new ArrayList();
+	ArrayList<ArrayList<Knoten>> arrayarray = new ArrayList();
+	Knoten n0 = new Knoten(0, Seite.Kathargo, new Position(350, 125));
+	Knoten n1 = new Knoten(1,Seite.Neutral, new Position(250,275));
+	Knoten n2 = new Knoten(2,Seite.Neutral, new Position(350,275));
+	Knoten n3 = new Knoten(3,Seite.Rom, new Position(250,425));
 
-    @Test
-    public void usedtest1() {
-	blubb1.add(blubb2);
-	blubb3.add(blubb1);
-	assertTrue(Pew.used(blubb2, blubb3));
-    }
+	//Testen der Hilfsfunktionen
+	
+	//optinalAI.used - tested!
+	@Test
+	public void usedtest1() {
+		array.add(n0);
+		arrayarray.add(array);
+		assertTrue(Pew.used(n0, arrayarray));
+	}
 
-    @Test
-    public void usedtest2() {
-	blubb3.add(blubb1);
-	assertFalse(Pew.used(blubb2, blubb3));
-    }
+	@Test
+	public void usedtest2() {
+		arrayarray.add(array);
+		assertFalse(Pew.used(n0, arrayarray));
+	}
+	//optinalAI.kette  - tested!
+	@Test
+	public void kettetest1() {
+		Pew.kette(array, Seite.Kathargo, n0);
+		assertTrue(Pew.checkme(array, n0));
+	}
 
-    @Test
-    public void kettetest1() {
-	Pew.kette(blubb1, Seite.Kathargo, blubb2);
-	assertTrue(blubb1.contains(blubb2));
-    }
+	@Test
+	public void kettetest2() {
+		array.add(n0);
+		Pew.kette(array, Seite.Kathargo, n0);
+		assertTrue(Pew.checkme(array, n0));
+	}
+	 
+	@Test
+	public void kettetest3() {
+		Pew.kette(array, Seite.Neutral, n1);
+		assertTrue(Pew.checkme(array, n2));
+	}
+	//optionalAI.getchainz
+	@Test
+	public void chainztest(){
+		Pew.getchainz();
+		Boolean result = false;
+		for(ArrayList<Knoten> a: Pew.Kchainz){
+			for(Knoten b: a){
+				if(Pew.checkme(a, n0)){
+					result = true;
+				}
+			}
+		}
+		assertTrue(result);
+	}
+	@Test
+	public void chainztest2(){
+		Pew.getchainz();
+		Boolean result = false;
+		for(ArrayList<Knoten> a: Pew.Rchainz){
+			for(Knoten b: a){
+				if(Pew.checkme(a, n3)){
+					result = true;
+				}
+			}
+		}
+		assertTrue(result);
+	}
 
-    @Test
-    public void kettetest2() {
-	blubb1.add(blubb2);
-	Pew.kette(blubb1, Seite.Kathargo, blubb2);
-	assertTrue(blubb1.contains(blubb2));
-    }
+
+
+
+
+
 }
