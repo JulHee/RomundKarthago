@@ -26,9 +26,8 @@ public class Server_C {
 	static Integer port;
 	static Mechanik myMechanik;
 
-	public Server_C(Integer port, Mechanik mechanik) {
+	public Server_C(Integer port) {
 		this.port = port;
-		this.myMechanik = mechanik;
 	}
 	/**
 	 * Funktionen zum Starten des Servers(Karthago)
@@ -42,12 +41,14 @@ public class Server_C {
 			DataOutputStream out = new DataOutputStream(clients.getOutputStream());
 			DataInputStream in = new DataInputStream(clients.getInputStream());
 
+			
 			//Einlesen der Map, welche vom Client gesendet wird
 			ArrayList<String> map = new ArrayList<String>();
 			String line;
 			while((line = in.readUTF()).length() > 0){
 				map.add(line);
 			}
+			
 			//TODO Start des eigentlichen Spiels
 			/*
 			 * Mechanik in client und Server sinnlos oder?
@@ -61,7 +62,7 @@ public class Server_C {
 				myMechanik.auswerten(zug, mySeite);
 				in.readUTF();
 			}
-
+			ss.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -90,6 +91,8 @@ public class Server_C {
 				myMechanik.auswerten(zug.toFormat(), mySeite);
 				in.readUTF();
 			}
+			ss.close();
+			
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
