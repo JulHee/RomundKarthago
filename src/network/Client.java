@@ -91,6 +91,12 @@ public class Client {
 	public void handleSocket_hum(Socket s) {
 		String input;
 		try {
+
+            //Stream zu abfragen der Tastatureingaben
+            BufferedReader bufferRead = new BufferedReader(
+                    new InputStreamReader(System.in));
+
+            //Socket Streeams
 			DataOutputStream out = new DataOutputStream(s.getOutputStream());
 			DataInputStream in = new DataInputStream(s.getInputStream());
 
@@ -99,18 +105,34 @@ public class Client {
 			for (String l : maptext) {
 				out.writeUTF(l);
 			}
+
+            //Spiel-Loop
 			while (myMechanik.getSpiel()) {
 				System.out.println("Bitte Zug angeben:");
 				try {
-					BufferedReader bufferRead = new BufferedReader(
-							new InputStreamReader(System.in));
+
+                    //Lesen des Zuges
 					String zug = bufferRead.readLine();
-					out.writeUTF(zug);
+                    System.out.println("Senden des Zuges: "+zug);
+
+                    // Lesen des Zuges
+                    out.writeUTF(zug);
+
+                    // Auswerten
 					String move = myMechanik.auswerten(zug, Seite.Rom);
                     System.out.println(myMechanik.getMyGraph().convertToString());
+
+                    // Falls nach dem ersten letzen Zug, dass Spiel beendet wurde
+                    if (!myMechanik.getSpiel()){
+                        break;
+                    }
                     in.available();
+
+                    // Lesen des Gegnerzuges
 					input = in.readUTF();
                     System.out.println("Der Gegner machte den Zug: "+input);
+
+                    // Auswerten
                     myMechanik.auswerten(input, Seite.Kathargo);
                     System.out.println(myMechanik.getMyGraph().convertToString());
 				} catch (IOException e) {
