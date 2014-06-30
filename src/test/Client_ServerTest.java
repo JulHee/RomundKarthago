@@ -1,11 +1,9 @@
 package test;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.net.Socket;
-
+import core.datacontainers.Seite;
 import logik.Mechanik;
+import logik.WaspAI;
+import network.AIServer;
 import network.Client;
 import network.HumanServer;
 
@@ -13,17 +11,33 @@ import org.junit.Test;
 
 public class Client_ServerTest {
 
-	// Variable, welche in mehreren Test benötigt werden
-	Mechanik myMechanik1 = new Mechanik("ext/GameBoard.txt");
-	String ip = "127.0.0.1";
-	Integer port = 12345;
-	
-	
-	@Test
-	public void test() throws Exception {
-		HumanServer S = new HumanServer(port); 
-		Client C = new Client(port, ip, myMechanik1);
-		C.test();
-	}
+    // Variable, welche in mehreren Test benötigt werden
+    Mechanik myMechanik = new Mechanik("ext/GameBoard.txt");
+    String ip = "127.0.0.1";
+    Integer port = 12345;
+
+
+    @Test
+    public void test() throws Exception {
+        HumanServer S = new HumanServer(port);
+        Client C = new Client(port, ip, myMechanik);
+        C.test();
+    }
+
+    @Test
+    public void test_thread() throws Exception {
+        Thread serverThread = new Thread() {
+            @Override
+            public void run() {
+                WaspAI myWasp = new WaspAI(Seite.Rom);
+                AIServer S = new AIServer(myWasp,port);
+            }
+        };
+        serverThread.start();
+
+        WaspAI myWasp = new WaspAI(Seite.Kathargo);
+        myMechanik.game(ip,port,myWasp);
+    }
+
 
 }
