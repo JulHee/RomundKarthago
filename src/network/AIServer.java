@@ -131,6 +131,7 @@ public class AIServer extends Server {
 
         // Einlesen der Map
         myMechanik = new Mechanik(map);
+        System.out.println("Die Map: "+myMechanik.getMyGraph().convertToString());
 
         System.out.println("Ok... \nBeginnen des Spiels");
 

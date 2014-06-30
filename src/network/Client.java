@@ -107,6 +107,7 @@ public class Client {
 			for (String l : maptext) {
 				out.writeUTF(l);
 			}
+            System.out.println("Die Map: "+myMechanik.getMyGraph().convertToString());
 
 			//Spiel-Loop
 			while (myMechanik.getSpiel()) {
