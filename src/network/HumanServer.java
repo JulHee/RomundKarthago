@@ -46,7 +46,10 @@ public class HumanServer extends Server {
 	    while ((line = in.readUTF()).length() > 0) {
 		map.add(line);
 	    }
-	    checkm
+	    if (!checkmap(map)) {
+		throw new Exception(
+			"Die Map entspricht nicht den Spezifikationen");
+	    }
 
 	    // TODO Start des eigentlichen Spiels
 	    /*
