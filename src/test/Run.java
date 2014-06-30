@@ -1,6 +1,7 @@
 package test;
 
 import logik.Mechanik;
+import network.HumanServer;
 
 /**
  * Projekt: Rom und Karthago
@@ -14,9 +15,7 @@ public class Run {
 
     public static void main(String[] args) throws Exception {
 
-	// AutomatischeTest game = new AutomatischeTest();
-	Mechanik game = new Mechanik("ext/Gameboard.txt");
-	game.game();
+        HumanServer hum = new HumanServer(0);
 
     }
 }

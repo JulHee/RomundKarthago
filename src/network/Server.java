@@ -1,50 +1,49 @@
 package network;
 
-import core.datacontainers.Zug;
+import java.util.ArrayList;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.sql.ClientInfoStatus;
+import logik.Mechanik;
+import core.datacontainers.Seite;
 
-/**
- * Created by Acer on 23.06.2014.
- */
-public class Server {
-    static ServerSocket serverC;
-    private static Boolean spielLaeuft = false;
-    public static void main(String[]args){
-        try {
-            serverC = new ServerSocket(Integer.parseInt(args[0])); // die Portnummer wird als Komandozeilenparameter übergeben
-            serverC.setSoTimeout(60000);                           // die max. Wartezeit des Servers wird festgelegt
-            while (spielLaeuft) {
-               Socket clientR = serverC.accept();
-                handleConnection(clientR);
-            }
-            serverC.close();                                        //beendet die aktuelle Verbindung
+public abstract class Server {
 
-        }catch (IOException e){e.getStackTrace();}
+    Seite mySeite = Seite.Kathargo;
+    Integer port;
+    Mechanik myMechanik;
+
+    public Server(Integer port) {
+	this.port = port;
     }
 
-    public static Boolean handleConnection(Socket clientR)throws IOException{
-        String tmp  = convertStreamToString(clientR.getInputStream());
-        Zug seinZug = new Zug(tmp);
+    abstract public void run() throws Exception;
 
-        return true;    //TODO Was macht der Server mit der vorhandenne Connection, lesen,handeln,antworten
+    public Boolean checkmap(ArrayList<String> map) {
+	try {
+	    int anzahl_an_Knoten = Integer.parseInt(map.get(0));
+	    int gefundene_Knoten = 0;
+	    map.remove(0);
+	    for (String s : map) {
+		if (s.startsWith("V")) {
+		    String[] split = s.split(" ");
+		    gefundene_Knoten += 1;
+		} else if (s.startsWith("E")) {
+		    String[] split = s.split(" ");
+		    if (myMechanik.getMyGraph().findKnoten(
+			    Integer.parseInt(split[1])) == null
+			    | myMechanik.getMyGraph().findKnoten(
+				    Integer.parseInt(split[2])) == null) {
+			throw new Exception();
+		    }
+		} else {
+		    throw new Exception();
+		}
+	    }
+	    if (!(anzahl_an_Knoten == gefundene_Knoten)) {
+		throw new Exception();
+	    }
+	} catch (Exception ex) {
+	    return false;
+	}
+	return true;
     }
-
-    /**
-     * This function get an InputStream and generates a String with its content
-     * @param is
-     * @return String
-     */
-    private static String convertStreamToString(java.io.InputStream is) {
-        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-        return s.hasNext() ? s.next() : "";
-    }
-
-
-
 }
