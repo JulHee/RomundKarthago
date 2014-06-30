@@ -13,8 +13,9 @@ import core.datacontainers.Zug;
  */
 
 public class Sloth extends AIPlayer {
-    public Sloth(Seite s) {
+    public Sloth(Seite s,Mechanik m) {
         meineSeite = s;
+        this.mechanik = m;
     }
 
     public Zug nextZug() {

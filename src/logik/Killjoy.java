@@ -11,7 +11,8 @@ import core.datacontainers.Zug;
  * Year    : 2014
  */
 public class Killjoy extends AIPlayer {
-    public Killjoy(Seite s) {
+    public Killjoy(Seite s,Mechanik m) {
+        this.mechanik = m;
         meineSeite = s;
     }
 
