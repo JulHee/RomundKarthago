@@ -18,7 +18,7 @@ public class WaspAI  extends AIPlayer {
     }
 
     public Zug nextZug() {
-        Zug erg = new Zug("0" + meineSeite.toString());
+        Zug erg = new Zug(meineSeite.toString()+" 0");
         return erg;
     }
 }

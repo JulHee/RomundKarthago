@@ -72,13 +72,15 @@ public class Client {
 
 				// Senden des Zuges
 				Zug zug = ai.nextZug();
-				out.writeUTF(zug.toFormat());
+                System.out.println("Senden des Zuges: "+zug.toFormat());
+                out.writeUTF(zug.toFormat());
 
 				// Auswerten des Zuges
 				myMechanik.auswerten(zug.toFormat(), Seite.Rom);
 				in.available();
 				input = in.readUTF();
-				myMechanik.auswerten(input, Seite.Kathargo);
+                System.out.println("Lesen des Zuges: "+input);
+                myMechanik.auswerten(input, Seite.Kathargo);
 			}
 			s.close();
 

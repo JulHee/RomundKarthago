@@ -69,7 +69,7 @@ public class AutomatischeTest {
 	for (int i = 0; i <= sollinput.size() - 1; i++) {
 	    String graphoutput = myMechanik.auswerten(sollinput.get(i),
 		    aktuellerSpieler);
-	    if (!graphoutput.equals(solloutput.get(i))) {
+	    if (!graphoutput.equals(solloutput.get(i ))) {
 		throw new Exception(
 			"Unterschiede in den Strings gefunden : \n Gefunden: "
 				+ graphoutput + "\n Sollte: "
