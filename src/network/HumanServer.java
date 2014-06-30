@@ -19,11 +19,11 @@ public class HumanServer extends Server {
     static Mechanik myMechanik;
 
     public HumanServer(Integer port) {
-        super(port);
+        this.port = port;
         try {
             run();
         } catch (IOException e) {
-            System.out.println("Fehler: " + e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -40,6 +40,8 @@ public class HumanServer extends Server {
         System.out.println("Laden des Servers....");
         try {
             ServerSocket server = new ServerSocket(port);
+            System.out.println("Server erfolgreich erstellt..");
+            System.out.println("Der Server läuft und hört auf Port:" + port);
             System.out.println("Server wartet auf Verbindungen...");
 
             while (true) {
@@ -48,7 +50,7 @@ public class HumanServer extends Server {
 
                 try {
                     client = server.accept();
-                    System.out.println("Verbindung hergestellt:" + client.getLocalAddress() + ":" + client.getLocalPort());
+                    System.out.println("Verbindung hergestellt:" + client.getLocalAddress().toString().substring(0) + ":" + client.getLocalPort());
                     handleClient(client);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -61,16 +63,13 @@ public class HumanServer extends Server {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            ex.printStackTrace();
         }
     }
 
     private void handleClient(Socket client) throws Exception {
         BufferedReader input = new BufferedReader(
                 new InputStreamReader(System.in));
-
-        System.out.println("Server erfolgreich erstellt..");
-        System.out.println("Der Server läuft und hört auf Port:" + port);
         System.out.println("Der Client " + client.getLocalAddress() + ":"
                 + client.getLocalPort() + " wurde verbunden");
         DataOutputStream out = new DataOutputStream(
@@ -80,10 +79,16 @@ public class HumanServer extends Server {
         System.out.println("Warten auf die Map");
         // Einlesen der Map, welche vom Client gesendet wird
         ArrayList<String> map = new ArrayList<String>();
-        String line;
-        while ((line = in.readUTF()).length() > 0) {
-            map.add(line);
+        String line = null;
+        Boolean karte = true;
+        while (karte) {
+            line = in.readUTF();
             System.out.println(line);
+            if (line.startsWith("C") | line.startsWith("R")) {
+                break;
+            } else {
+                map.add(line);
+            }
         }
 
         System.out.println("Prüfen der Map");
@@ -99,6 +104,9 @@ public class HumanServer extends Server {
         myMechanik = new Mechanik(map);
 
         System.out.println("Ok... \nBeginnen des Spiels");
+
+        // Da der Client mit dem Zug beginnt wird zuerst der Zug ausgewertet
+        myMechanik.auswerten(line, Seite.Rom);
 
         // Beginnen des Spiels
         while (myMechanik.getSpiel()) {

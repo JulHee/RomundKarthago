@@ -1,69 +1,127 @@
 package network;
 
-import core.datacontainers.Seite;
-import logik.AIPlayer;
-import core.datacontainers.Zug;
-import logik.Killjoy;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import logik.AIPlayer;
+import logik.Mechanik;
+import core.datacontainers.Seite;
+import core.datacontainers.Zug;
 
 /**
- * Projekt: Rom und Karthago
- * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
- * Date : 26.04.14
+ * Projekt : RomUndKathargo
+ * Author : Julian Heeger
+ * Date : 24.06.14
  * Year : 2014
  */
-
 public class Client {
-    private static Boolean spielLaeuft = false;
 
-    public static void main(String[] args) {
-        try {
-            Socket clientR = new Socket(args[0], Integer.parseInt(args[1]));        // Socket(Server-name,Port)
-            sendGameBoard(clientR, "ext/map.txt");
-            spielLaeuft = true;
-            AIPlayer player = new Killjoy(Seite.Kathargo);                      // AIPlayer wird angelegt
-            sendZug(clientR, player);
-            while (spielLaeuft) {
-                spielLaeuft = warteAufZug(clientR);
-                sendZug(clientR, player);
-            }
-            clientR.close();
+	Seite mySeite = Seite.Rom;
+	private Integer port = 0;
+	private String ip = "";
+	private final Mechanik myMechanik;
 
-            //TODO Was der Client machen soll
+	public Client(Integer port, String ip, Mechanik m) {
+		this.port = port;
+		this.ip = ip;
+		this.myMechanik = m;
+	}
 
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
-    }
+	public Integer getPort() {
+		return port;
+	}
 
+	public String getIp() {
+		return ip;
+	}
 
-    private static void sendGameBoard(Socket clientR, String myPath) {
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(myPath));
-            BufferedOutputStream out = new BufferedOutputStream(clientR.getOutputStream());
-            while (in.readLine() != null) {
-                out.write(in.readLine().getBytes());        //Die Zeilen der Map.txt werden in den OutputStream des Socket gegeben
-            }
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
-    }
+	public void aigegner(AIPlayer ai) {
+		try (Socket s = new Socket(ip, port)) {
+			handleSocket_ai(s, ai);
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
+	}
 
-    private static void sendZug(Socket clientR, AIPlayer spieler) throws IOException {
-        BufferedOutputStream out = new BufferedOutputStream(clientR.getOutputStream());
-        out.write(spieler.nextZug().toFormat().getBytes()); // hier wird die abstrakte Methode nextZug aufgerufen, um den Zug zu übergeben
-        // TODO abstract nextZug funktioniert nicht
-    }
+	public void humanEnemy() {
+		try (Socket s = new Socket(ip, port)) {
+			handleSocket_hum(s);
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
+	}
 
-    /**
-     * empfängt den Zug und falls etwas nicht stimmt gibt es false zurück, wodurch das Spiel beendent wird
-     *
-     * @return Boolean
-     */
-    private static Boolean warteAufZug(Socket clientR) {
-        return true;    //TODO bekommt einen Zug vom Server und verarbeitet ihn
-    }
+	public void handleSocket_ai(Socket s, AIPlayer ai) {
+		String input;
+		try {
+			DataOutputStream out = new DataOutputStream(s.getOutputStream());
+			DataInputStream in = new DataInputStream(s.getInputStream());
 
+			// Senden der Map
+
+			ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
+			for (String l : maptext) {
+				out.writeUTF(l);
+			}
+			while (myMechanik.getSpiel()) {
+
+				// Senden des Zuges
+				Zug zug = ai.nextZug();
+				out.writeUTF(zug.toFormat());
+
+				// Auswerten des Zuges
+				myMechanik.auswerten(zug.toFormat(), Seite.Rom);
+				in.available();
+				input = in.readUTF();
+				myMechanik.auswerten(input, Seite.Kathargo);
+			}
+			s.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void handleSocket_hum(Socket s) {
+		String input;
+		try {
+			DataOutputStream out = new DataOutputStream(s.getOutputStream());
+			DataInputStream in = new DataInputStream(s.getInputStream());
+
+			// Senden der Map
+			ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
+			for (String l : maptext) {
+				out.writeUTF(l);
+			}
+			while (myMechanik.getSpiel()) {
+				System.out.println("Bitte Zug angeben:");
+				try {
+					BufferedReader bufferRead = new BufferedReader(
+							new InputStreamReader(System.in));
+					String zug = bufferRead.readLine();
+					out.writeUTF(zug);
+					String move = myMechanik.auswerten(zug, Seite.Rom);
+                    System.out.println(myMechanik.getMyGraph().convertToString());
+                    in.available();
+					input = in.readUTF();
+                    System.out.println("Der Gegner machte den Zug: "+input);
+                    myMechanik.auswerten(input, Seite.Kathargo);
+                    System.out.println(myMechanik.getMyGraph().convertToString());
+				} catch (IOException e) {
+					e.getStackTrace();
+				}
+			}
+			s.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 }

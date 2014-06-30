@@ -63,7 +63,7 @@ public class Graph implements Cloneable {
 	    int gefundene_Knoten = 0;
 	    if ((zeile = br.readLine()) != null) {
 		anzahl_an_Knoten = Integer.parseInt(zeile);
-
+        maptext.add(String.valueOf(anzahl_an_Knoten));
 		while ((zeile = br.readLine()) != null) {
 		    maptext.add(zeile);
 		    if (zeile.startsWith("V")) {

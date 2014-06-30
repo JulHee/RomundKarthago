@@ -11,10 +11,6 @@ public abstract class Server {
     Integer port;
     Mechanik myMechanik;
 
-    public Server(Integer port) {
-	this.port = port;
-    }
-
     abstract public void run() throws Exception;
 
     public Boolean checkmap(ArrayList<String> map) {

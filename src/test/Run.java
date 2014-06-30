@@ -15,7 +15,7 @@ public class Run {
 
     public static void main(String[] args) throws Exception {
 
-        HumanServer hum = new HumanServer(0);
+        HumanServer hum = new HumanServer(3000);
 
     }
 }

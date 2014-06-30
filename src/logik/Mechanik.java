@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import network.Client_R;
+import network.Client;
 import core.Graph;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
@@ -226,9 +226,13 @@ public class Mechanik implements Cloneable {
 
     }
 
-    public void game(Client_R client, String ip, Integer port, AIPlayer ai) {
-	Client_R myClient = new Client_R(port, ip, this);
+    public void game(String ip, Integer port, AIPlayer ai) {
+	Client myClient = new Client(port, ip, this);
 	myClient.aigegner(ai);
+    }
+    public void game(String ip, Integer port) {
+        Client myClient = new Client(port, ip, this);
+        myClient.humanEnemy();
     }
 
     @Override
