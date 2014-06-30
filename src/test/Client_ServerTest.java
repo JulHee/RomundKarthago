@@ -25,7 +25,6 @@ public class Client_ServerTest {
 		Client C = new Client(port, ip, myMechanik1);
 		S.run();
 		C.test();
-		
 	}
 
 }
