@@ -4,7 +4,9 @@ import core.datacontainers.Seite;
 import logik.AIPlayer;
 import logik.Mechanik;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class AIServer extends Server {
     static Mechanik myMechanik;
     static AIPlayer myAI;
 
-    public AIServer(AIPlayer ai,Integer port) {
+    public AIServer(AIPlayer ai, Integer port) {
 
         // Setzen der AI
         this.myAI = ai;
@@ -138,7 +140,7 @@ public class AIServer extends Server {
         // Beginnen des Spiels
         while (myMechanik.getSpiel()) {
             String zug = myAI.nextZug().toFormat();
-            System.out.println("Senden des Zuges: "+zug);
+            System.out.println("Senden des Zuges: " + zug);
 
             // Zug senden
             out.writeUTF(zug);
@@ -148,7 +150,7 @@ public class AIServer extends Server {
             System.out.println("Spielstatus: " + myMechanik.getMyGraph().convertToString());
 
             //Falls der letzte Zug das Spiel schon beendet hat
-            if (!myMechanik.getSpiel()){
+            if (!myMechanik.getSpiel()) {
                 break;
             }
 
