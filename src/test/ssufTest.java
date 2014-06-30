@@ -28,4 +28,14 @@ public class ssufTest {
         assertEquals("NRCN",myGraph.convertToString());
     }
 
+
+    @Test
+    public void test3(){
+        Mechanik mech = new Mechanik("ext/Gameboard.txt");
+        Graph myGraph = mech.getMyGraph();
+        myGraph.run("R 2", Seite.Rom);
+        myGraph.run("C 0", Seite.Kathargo);
+        assertEquals("CNRR",myGraph.convertToString());
+    }
+
 }

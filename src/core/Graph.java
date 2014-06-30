@@ -83,24 +83,112 @@ public class Graph implements Cloneable{
     }
 
     /**
-     * Setz alle Werte einer vorherigen Spiels zurück
+     * Führt den Zug aus und gibt einen Errorcode aus, der weiter geleitet wird
+     * Errorcode = 0: Alles in Ordnung
+     * Errorcode = 1: Zug wurde ausgesetzt
+     * Errorcode = 2: Beende Spiel
+     * Errorcode = 3: Stellung wiederholt
+     *
+     * @param zug
+     * @param spieler
+     * @return
      */
-    private void reset() {
-        l_knoten.clear();
-        l_kante.clear();
-        history.clear();
-        letzterZugAusgesetzt = false;
-        maptext.clear();
+
+    public Zustand run(String zug, Seite spieler) {
+        String retrn;
+        Zustand retrnZustand = new Zustand(0);
+        Zug myzug = new Zug(zug);
+        Graph temp = this.clone();
+        if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
+            retrnZustand.setName(this.convertToString());
+            if (letzterZugAusgesetzt) {
+                retrnZustand.setErrorcode(2);
+            } else {
+                retrnZustand.setErrorcode(1);
+                letzterZugAusgesetzt = true;
+            }
+
+        } else if (history.contains(temp.ssuf(temp,myzug).convertToString())) {
+            retrnZustand.setName(this.convertToString());
+            retrnZustand.setErrorcode(3);
+            letzterZugAusgesetzt = true;
+        } else {
+            String letzterZug = this.convertToString();
+            this.ssuf(myzug);
+            if (letzterZug.equals(this.convertToString())) {
+                if (letzterZugAusgesetzt) {
+                    retrnZustand.setErrorcode(2);
+                }
+                retrnZustand.setErrorcode(1);
+                letzterZugAusgesetzt = true;
+
+            }
+            retrnZustand.setName(this.convertToString());
+        }
+        history.add(retrnZustand.getName());
+        return retrnZustand;
     }
 
     /**
-     * Konvertiert die Knoten in ein Set
+     * Anwenden der Funktion ssuf mit der eigenen Klasse
      *
-     * @return Alle Knoten des Graphen
+     * @param z Der Zug
+     * @return Der neue Graph nach dem Zug
      */
 
-    public HashSet<Knoten> toHashSet() {
-        return l_knoten;
+    public Graph ssuf(Zug z) {
+        return ssuf(this, z);
+    }
+
+    /**
+     * Anwenden eines Zuges auf einen Graphen g
+     *
+     * @param g Der Graph g auf den z angewendet werden soll
+     * @param z Der Zug
+     * @return Der neue Graph nachdem der Zug angewendet wurde
+     */
+
+    public Graph ssuf(Graph g, Zug z) {
+        try {
+            Knoten aktKnoten = g.findKnoten(z.getStadt());
+            if (aktKnoten == null) {
+                return g;
+            }
+            if (aktKnoten.seite == Seite.Neutral) {                          // wenn der aktKnoten schon besetzt ist C oder R, word einfach g zurück gegeben
+                aktKnoten.seite = z.getSeite();                            // Die Seite des Knoten wird gesetzt
+                HashSet<Knoten> nachbarn = getNachbarschaft(aktKnoten);
+
+             Seite gegner;                                               //setze Gegner
+                if (z.getSeite() == Seite.Kathargo) {
+                    gegner = Seite.Rom;
+                } else {
+                    gegner = Seite.Kathargo;
+                }
+
+                Boolean existiertKeinGegner = true;                         // Checken ob die Stadt an einen oder mehrer Gegner grenzt
+                for (Knoten k : nachbarn) {
+                    if (k.seite == gegner) existiertKeinGegner = false;
+                }
+
+                if (existiertKeinGegner) {
+                    checkAushungernOhneGegner(aktKnoten);
+                    return g;
+                }
+                HashSet<Knoten> nachbarGegner = new HashSet<>();           //findet die benachbarten Gegner heraus
+                for (Knoten i : getNachbarschaft(aktKnoten)){
+                    if(i.getSeite()==gegner) nachbarGegner.add(i);
+                }
+                for (Knoten i: nachbarGegner) {
+                    checkAushungern(i, gegner);                           // prüft für alle benachbarten Gegner ob sie aushungern
+                }
+                checkAushungern(aktKnoten, aktKnoten.getSeite());          // prüft für sich selbst ob man aushungert
+            }
+            return g;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return g;
+        }
+
     }
 
     /**
@@ -158,29 +246,6 @@ public class Graph implements Cloneable{
         return retrn;
     }
 
-
-    /**
-     * Sollte eig funktionieren, wenn du getBesetztesGebiet() funktioniert.
-     * Die Funktion holt sich, gegeben dem Fall, dass die Stadt neutral ist, das "neutral besetzte" Gebiet.
-     * Von diesem wird dann die Nachbarschaft ermittelt und diese darauf geprueft, ob alle zur eigenen
-     * Besetzungsmacht gehoeren. Gehoert auch nur eine einzelne Stadt dem Gegner, koennen keine Punkte fuer
-     * diese neutralen Staedte gezaehlt werden.
-     *
-     * @param spieler
-     * @return Punktestand
-     */
-    public int besetztePunkteStandFuer(Seite spieler) {
-        HashSet<Knoten> punkteStaedte = new HashSet<Knoten>();
-        for (Knoten i : l_knoten) {
-            if (i.seite == spieler) {
-                punkteStaedte.add(i);
-            } else if (i.seite == Seite.Neutral) {
-                punkteStaedte.addAll(checkNachbarschaft(i, spieler));
-            }
-        }
-        return punkteStaedte.size();
-    }
-
     /**
      * checkNachbarschaft gibt alle Städte zurück, die Punkte einbringen.
      * @param knot
@@ -199,6 +264,59 @@ public class Graph implements Cloneable{
     }
 
     /**
+     * Prüft ob ein Knoten aushungert oder nicht
+     *
+     * @param k Knoten der geprüft werden soll
+     * @return Seite die der Knoten nach dem Aushungern hat
+     */
+
+    private void checkAushungern(Knoten k, Seite spieler) {
+        Boolean kHungertAus = true;
+        k = findKnoten(k.id);                            // setzte k auf den richtigen knoten aus lKnoten
+        /*
+        Seite gegner;                                    // Gegner wird ermittelt
+        if (spieler == Seite.Kathargo) {
+            gegner = Seite.Rom;
+        } else {
+            gegner = Seite.Kathargo;
+        }
+        */
+        HashSet<Knoten> nachbarnUmUrsprung = getNachbarschaft(k);
+        for (Knoten kn : nachbarnUmUrsprung) {
+            Knoten lKnotenKn = findKnoten(kn.id);                           // ermittle über kn den richtigen Knoten aus lKnoten
+            if(lKnotenKn.seite == Seite.Neutral){kHungertAus=false;}
+            if(lKnotenKn.seite == spieler) {
+                HashSet<Knoten> alleMeins = getBesetztesGebiet(lKnotenKn);
+                HashSet<Knoten> meineNachbarn = getNachbarschaft(alleMeins);
+                boolean neutralGefunden = false;
+                for (Knoten kno : meineNachbarn) {
+                    if (kno.seite == Seite.Neutral) {
+                        neutralGefunden = true;
+                    }
+                }
+                if (!neutralGefunden) {
+                    kHungertAus=false;
+                    for (Knoten knot : alleMeins) {
+                        knot.setSeite(Seite.Neutral);
+                    }
+                }
+            }
+        }
+        if(kHungertAus){
+            k.setSeite(Seite.Neutral);
+        }
+    }
+
+    private void checkAushungernOhneGegner(Knoten k) {
+        Boolean kHungertAus = true;
+        HashSet<Knoten> besetztesGebiet = getBesetztesGebiet(k);
+        for (Knoten i : getNachbarschaft(besetztesGebiet)) if(i.seite == Seite.Neutral){kHungertAus=false;}
+        if(kHungertAus){
+            k.setSeite(Seite.Neutral);
+        }
+    }
+
+    /**
      * Generiert aus der ID des Knoten die Klasse Knoten.
      *
      * @param id ID des gesuchten Knoten
@@ -214,6 +332,52 @@ public class Graph implements Cloneable{
         System.out.println("Error: Keine Stadt passend zu der ID:" + id + " gefunden.");
         return null;
     }
+
+    /**
+     * Gibt einen benachtbarten Knoten zurück
+     * @param aktKnoten
+     * @return Knoten . Einen benachtbarten Knoten. Falls keiner existiert null
+     */
+    public Knoten getEinenBenachbartenGegner(Knoten aktKnoten){
+        Seite gegner;
+        if (aktKnoten.getSeite() == Seite.Kathargo) {
+            gegner = Seite.Rom;
+        } else {
+            gegner = Seite.Kathargo;
+        }
+
+        for(Knoten i : getNachbarschaft(aktKnoten)){
+            if(i.getSeite()==gegner)return i;
+        }
+        return  null;
+    }
+
+
+    //Getter-Setter Funktionen ff
+    /**
+     * Gibt an, an welchem Ort die Textdatei für den Graphen liegt
+     *
+     * @return Speicherort
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * Verändert den Path
+     *
+     * @param path Pfad zur datei
+     */
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    /**
+     * Erzeugt einen String aus allen Knoten wobei nur der Besetzer angezeigt wird
+     *
+     * @return String mit allen Besetzern
+     */
 
     /**
      * Erzeugt aus einem String eine enumeration Seite
@@ -241,186 +405,17 @@ public class Graph implements Cloneable{
         return resu;
     }
 
-    /**
-     * Anwenden der Funktion ssuf mit der eigenen Klasse
-     *
-     * @param z Der Zug
-     * @return Der neue Graph nach dem Zug
-     */
-
-    public Graph ssuf(Zug z) {
-        return ssuf(this, z);
-    }
-
-    /**
-     * Anwenden eines Zuges auf einen Graphen g
-     *
-     * @param g Der Graph g auf den z angewendet werden soll
-     * @param z Der Zug
-     * @return Der neue Graph nachdem der Zug angewendet wurde
-     */
-
-    public Graph ssuf(Graph g, Zug z) {
-        try {
-            Knoten aktKnoten = g.findKnoten(z.getStadt());
-            if (aktKnoten == null) {
-                return g;
-            }
-            if (aktKnoten.seite == Seite.Neutral) {
-
-                aktKnoten.setSeite(z.getSeite());                            // Die Seite des Knoten wird gesetzt
-                HashSet<Knoten> nachbarn = getNachbarschaft(aktKnoten);
-                Seite gegner;
-
-                if (z.getSeite() == Seite.Kathargo) {
-                    gegner = Seite.Rom;
-                } else {
-                    gegner = Seite.Kathargo;
-                }
-
-                Boolean existiertKeinGegner = true;                         // Checken ob die Stadt an einen oder mehrer Gegner grenzt
-                for (Knoten k : nachbarn) {
-                    if (k.seite == gegner) existiertKeinGegner = false;
-                }
-
-                if (existiertKeinGegner) {
-                    checkAushungernOhneGegner(aktKnoten, aktKnoten.getSeite());
-                    return g;
-                }
-                HashSet<Knoten> nachbarGegner = new HashSet<>();           //findet die benachbarten Gegner heraus
-                for (Knoten i : getNachbarschaft(aktKnoten)){
-                    if(i.getSeite()==gegner) nachbarGegner.add(i);
-                }
-                for (Knoten i: nachbarGegner) {
-                    checkAushungern(getEinenBenachbartenGegner(aktKnoten), gegner);  // prüft für alle benachbarten Gegner ob sie aushungern
-                }
-                checkAushungern(aktKnoten, aktKnoten.getSeite());                   // prüft für sich selbst ob man aushungert
-                }
-            return g;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return g;
-        }
-
-    }
-
-
-    /**
-     * Führt den Zug aus und gibt einen Errorcode aus, der weiter geleitet wird
-     * Errorcode = 0: Alles in Ordnung
-     * Errorcode = 1: Zug wurde ausgesetzt
-     * Errorcode = 2: Beende Spiel
-     * Errorcode = 3: Stellung wiederholt
-     *
-     * @param zug
-     * @param spieler
-     * @return
-     */
-
-    public Zustand run(String zug, Seite spieler) {
-        String retrn;
-        Zustand retrnZustand = new Zustand(0);
-        Zug myzug = new Zug(zug);
-        Graph temp = this.clone();
-        if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
-            if (letzterZugAusgesetzt) {
-                retrnZustand.setName(this.convertToString());
-                retrnZustand.setErrorcode(2);
-            } else {
-                retrnZustand.setName(this.convertToString());
-                retrnZustand.setErrorcode(1);
-                letzterZugAusgesetzt = true;
-            }
-
-        } else if (history.contains(temp.ssuf(temp,myzug).convertToString())) {
-            retrnZustand.setErrorcode(3);
-            letzterZugAusgesetzt = true;
-            retrnZustand.setName(this.convertToString());
-        } else {
-            String letzterZug = this.convertToString();
-            ssuf(myzug);
-            if (letzterZug.equals(this.convertToString())) {
-                if (letzterZugAusgesetzt) {
-                    retrnZustand.setErrorcode(2);
-                }
-                retrnZustand.setErrorcode(1);
-                letzterZugAusgesetzt = true;
-
-            }
-
-            retrnZustand.setName(this.convertToString());
-        }
-        history.add(retrnZustand.getName());
-        return retrnZustand;
-    }
-
-    /**
-     * Prüft ob ein Knoten aushungert oder nicht
-     *
-     * @param k Knoten der geprüft werden soll
-     * @return Seite die der Knoten nach dem Aushungern hat
-     */
-
-    private void checkAushungern(Knoten k, Seite spieler) {
-        Seite gegner;
-        Boolean kHungertAus = true;
-        if (spieler == Seite.Kathargo) {
-            gegner = Seite.Rom;
-        } else {
-            gegner = Seite.Kathargo;
-        }
-        HashSet<Knoten> nachbarnUmUrsprung = getNachbarschaft(k);
-        //System.out.println("CheckPoint1");
-        for (Knoten kn : nachbarnUmUrsprung) {
-            if(kn.seite == Seite.Neutral){kHungertAus=false;}
-            if (kn.seite == gegner) {
-                HashSet<Knoten> alleGegner = getBesetztesGebiet(kn);
-                HashSet<Knoten> gebiet = getNachbarschaft(alleGegner);
-                boolean neutralGefunden = false;
-                for (Knoten kno : gebiet) {
-                    if (kno.seite == Seite.Neutral) {
-                        neutralGefunden = true;
-                    }
-                }
-                if (!neutralGefunden) {
-                    kHungertAus=false;
-                    for (Knoten knot : alleGegner) {
-                        knot.setSeite(Seite.Neutral);
-                    }
+    //Konvertierungen ff
+    public String convertToString() {
+        String temp = "";
+        for (int i = 0; i < l_knoten.size(); i++) {
+            for (Knoten k : l_knoten) {
+                if (k.id == i) {
+                    temp = temp + k.seite.toString();
                 }
             }
         }
-        if(kHungertAus){
-            k.setSeite(Seite.Neutral);
-        }
-    }
-
-    private void checkAushungernOhneGegner(Knoten k, Seite spieler) {
-        Boolean kHungertAus = true;
-        HashSet<Knoten> besetztesGebiet = getBesetztesGebiet(k);
-        for (Knoten i : besetztesGebiet) if(i.seite == Seite.Neutral){kHungertAus=false;}
-        if(kHungertAus){
-            k.setSeite(Seite.Neutral);
-        }
-    }
-
-    /**
-     * Gibt einen benachtbarten Knoten zurück
-     * @param aktKnoten
-     * @return Knoten . Einen benachtbarten Knoten. Falls keiner existiert null
-     */
-    public Knoten getEinenBenachbartenGegner(Knoten aktKnoten){
-        Seite gegner;
-        if (aktKnoten.getSeite() == Seite.Kathargo) {
-            gegner = Seite.Rom;
-        } else {
-            gegner = Seite.Kathargo;
-        }
-
-        for(Knoten i : getNachbarschaft(aktKnoten)){
-            if(i.getSeite()==gegner)return i;
-        }
-        return  null;
+        return temp;
     }
 
     /**
@@ -458,43 +453,6 @@ public class Graph implements Cloneable{
 
         }
         return retrn;
-    }
-
-    /**
-     * Gibt an, an welchem Ort die Textdatei für den Graphen liegt
-     *
-     * @return Speicherort
-     */
-    public String getPath() {
-        return path;
-    }
-
-    /**
-     * Verändert den Path
-     *
-     * @param path Pfad zur datei
-     */
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    /**
-     * Erzeugt einen String aus allen Knoten wobei nur der Besetzer angezeigt wird
-     *
-     * @return String mit allen Besetzern
-     */
-
-    public String convertToString() {
-        String temp = "";
-        for (int i = 0; i < l_knoten.size(); i++) {
-            for (Knoten k : l_knoten) {
-                if (k.id == i) {
-                    temp = temp + k.seite.toString();
-                }
-            }
-        }
-        return temp;
     }
 
     /**
@@ -561,5 +519,48 @@ public class Graph implements Cloneable{
 
     public ArrayList<String> getMaptext() {
         return maptext;
+    }
+
+    /**
+     * Sollte eig funktionieren, wenn du getBesetztesGebiet() funktioniert.
+     * Die Funktion holt sich, gegeben dem Fall, dass die Stadt neutral ist, das "neutral besetzte" Gebiet.
+     * Von diesem wird dann die Nachbarschaft ermittelt und diese darauf geprueft, ob alle zur eigenen
+     * Besetzungsmacht gehoeren. Gehoert auch nur eine einzelne Stadt dem Gegner, koennen keine Punkte fuer
+     * diese neutralen Staedte gezaehlt werden.
+     *
+     * @param spieler
+     * @return Punktestand
+     */
+    public int besetztePunkteStandFuer(Seite spieler) {
+        HashSet<Knoten> punkteStaedte = new HashSet<Knoten>();
+        for (Knoten i : l_knoten) {
+            if (i.seite == spieler) {
+                punkteStaedte.add(i);
+            } else if (i.seite == Seite.Neutral) {
+                punkteStaedte.addAll(checkNachbarschaft(i, spieler));
+            }
+        }
+        return punkteStaedte.size();
+    }
+
+    /**
+     * Setz alle Werte einer vorherigen Spiels zurück
+     */
+    private void reset() {
+        l_knoten.clear();
+        l_kante.clear();
+        history.clear();
+        letzterZugAusgesetzt = false;
+        maptext.clear();
+    }
+
+    /**
+     * Konvertiert die Knoten in ein Set
+     *
+     * @return Alle Knoten des Graphen
+     */
+
+    public HashSet<Knoten> toHashSet() {
+        return l_knoten;
     }
 }
