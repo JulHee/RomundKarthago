@@ -23,7 +23,6 @@ public class Client_ServerTest {
 	public void test() throws Exception {
 		HumanServer S = new HumanServer(port); 
 		Client C = new Client(port, ip, myMechanik1);
-		S.run();
 		C.test();
 		
 	}
