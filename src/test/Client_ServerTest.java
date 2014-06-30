@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.*;
 import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.WaspAI;
@@ -17,13 +18,22 @@ public class Client_ServerTest {
     Integer port = 12345;
 
 
-    @Test
-    public void test() throws Exception {
-        HumanServer S = new HumanServer(port);
-        Client C = new Client(port, ip, myMechanik);
-        C.test();
-    }
-
+   @Test
+   public void CStest() throws Exception {
+	   Thread serverThread = new Thread(){
+		 @Override
+		 public void run(){
+			 HumanServer S = new HumanServer(port);
+		 }
+	   };
+	   serverThread.start();
+	   
+	   Client C = new Client(port,ip,myMechanik);
+	   C.test();
+   }
+    
+    
+    /*
     @Test
     public void test_thread() throws Exception {
         Thread serverThread = new Thread() {
@@ -38,6 +48,6 @@ public class Client_ServerTest {
         WaspAI myWasp = new WaspAI(Seite.Kathargo);
         myMechanik.game(ip,port,myWasp);
     }
-
+*/
 
 }

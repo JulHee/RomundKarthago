@@ -153,9 +153,8 @@ public class Client {
 	 * Testfunktion um geeignete Kommunikation zwischen Client und Server zu testen
 	 */
 	public void test() {
-		System.out.println("did smth happen");
 		try {Socket s = new Socket(this.getIp(),this.getPort());
-			System.out.println("TestText");
+			
 			//Socket Streams
 			DataOutputStream out = new DataOutputStream(s.getOutputStream());
 			DataInputStream in = new DataInputStream(s.getInputStream());
@@ -165,6 +164,7 @@ public class Client {
 			for (String l : maptext) {
 				out.writeUTF(l);
 			}
+			out.writeUTF("R 3");
 			s.close();
 
 		} catch (IOException e) {
