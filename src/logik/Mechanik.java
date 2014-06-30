@@ -3,6 +3,7 @@ package logik;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import network.Client_R;
 import core.Graph;
@@ -31,9 +32,9 @@ public class Mechanik implements Cloneable {
 	return spiel;
     }
 
-    /*
-     * Initialisiert den Start Graphen mit welchem
-     * das Spiel begonnen wird
+    /**
+     * Initialisiert der Mechanik durch initialisierung des Graphen, über die im Netzwerk gesendete Map
+     * @param path Pfad zur Datei, inder die Map beschrieben wird
      */
 
     public Mechanik(String path) {
@@ -41,6 +42,17 @@ public class Mechanik implements Cloneable {
 	myGraph = new Graph();
 	myGraph.setPath(this.path);
 	myGraph.read();
+    }
+
+    /**
+     * Initialisiert der Mechanik durch initialisierung des Graphen, über die im Netzwerk gesendete Map
+     * @param map Die Karte auf der gespielt wird
+     */
+
+    public Mechanik(ArrayList<String> map){
+        this.path = "Es wurde eine ArrayList übergeben";
+        myGraph = new Graph();
+        myGraph.setPath(map);
     }
 
     /*
