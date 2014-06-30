@@ -14,7 +14,7 @@ public abstract class AIPlayer {
     protected Mechanik mechanik;
     String path;
 
-    protected Seite meineSeite;
+    public Seite meineSeite;
 
     abstract public Zug nextZug();
 
