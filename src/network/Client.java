@@ -151,9 +151,9 @@ public class Client {
 	/**
 	 * Testfunktion um geeignete Kommunikation zwischen Client und Server zu testen
 	 */
-	public void test(Socket s) {
+	public void test() {
 		System.out.println("did smth happen");
-		try {
+		try {Socket s = new Socket(this.getIp(),this.getPort());
 			System.out.println("TestText");
 			//Socket Streams
 			DataOutputStream out = new DataOutputStream(s.getOutputStream());

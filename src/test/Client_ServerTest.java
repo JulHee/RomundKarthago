@@ -21,11 +21,10 @@ public class Client_ServerTest {
 	
 	@Test
 	public void test() throws Exception {
-		Client C = new Client(port, ip, myMechanik1);
 		HumanServer S = new HumanServer(port); 
+		Client C = new Client(port, ip, myMechanik1);
 		S.run();
-		Socket csock = new Socket(ip,port);
-		C.test(csock);
+		C.test();
 		
 	}
 
