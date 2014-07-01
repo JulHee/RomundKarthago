@@ -1,6 +1,9 @@
 package test;
 
+import core.datacontainers.Seite;
+import logik.Killjoy;
 import logik.Mechanik;
+import logik.WaspAI;
 import network.HumanServer;
 
 /**
@@ -15,7 +18,21 @@ public class Run {
 
     public static void main(String[] args) throws Exception {
 
-        HumanServer hum = new HumanServer(9999);
+        Mechanik myMechanik = new Mechanik("ext/GameBoard.txt");
+        Integer port = 9999;
+
+        Thread test_server = new Thread(){
+            @Override
+            public void run() {
+                HumanServer hum = new HumanServer(port);
+            }
+        };
+        test_server.run();
+
+        Killjoy myKilljoy = new Killjoy(Seite.Rom,myMechanik);
+        WaspAI myWasp = new WaspAI(Seite.Rom);
+
+        myMechanik.game("137.248.59.235",port,myWasp);
 
     }
 }
