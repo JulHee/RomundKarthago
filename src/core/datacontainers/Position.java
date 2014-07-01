@@ -5,6 +5,11 @@ package core.datacontainers;
  * Date : 26.04.14
  * Year : 2014
  */
+
+/**
+ * Diese Klasse beschreibt eine Position im zweidimensionalen Raum.
+ * Sie hat folglich eine 'x' und eine 'y' Koordinate.
+ */
 public class Position {
     public final int x;
     public final int y;

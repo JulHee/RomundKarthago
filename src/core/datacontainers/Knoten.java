@@ -5,6 +5,14 @@ package core.datacontainers;
  * Date : 26.04.14
  * Year : 2014
  */
+
+
+/**
+ * Diese Klasse beschreibt die Knotenpunkte eines Graphen,
+ * welche durch Kanten (siehe Klasse 'Kante') verbunden sind.
+ *
+ */
+
 public class Knoten {
     public int  id;
     public Seite seite;
@@ -16,19 +24,20 @@ public class Knoten {
         this.position = position;
     }
 
-    @Override
-    public String toString() {
-        return "Knoten{" +
-                "id=" + id +
-                ", seite=" + seite +
-                ", position=" + position.toString() +
-                '}';
-    }
     public void setSeite(Seite seite) {
         this.seite = seite;
     }
 
     public Seite getSeite() { return seite;}
+
+	@Override
+	public String toString() {
+		return "Knoten{" +
+				"id=" + id +
+				", seite=" + seite +
+				", position=" + position.toString() +
+				'}';
+	}
 
     public Boolean equals(Knoten k){
         Boolean erg = false;
