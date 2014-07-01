@@ -36,31 +36,27 @@ public class optionalAI extends AIPlayer {
 	//TODO at the end
 	@Override
 	public Zug nextZug() {
-		// TODO allgemeine Def. nextZug
+		if (checktarget()){
+			Zug tzug = new Zug(meineSeite,Target.id);
+			return tzug;
+		}else{
+			
+		}
 		return null;
 	}
 
 	/*
-	 * Konzept: Alle möglichen Züge werden bewertet und bekommen einen "Wert"
-	 * (evtl. zwischen 0 und 1)
-	 * zugewiesen, wobei der höhere Wert größere Erfolgs/Gewinnchancen
-	 * verspricht.
+	 * Konzept: 
+	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  TODO
+	 * 1) Targets zum Aushungern des Gegners sofort besetzen DONE
+	 * 2) Strategie TODO
+	 * 3) Sicherer Zug. Knoten mit max neutral Nachbarn -> wenn Anzahl = 0 aussetzen ! TODO
 	 * 
-	 * Berechnung des Wertes durch:
 	 * 
-	 * -mehrere mögliche Züge bewerten und besten ermitteln (wie?) TODO
-	 * Zugbewertung Zvalue
-	 * -zusammenhängende Ketten einer Seite ermitteln + check ob "sicher" (vor
-	 * Aushungerung) 
-	 * -Gegnerketten beachten (nur 1 Neutraler Nachbar -> sofort besetzen ->
-	 * Gegner hungert aus TODO Gegnerketten
-	 * -je weiter vom Gegner entfernt, desto mehr Platz für Ausbreitung/ sammeln
-	 * von Punkten TODO Entfernung berechnen
-	 * -allgemein mögliche Stellungen bevorzugen, welche viele Neutrale Nachbarn
-	 * haben TODO Stadt-Sicherheit bewerten
-	 * -letzten Züge des Gegners beachten: Züge nah an eigenene Ketten -> Gefahr
-	 * -> Reaktion? TODO Reaktion auf Geg. Züge
+	 * 
+	 * 
 	 */
+	
 	/*
 	 * Variablen für Zugriffsrechte außerhalb definiert
 	 */
@@ -83,13 +79,15 @@ public class optionalAI extends AIPlayer {
 	 * Finden eines direkten Besetzungspunktes, wenn dadurch ein direktes Aushungern des Gegners
 	 * bewirkt wird (aggressives Ziehen!)  
 	 */
-	public void checktarget(){
-		Target = null;
+	public Boolean checktarget(){
 		if(this.meineSeite == Seite.Rom){
-			checkt(Kchainz);
+			if(checkt(Kchainz)){
+				return true;};
 		}
-		else{checkt(Rchainz);
+		else{if(checkt(Rchainz)){
+			return true;};
 		}
+		return false;
 	}
 	/**
 	 * Hilfsfunktion für checktarget
@@ -99,7 +97,7 @@ public class optionalAI extends AIPlayer {
 	 * @param listo
 	 * @return 
 	 */
-	public void checkt(ArrayList<ArrayList<Knoten>> listo){
+	public Boolean checkt(ArrayList<ArrayList<Knoten>> listo){
 		for (ArrayList<Knoten> a : listo){
 			int zaehl = 0;
 			ArrayList<Knoten> neuNeigh = new ArrayList<Knoten>();
@@ -114,9 +112,11 @@ public class optionalAI extends AIPlayer {
 			}
 			if(zaehl == 1){
 				Target = neuNeigh.get(0);
+				return true;
 			}
 		}
-		
+		return false;
+
 	}
 
 	/**
