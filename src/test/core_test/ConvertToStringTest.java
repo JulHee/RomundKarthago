@@ -1,4 +1,4 @@
-package test;
+package test.core_test;
 import org.junit.Test;
 import core.Graph;
 import static org.junit.Assert.*;

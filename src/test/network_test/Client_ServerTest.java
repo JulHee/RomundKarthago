@@ -1,4 +1,4 @@
-package test;
+package test.network_test;
 
 import core.datacontainers.Seite;
 import logik.Mechanik;

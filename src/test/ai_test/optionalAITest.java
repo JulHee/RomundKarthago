@@ -1,4 +1,4 @@
-package test;
+package test.ai_test;
 
 import static org.junit.Assert.*;
 

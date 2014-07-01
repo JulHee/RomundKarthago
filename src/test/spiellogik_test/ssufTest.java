@@ -1,4 +1,4 @@
-package test;
+package test.spiellogik_test;
 
 import core.Graph;
 import core.datacontainers.Seite;

@@ -1,4 +1,4 @@
-package test;
+package test.core_test;
 
 import core.datacontainers.Kante;
 import core.datacontainers.Zug;
