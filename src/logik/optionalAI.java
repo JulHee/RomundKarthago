@@ -37,26 +37,32 @@ public class optionalAI extends AIPlayer {
 	@Override
 	public Zug nextZug() {
 		Zug retrn;
+		if(mechanik.letzerZugAusgesetzt){
+			int me = mechanik.myGraph.besetztePunkteStandFuer(meineSeite);
+			int enemy = mechanik.myGraph.besetztePunkteStandFuer(notmysite());
+			if(me>enemy){
+				retrn = new Zug(meineSeite+" X");
+				return retrn;
+			}
+		}
 		if (checktarget()){
 			retrn = new Zug(meineSeite,Target.id);
 			return retrn;
-		}else{
-			retrn = saveme();
-			
 		}
+		retrn = saveme();
 		return retrn;
 	}
 
 	/*
 	 * Konzept: 
-	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  TODO Fastend programmieren
+	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  TODO option testen!
 	 * 1) Targets zum Aushungern des Gegners sofort besetzen DONE
 	 * 2) Strategie TODO Strategie entwickeln
 	 * 3) Sicherer Zug. Knoten mit max neutral Nachbarn -> wenn Anzahl = 0 aussetzen ! TODO testen saveme!
 	 * 
 	 * 
 	 */
-	
+
 	/*
 	 * Variablen für Zugriffsrechte außerhalb definiert
 	 */
@@ -65,7 +71,20 @@ public class optionalAI extends AIPlayer {
 	public ArrayList<ArrayList<Knoten>> Kchainz = new ArrayList<ArrayList<Knoten>>();
 	public Knoten Target;
 
-	
+
+	/*
+	 * Hilfsfunktion für GegnerSeite
+	 */
+	public Seite notmysite(){
+		Seite retrn;
+		if(meineSeite == Seite.Rom){
+			retrn = Seite.Kathargo;
+		}else {
+			retrn = Seite.Rom;
+		}
+		return retrn;
+	}
+
 	/*
 	 * Funktion um einen sicheren Zug zu generieren
 	 */
@@ -95,10 +114,10 @@ public class optionalAI extends AIPlayer {
 		}
 		save = new Zug(meineSeite,kn.id);
 		return save;
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Finden eines direkten Besetzungspunktes, wenn dadurch ein direktes Aushungern des Gegners
 	 * bewirkt wird (aggressives Ziehen!)  
