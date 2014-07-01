@@ -1,7 +1,7 @@
 package network;
 
 import core.datacontainers.Seite;
-import logik.AIPlayer;
+import logik.ai.AIPlayer;
 import logik.Mechanik;
 
 import java.io.DataInputStream;

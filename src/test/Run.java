@@ -1,9 +1,9 @@
 package test;
 
 import core.datacontainers.Seite;
-import logik.Killjoy;
+import logik.ai.Killjoy;
 import logik.Mechanik;
-import logik.WaspAI;
+import logik.ai.WaspAI;
 import network.HumanServer;
 
 /**

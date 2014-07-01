@@ -1,7 +1,7 @@
 package test;
 
 import logik.Mechanik;
-import logik.WaspAI;
+import logik.ai.WaspAI;
 
 import org.junit.Test;
 

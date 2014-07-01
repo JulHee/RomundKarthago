@@ -1,4 +1,4 @@
-package logik;
+package logik.ai;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,6 +7,8 @@ import core.Graph;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import logik.Mechanik;
+import logik.ai.AIPlayer;
 
 /**
  * optionale KI fuer Ki - Turnier
@@ -37,9 +39,9 @@ public class optionalAI extends AIPlayer {
 	@Override
 	public Zug nextZug() {
 		Zug retrn;
-		if(mechanik.letzerZugAusgesetzt){
-			int me = mechanik.myGraph.besetztePunkteStandFuer(meineSeite);
-			int enemy = mechanik.myGraph.besetztePunkteStandFuer(notmysite());
+		if(mechanik.getLetzterZugAusgesetzt()){
+			int me = mechanik.getMyGraph().besetztePunkteStandFuer(meineSeite);
+			int enemy = mechanik.getMyGraph().besetztePunkteStandFuer(notmysite());
 			if(me>enemy){
 				retrn = new Zug(meineSeite+" X");
 				return retrn;
@@ -90,7 +92,7 @@ public class optionalAI extends AIPlayer {
 	 */
 	public Zug saveme(){
 		Zug save = null;
-		HashSet<Knoten> mapknoten = mechanik.myGraph.l_knoten;
+		HashSet<Knoten> mapknoten = mechanik.getMyGraph().l_knoten;
 		ArrayList<Knoten> neuknoten = new ArrayList<Knoten>();
 		for(Knoten a : mapknoten){
 			if(a.getSeite()== Seite.Neutral){
@@ -101,7 +103,7 @@ public class optionalAI extends AIPlayer {
 		Integer knint = 0;
 		for(Knoten b : neuknoten){
 			Integer tempint = 0;
-			HashSet<Knoten> neighbours = mechanik.myGraph.getNachbarschaft(b);
+			HashSet<Knoten> neighbours = mechanik.getMyGraph().getNachbarschaft(b);
 			for(Knoten c : neighbours){
 				if(c.getSeite() == Seite.Neutral){
 					tempint+=1;

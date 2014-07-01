@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import logik.ai.AIPlayer;
 import network.Client;
 import core.Graph;
 import core.datacontainers.Seite;
@@ -21,7 +22,7 @@ public class Mechanik implements Cloneable {
 
     String path;
     Graph myGraph;
-    Boolean letzerZugAusgesetzt = false;
+    Boolean letzterZugAusgesetzt = false;
     Boolean spiel = true;
 
     public Graph getMyGraph() {
@@ -31,6 +32,8 @@ public class Mechanik implements Cloneable {
     public Boolean getSpiel() {
         return spiel;
     }
+
+    public Boolean getLetzterZugAusgesetzt(){return letzterZugAusgesetzt;}
 
     /**
      * Initialisiert der Mechanik durch initialisierung des Graphen, über die im Netzwerk gesendete Map

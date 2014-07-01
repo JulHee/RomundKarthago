@@ -1,9 +1,11 @@
-package logik;
+package logik.ai;
 
 import core.*;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import logik.Mechanik;
+import logik.ai.AIPlayer;
 
 /**
  * Projekt: Rom und Karthago
@@ -13,7 +15,7 @@ import core.datacontainers.Zug;
  */
 
 public class Sloth extends AIPlayer {
-    public Sloth(Seite s,Mechanik m) {
+    public Sloth(Seite s, Mechanik m) {
         meineSeite = s;
         this.mechanik = m;
     }

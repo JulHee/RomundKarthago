@@ -1,13 +1,9 @@
 package test;
 
-import static org.junit.Assert.*;
 import core.datacontainers.Seite;
 import logik.Mechanik;
-import logik.Scrooge;
-import logik.WaspAI;
+import logik.ai.Scrooge;
 import network.AIServer;
-import network.Client;
-import network.HumanServer;
 
 import org.junit.Test;
 

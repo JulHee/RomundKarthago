@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import logik.AIPlayer;
+import logik.ai.AIPlayer;
 import logik.Mechanik;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;

@@ -1,8 +1,10 @@
-package logik;
+package logik.ai;
 import core.*;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import logik.Mechanik;
+import logik.ai.AIPlayer;
 
 /**
  * Projekt : RomUndKathargo
@@ -11,7 +13,7 @@ import core.datacontainers.Zug;
  * Year    : 2014
  */
 public class Killjoy extends AIPlayer {
-    public Killjoy(Seite s,Mechanik m) {
+    public Killjoy(Seite s, Mechanik m) {
         this.mechanik = m;
         meineSeite = s;
     }

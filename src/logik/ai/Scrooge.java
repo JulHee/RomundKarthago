@@ -1,9 +1,11 @@
-package logik;
+package logik.ai;
 
 import core.*;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import logik.Mechanik;
+import logik.ai.AIPlayer;
 
 /**
  * Projekt : RomUndKathargo
@@ -12,7 +14,7 @@ import core.datacontainers.Zug;
  * Year    : 2014
  */
 public class Scrooge extends AIPlayer {
-    public Scrooge(Seite s,Mechanik m) {
+    public Scrooge(Seite s, Mechanik m) {
         meineSeite = s;
         this.mechanik = m;
     }

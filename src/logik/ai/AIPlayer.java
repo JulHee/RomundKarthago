@@ -1,7 +1,8 @@
-package logik;
+package logik.ai;
 
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import logik.Mechanik;
 
 /**
  * Projekt: Rom und Karthago

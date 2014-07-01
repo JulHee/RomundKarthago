@@ -3,14 +3,11 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
-import logik.Mechanik;
-import logik.optionalAI;
+import logik.ai.optionalAI;
 
 import org.junit.Test;
 
-import core.datacontainers.Kante;
 import core.datacontainers.Knoten;
 import core.datacontainers.Position;
 import core.datacontainers.Seite;
