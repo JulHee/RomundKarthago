@@ -19,7 +19,7 @@ public class Run {
     public static void main(String[] args) throws Exception {
 
         Mechanik myMechanik = new Mechanik("ext/GameBoard.txt");
-        Integer port = 9999;
+        final Integer port = 9999;
 
         Thread test_server = new Thread(){
             @Override
