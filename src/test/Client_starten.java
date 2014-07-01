@@ -1,6 +1,7 @@
 package test;
 
 import core.datacontainers.Seite;
+import logik.Killjoy;
 import logik.Mechanik;
 import logik.WaspAI;
 
@@ -13,7 +14,7 @@ import logik.WaspAI;
 public class Client_starten {
     public static void main(String[] args) {
         Mechanik myMechanik = new Mechanik("ext/GameBoard.txt");
-        WaspAI myWasp = new WaspAI(Seite.Rom);
-        myMechanik.game("127.0.0.1",3000,myWasp);
+        Killjoy myWasp = new Killjoy(Seite.Rom,myMechanik);
+        myMechanik.game("137.248.59.235",12345,myWasp);
     }
 }

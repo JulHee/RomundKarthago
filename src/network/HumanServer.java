@@ -1,10 +1,6 @@
 package network;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -83,11 +79,18 @@ public class HumanServer extends Server {
     private void handleClient(Socket client) throws Exception {
 
         // Öffnen der Streams zum lesen der I/O Eingaben zwischen den Sockets und der Eingabe der Tastatur
-        BufferedReader input = new BufferedReader(
+        BufferedReader tastatur_input = new BufferedReader(
                 new InputStreamReader(System.in));
-        DataOutputStream out = new DataOutputStream(
+        PrintWriter output = new PrintWriter(client.getOutputStream(),true /* autolush */);
+        BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+        /*
+
+                DataOutputStream out = new DataOutputStream(
                 client.getOutputStream());
-        DataInputStream in = new DataInputStream(client.getInputStream());
+                DataInputStream in = new DataInputStream(client.getInputStream());
+         */
+
 
         // Status ausgeben
         System.out.println("Der Client " + client.getLocalAddress() + ":"
@@ -100,11 +103,11 @@ public class HumanServer extends Server {
         String line = null;
         Boolean karte = true;
         while (karte) {
-            line = in.readUTF();
+            line = input.readLine();
             System.out.println(line);
 
             // Beenden des Map einlesen, fall der erste Zug gesendet wird
-            if (line.startsWith("C") | line.startsWith("R")) {
+            if (line.startsWith("C") | line.startsWith("R") | line.startsWith("X")) {
                 break;
             } else {
                 map.add(line);
@@ -134,11 +137,11 @@ public class HumanServer extends Server {
         // Beginnen des Spiels
         while (myMechanik.getSpiel()) {
             System.out.println("Bitte geben Sie ihren Zug ein:");
-            String zug = input.readLine();
+            String zug = tastatur_input.readLine();
             System.out.println("Senden des Zuges: "+zug);
 
             // Zug senden
-            out.writeUTF(zug);
+            output.println(zug);
 
             // Auswerten des Zuges
             myMechanik.auswerten(zug, mySeite);
@@ -150,7 +153,7 @@ public class HumanServer extends Server {
             }
 
             // Lesen des Gegnerzuges
-            String zug_gegner = in.readUTF();
+            String zug_gegner = input.readLine();
             System.out.println("Der Gegner macht den Zug: " + zug_gegner);
 
             // Auswerten

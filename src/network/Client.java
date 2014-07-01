@@ -1,10 +1,6 @@
 package network;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -57,30 +53,29 @@ public class Client {
 	}
 
 	public void handleSocket_ai(Socket s, AIPlayer ai) {
-		String input;
+		String in;
 		try {
-			DataOutputStream out = new DataOutputStream(s.getOutputStream());
-			DataInputStream in = new DataInputStream(s.getInputStream());
+            PrintWriter output = new PrintWriter(s.getOutputStream(),true /* autolush */);
+            BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
 			// Senden der Map
 
 			ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
 			for (String l : maptext) {
-				out.writeUTF(l);
+                output.println(l);
 			}
 			while (myMechanik.getSpiel()) {
 
 				// Senden des Zuges
 				Zug zug = ai.nextZug();
 				System.out.println("Senden des Zuges: "+zug.toFormat());
-				out.writeUTF(zug.toFormat());
+                output.println(zug.toFormat());
 
 				// Auswerten des Zuges
 				myMechanik.auswerten(zug.toFormat(), Seite.Rom);
-				in.available();
-				input = in.readUTF();
+				in = input.readLine();
 				System.out.println("Lesen des Zuges: "+input);
-				myMechanik.auswerten(input, Seite.Kathargo);
+				myMechanik.auswerten(in, Seite.Kathargo);
 			}
 			s.close();
 
@@ -91,7 +86,7 @@ public class Client {
 	}
 
 	public void handleSocket_hum(Socket s) {
-		String input;
+		String in;
 		try {
 
 			//Stream zu abfragen der Tastatureingaben
@@ -99,13 +94,13 @@ public class Client {
 					new InputStreamReader(System.in));
 
 			//Socket Streams
-			DataOutputStream out = new DataOutputStream(s.getOutputStream());
-			DataInputStream in = new DataInputStream(s.getInputStream());
+            PrintWriter output = new PrintWriter(s.getOutputStream(),true /* autolush */);
+            BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
 			// Senden der Map
 			ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
 			for (String l : maptext) {
-				out.writeUTF(l);
+				output.write(l);
 			}
             System.out.println("Die Map: "+myMechanik.getMyGraph().convertToString());
 
@@ -119,7 +114,7 @@ public class Client {
 					System.out.println("Senden des Zuges: "+zug);
 
 					// Lesen des Zuges
-					out.writeUTF(zug);
+					output.write(zug);
 
 					// Auswerten
 					String move = myMechanik.auswerten(zug, Seite.Rom);
@@ -129,14 +124,13 @@ public class Client {
 					if (!myMechanik.getSpiel()){
 						break;
 					}
-					in.available();
 
 					// Lesen des Gegnerzuges
-					input = in.readUTF();
-					System.out.println("Der Gegner machte den Zug: "+input);
+					in = input.readLine();
+					System.out.println("Der Gegner machte den Zug: "+in);
 
 					// Auswerten
-					myMechanik.auswerten(input, Seite.Kathargo);
+					myMechanik.auswerten(in, Seite.Kathargo);
 					System.out.println(myMechanik.getMyGraph().convertToString());
 				} catch (IOException e) {
 					e.getStackTrace();
