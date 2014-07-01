@@ -6,11 +6,11 @@ package eigene_exceptions;
  * Date : 01.07.14
  * Year : 2014
  */
-//TODO soll geworfen werden, wenn ein falscher Zug gemacht wird
-public class ZugException extends Exception {
-    public ZugException(){}
+//TODO soll geworfen werden, wenn ein Knoten nicht gefunden werden kann.
+public class KnotenException extends Exception {
+    public KnotenException(){}
 
-    public ZugException(String s){
+    public KnotenException(String s){
         super(s);
     }
 }
