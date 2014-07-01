@@ -36,23 +36,23 @@ public class optionalAI extends AIPlayer {
 	//TODO at the end
 	@Override
 	public Zug nextZug() {
+		Zug retrn;
 		if (checktarget()){
-			Zug tzug = new Zug(meineSeite,Target.id);
-			return tzug;
+			retrn = new Zug(meineSeite,Target.id);
+			return retrn;
 		}else{
+			retrn = saveme();
 			
 		}
-		return null;
+		return retrn;
 	}
 
 	/*
 	 * Konzept: 
-	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  TODO
+	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  TODO Fastend programmieren
 	 * 1) Targets zum Aushungern des Gegners sofort besetzen DONE
-	 * 2) Strategie TODO
-	 * 3) Sicherer Zug. Knoten mit max neutral Nachbarn -> wenn Anzahl = 0 aussetzen ! TODO
-	 * 
-	 * 
+	 * 2) Strategie TODO Strategie entwickeln
+	 * 3) Sicherer Zug. Knoten mit max neutral Nachbarn -> wenn Anzahl = 0 aussetzen ! TODO testen saveme!
 	 * 
 	 * 
 	 */
@@ -65,16 +65,40 @@ public class optionalAI extends AIPlayer {
 	public ArrayList<ArrayList<Knoten>> Kchainz = new ArrayList<ArrayList<Knoten>>();
 	public Knoten Target;
 
-	//TODO wenn Konzept fertig
-	/**
-	 * Berechnung, wie "gut" ein Zug zu bewerten ist.
-	 * 
+	
+	/*
+	 * Funktion um einen sicheren Zug zu generieren
 	 */
-	public double Zvalue() {
-		double value = 0.0;
-		return value;
-
-	};
+	public Zug saveme(){
+		Zug save = null;
+		HashSet<Knoten> mapknoten = mechanik.myGraph.l_knoten;
+		ArrayList<Knoten> neuknoten = new ArrayList<Knoten>();
+		for(Knoten a : mapknoten){
+			if(a.getSeite()== Seite.Neutral){
+				neuknoten.add(a);
+			}
+		}
+		Knoten kn = null;
+		Integer knint = 0;
+		for(Knoten b : neuknoten){
+			Integer tempint = 0;
+			HashSet<Knoten> neighbours = mechanik.myGraph.getNachbarschaft(b);
+			for(Knoten c : neighbours){
+				if(c.getSeite() == Seite.Neutral){
+					tempint+=1;
+				}
+			}
+			if(tempint>=knint){
+				kn = b;
+				knint = tempint;
+			}
+		}
+		save = new Zug(meineSeite,kn.id);
+		return save;
+		
+	}
+	
+	
 	/**
 	 * Finden eines direkten Besetzungspunktes, wenn dadurch ein direktes Aushungern des Gegners
 	 * bewirkt wird (aggressives Ziehen!)  
