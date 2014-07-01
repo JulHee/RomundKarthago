@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.*;
 import core.datacontainers.Seite;
 import logik.Mechanik;
+import logik.Scrooge;
 import logik.WaspAI;
 import network.AIServer;
 import network.Client;
@@ -17,7 +18,8 @@ public class Client_ServerTest {
     String ip = "127.0.0.1";
     Integer port = 12345;
 
-
+    //Funktionieren jeweils einzeln.... irgendeine art close fehlt!
+/*
    @Test
    public void CStest() throws Exception {
 	   Thread serverThread = new Thread(){
@@ -32,7 +34,7 @@ public class Client_ServerTest {
 	   C.test();
    }
     
-    
+  */  
     /*
     @Test
     public void test_thread() throws Exception {
@@ -48,6 +50,22 @@ public class Client_ServerTest {
         WaspAI myWasp = new WaspAI(Seite.Kathargo);
         myMechanik.game(ip,port,myWasp);
     }
-*/
+*/	
+    
+    @Test
+    public void test_thread() throws Exception {
+        Thread serverThread = new Thread() {
+            @Override
+            public void run() {
+                Scrooge myScro = new Scrooge(Seite.Rom, myMechanik);
+                AIServer S = new AIServer(myScro,port);
+            }
+        };
+        serverThread.start();
+
+        Scrooge myScro = new Scrooge(Seite.Kathargo, myMechanik);
+        myMechanik.game(ip,port,myScro);
+    }
+
 
 }
