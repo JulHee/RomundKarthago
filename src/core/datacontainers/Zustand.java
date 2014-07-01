@@ -6,19 +6,25 @@ package core.datacontainers;
  * Date : 04.06.14
  * Year : 2014
  */
+
+
+/**
+ * Diese Klasse beinhaltet Informationen ueber den jeweils aktuellen Zustand des laufenden Spiels.
+ */
+
 public class Zustand {
 
     private String name;
     private Integer errorcode;
 
+	public Zustand() {
+		this.name = null;
+		this.errorcode = null;
+	}
+
     public Zustand(String name, Integer errorcode) {
         this.name = name;
         this.errorcode = errorcode;
-    }
-
-    public Zustand() {
-        this.name = null;
-        this.errorcode = null;
     }
 
     public Zustand(Integer errorcode) {

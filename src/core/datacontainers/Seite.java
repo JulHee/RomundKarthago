@@ -5,6 +5,12 @@ package core.datacontainers;
  * Date : 26.04.14
  * Year : 2014
  */
+
+/**
+ * Die Enumeration beschriebt die (Belagerungs-) Zustaende,
+ * welche eine Stadt (Knoten) im gegebenen Spiel annehmen kann.
+ */
+
 public enum Seite {
     Rom{
         public String toString(){

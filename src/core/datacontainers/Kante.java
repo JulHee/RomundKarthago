@@ -6,6 +6,10 @@ package core.datacontainers;
  * Year : 2014
  */
 
+/**
+ * Die Klasse Kante beschreibt eine Kante,
+ * welche zwischen zwei Knoten eines Graphen aufgespannt wird.
+ */
 
 public class Kante {
 
