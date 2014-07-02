@@ -36,6 +36,11 @@ public class Client {
         return ip;
     }
 
+    /**
+     * Funktion zum Starten eines Spiel mit einer AI
+     * @param ai Die gewählte AI
+     */
+
     public void aigegner(AIPlayer ai) {
         try (Socket s = new Socket(ip, port)) {
             handleSocket_ai(s, ai);
@@ -44,6 +49,10 @@ public class Client {
         }
     }
 
+    /**
+     * Funktion zum Starten eines Spiel druch Tastatur-Eingabe
+     */
+
     public void humanEnemy() {
         try (Socket s = new Socket(ip, port)) {
             handleSocket_hum(s);
@@ -51,6 +60,12 @@ public class Client {
             e.getStackTrace();
         }
     }
+
+    /**
+     * Übernimmt die Verbindung mit dem Server als AI-Gegner
+     * @param s  Übergabe des verbundenen Socket
+     * @param ai Die gewählte AI
+     */
 
     public void handleSocket_ai(Socket s, AIPlayer ai) {
         String in;
@@ -84,6 +99,11 @@ public class Client {
         }
 
     }
+
+    /**
+     * Übernimmt die Kommunikation mit dem Server als menschlicher Gegner
+     * @param s Übergabe des verbundenen Socket
+     */
 
     public void handleSocket_hum(Socket s) {
         String in;
