@@ -1,9 +1,9 @@
-package test.network_test;
+package test.network;
 
 import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.ai.Scrooge;
-import network.AIServer;
+//import network.AIServer;
 
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public class Client_ServerTest {
         myMechanik.game(ip,port,myWasp);
     }
 */	
-    
+ /*
     @Test
     public void test_thread() throws Exception {
         Thread serverThread = new Thread() {
@@ -63,5 +63,5 @@ public class Client_ServerTest {
         myMechanik.game(ip,port,myScro);
     }
 
-
+  */
 }

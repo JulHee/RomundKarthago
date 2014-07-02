@@ -1,4 +1,4 @@
-package test.core_test;
+package test.core;
 import core.datacontainers.Zug;
 import org.junit.Test;
 

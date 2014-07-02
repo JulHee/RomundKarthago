@@ -1,4 +1,4 @@
-package test.ai_test;
+package test.ai;
 
 import logik.Mechanik;
 import logik.ai.WaspAI;

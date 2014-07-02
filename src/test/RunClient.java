@@ -1,3 +1,5 @@
+package test;
+
 import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.ai.Killjoy;
