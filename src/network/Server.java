@@ -79,6 +79,8 @@ public class Server {
                     // Abfertigung des Clienten
                     handleClient(client);
                 } catch (IOException e) {
+                    client.close();
+                    server.close();
                     e.printStackTrace();
                 } finally {
                     // Wenn die Verbindung des Clienten nicht geschlossen wurde, wird dies nun getan
