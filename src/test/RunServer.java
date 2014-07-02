@@ -1,6 +1,6 @@
 package test;
 
-import network.HumanServer;
+import network.Server;
 
 /**
  * Projekt: Rom und Karthago
@@ -15,6 +15,6 @@ public class RunServer {
     public static void main(String[] args) throws Exception {
 
         final Integer port = 9999;
-        HumanServer hum = new HumanServer(port);
+        Server hum = new Server(port);
     }
 }
