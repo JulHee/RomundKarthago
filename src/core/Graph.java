@@ -30,11 +30,11 @@ public class Graph implements Cloneable {
 	private String path = "ext/map2.txt";
 
 	// Konstrukte zum speichern der Informationen bzgl. des Graphen
-	public HashSet<Knoten> l_knoten = new HashSet<Knoten>();
-	public HashSet<Kante> l_kante = new HashSet<Kante>();
-	private ArrayList<String> history = new ArrayList<String>();
+	public HashSet<Knoten> l_knoten = new HashSet<>();
+	public HashSet<Kante> l_kante = new HashSet<>();
+	private ArrayList<String> history = new ArrayList<>();
 	private boolean letzterZugAusgesetzt = false;
-	private ArrayList<String> maptext = new ArrayList<String>();
+	private ArrayList<String> maptext = new ArrayList<>();
 
 	public Graph() {
 	}
@@ -131,8 +131,8 @@ public class Graph implements Cloneable {
 
 	/**
 	 * Konvertierung des Graphen in eine einfache Stringdarstellung.
-	 * Bsp.:  "CNNR"
-	 * @return
+	 * Bsp.:  tmp = "CNNR"
+	 * @return tmp String
 	 */
 	public String convertToString() {
 		String temp = "";
@@ -155,7 +155,7 @@ public class Graph implements Cloneable {
 	 * @return Sortierte Liste mit den Knoten
 	 */
 	public ArrayList<Knoten> toArrayList(HashSet<Knoten> knotenlist) {
-		ArrayList<Knoten> retrn = new ArrayList<Knoten>();
+		ArrayList<Knoten> retrn = new ArrayList<>();
 		for (int i = 0; i < knotenlist.size(); i++) {
 			for (Knoten k : knotenlist) {
 				if (k.id == i) {
@@ -175,7 +175,7 @@ public class Graph implements Cloneable {
 	 * @return Sortierte Liste mit den Kante
 	 */
 	public ArrayList<Kante> toArrayListKante(HashSet<Kante> kanteList) {
-		ArrayList<Kante> retrn = new ArrayList<Kante>();
+		ArrayList<Kante> retrn = new ArrayList<>();
 		for (int i = 0; i < kanteList.size(); i++) {
 			for (Kante k : kanteList) {
 				if (k.getPunkt1().id == i)
@@ -220,7 +220,7 @@ public class Graph implements Cloneable {
 	}
 
 	public HashSet<Knoten> erzeugeNeueKnotenListe(HashSet<Knoten> alte) {
-		HashSet<Knoten> neue = new HashSet<Knoten>();
+		HashSet<Knoten> neue = new HashSet<>();
 		for (Knoten i : alte) {
 			neue.add(new Knoten(i.id, i.seite, i.position));
 		}
@@ -228,7 +228,7 @@ public class Graph implements Cloneable {
 	}
 
 	public HashSet<Kante> erzeugeNeueKanteListe(HashSet<Kante> alte) {
-		HashSet<Kante> neue = new HashSet<Kante>();
+		HashSet<Kante> neue = new HashSet<>();
 		for (Kante i : alte) {
 			neue.add(new Kante(i.getPunkt1(), i.getPunkt2()));
 		}
@@ -236,7 +236,7 @@ public class Graph implements Cloneable {
 	}
 
 	public ArrayList<String> erzeugeNeueHistory(ArrayList<String> alte) {
-		ArrayList<String> neue = new ArrayList<String>();
+		ArrayList<String> neue = new ArrayList<>();
 		for (String i : alte) {
 			neue.add(i);
 		}
@@ -244,7 +244,7 @@ public class Graph implements Cloneable {
 	}
 
 	public ArrayList<String> erzeugeNeueMaptext(ArrayList<String> alte) {
-		ArrayList<String> neue = new ArrayList<String>();
+		ArrayList<String> neue = new ArrayList<>();
 		for (String i : alte) {
 			neue.add(i);
 		}
@@ -281,7 +281,7 @@ public class Graph implements Cloneable {
 		try {
 			reset();
 			BufferedReader br = new BufferedReader(new FileReader(getPath()));
-			LinkedList<String> datei = new LinkedList<String>();
+			LinkedList<String> datei = new LinkedList<>();
 			String zeile;
 			int anzahl_an_Knoten = 0;
 			int gefundene_Knoten = 0;
@@ -589,7 +589,7 @@ public class Graph implements Cloneable {
 	 * @return Der neue Graph nachdem der Zug angewendet wurde
 	 */
 	public Graph ssuf(Graph g, Zug z) throws KnotenException{
-		//try {
+
 			Knoten aktKnoten = g.findKnoten(z.getStadt());
 			if (aktKnoten == null) {
 				return g;
@@ -598,8 +598,7 @@ public class Graph implements Cloneable {
 				// besetzt ist C oder R,
 				// word einfach g zurück
 				// gegeben
-				aktKnoten.seite = z.getSeite(); // Die Seite des Knoten wird
-				// gesetzt
+				aktKnoten.seite = z.getSeite(); // Die Seite des Knoten wird gesetzt
 				HashSet<Knoten> nachbarn = getNachbarschaft(aktKnoten);
 
 				Seite gegner; // setze Gegner
@@ -609,9 +608,7 @@ public class Graph implements Cloneable {
 					gegner = Seite.Kathargo;
 				}
 
-				Boolean existiertKeinGegner = true; // Checken ob die Stadt an
-				// einen oder mehrer Gegner
-				// grenzt
+				Boolean existiertKeinGegner = true; // Checken ob die Stadt an einen oder mehrer Gegner grenzt
 				for (Knoten k : nachbarn) {
 					if (k.seite == gegner)
 						existiertKeinGegner = false;
@@ -621,28 +618,18 @@ public class Graph implements Cloneable {
 					checkAushungernOhneGegner(aktKnoten);
 					return g;
 				}
-				HashSet<Knoten> nachbarGegner = new HashSet<Knoten>(); // findet die
-				// benachbarten
-				// Gegner
-				// heraus
+				HashSet<Knoten> nachbarGegner = new HashSet<Knoten>(); // findet die benachbarten Gegner heraus
 				for (Knoten i : getNachbarschaft(aktKnoten)) {
 					if (i.getSeite() == gegner)
 						nachbarGegner.add(i);
 				}
 				for (Knoten i : nachbarGegner) {
-					checkAushungern(i, gegner); // prüft für alle benachbarten
-					// Gegner ob sie aushungern
+					checkAushungern(i, gegner); // prüft für alle benachbarten Gegner ob sie aushungern
 				}
-				checkAushungern(aktKnoten, aktKnoten.getSeite()); // prüft für
-				// sich selbst
-				// ob man
-				// aushungert
+				checkAushungern(aktKnoten, aktKnoten.getSeite()); // prüft für sich selbst ob man aushungert
 			}
 			return g;
-	//	} catch (Exception e) {
-	//		System.out.println(e.toString());
-//			return g;
-	//	}
+
 
 	}
 
