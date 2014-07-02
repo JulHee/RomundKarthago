@@ -20,19 +20,19 @@ import logik.ai.AIPlayer;
 // komplette AI noch in Arbeit!
 
 public class optionalAI extends AIPlayer {
-
-	/* TODO
-	 * Muss entfernt/umgangen werden da client und server jeweils mechaniken besitzen 
-	 * und die Map variabel bleiben muss!!!
-	 */
-	String gamepath = "ext/Gameboard.txt";
-	Mechanik mechanik = new Mechanik(gamepath);
-
-
+	
+	public Mechanik mechanik;
 	public Seite meineSeite;
-
-	public optionalAI(Seite s) {
-		meineSeite = s;
+	/*
+	 * Variablen für Zugriffsrechte außerhalb definiert
+	 */
+	public ArrayList<ArrayList<Knoten>> Rchainz = new ArrayList<ArrayList<Knoten>>();
+	public ArrayList<ArrayList<Knoten>> Kchainz = new ArrayList<ArrayList<Knoten>>();
+	public Knoten Target;
+	
+	public optionalAI(Seite s,Mechanik mechanik) {
+		this.meineSeite = s;
+		this.mechanik = mechanik;
 	};
 
 	//TODO at the end
@@ -60,18 +60,12 @@ public class optionalAI extends AIPlayer {
 	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  TODO option testen!
 	 * 1) Targets zum Aushungern des Gegners sofort besetzen DONE
 	 * 2) Strategie TODO Strategie entwickeln
-	 * 3) Sicherer Zug. Knoten mit max neutral Nachbarn -> wenn Anzahl = 0 aussetzen ! TODO testen saveme!
+	 * 3) Sicherer Zug. Knoten mit max neutral Nachbarn -> wenn Anzahl = 0 aussetzen ! DONE
 	 * 
 	 * 
 	 */
 
-	/*
-	 * Variablen für Zugriffsrechte außerhalb definiert
-	 */
-	public Graph myGraph = mechanik.getMyGraph();
-	public ArrayList<ArrayList<Knoten>> Rchainz = new ArrayList<ArrayList<Knoten>>();
-	public ArrayList<ArrayList<Knoten>> Kchainz = new ArrayList<ArrayList<Knoten>>();
-	public Knoten Target;
+	
 
 
 	/*
@@ -147,7 +141,7 @@ public class optionalAI extends AIPlayer {
 			int zaehl = 0;
 			ArrayList<Knoten> neuNeigh = new ArrayList<Knoten>();
 			for(Knoten b : a){
-				HashSet<Knoten> neighbourhood = myGraph.getNachbarschaft(b);
+				HashSet<Knoten> neighbourhood = this.mechanik.getMyGraph().getNachbarschaft(b);
 				for (Knoten c : neighbourhood){
 					if(c.seite == Seite.Neutral){
 						zaehl += 1;
@@ -174,7 +168,7 @@ public class optionalAI extends AIPlayer {
 		Kchainz.clear();
 
 		int zaehl = 0; // sinnfreie zählvariable -> Anzahl der neutralen Knoten
-		for (Knoten a : myGraph.l_knoten) {
+		for (Knoten a : this.mechanik.getMyGraph().l_knoten) {
 			Seite site = a.getSeite();
 			if (site == Seite.Neutral) {
 				zaehl += 1;
@@ -219,7 +213,7 @@ public class optionalAI extends AIPlayer {
 
 		} else {
 			temp.add(knot);
-			HashSet<Knoten> blubb = myGraph.getNachbarschaft(knot);
+			HashSet<Knoten> blubb = this.mechanik.getMyGraph().getNachbarschaft(knot);
 			for (Knoten x : blubb) {
 				if (x.getSeite() == seite) {
 					kette(temp, seite, x);

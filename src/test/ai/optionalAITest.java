@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import logik.Mechanik;
 import logik.ai.optionalAI;
 
 import org.junit.Test;
@@ -11,11 +12,13 @@ import org.junit.Test;
 import core.datacontainers.Knoten;
 import core.datacontainers.Position;
 import core.datacontainers.Seite;
+import core.datacontainers.Zug;
 
 public class optionalAITest {
 
 	// Variablen zur Erzeugung der Test
-	optionalAI Pew = new optionalAI(Seite.Rom);
+	Mechanik mecha = new Mechanik("ext/Gameboard.txt");
+	optionalAI Pew = new optionalAI(Seite.Rom,mecha);
 
 	ArrayList<Knoten> array = new ArrayList();
 	ArrayList<ArrayList<Knoten>> arrayarray = new ArrayList();
@@ -25,7 +28,7 @@ public class optionalAITest {
 	Knoten n3 = new Knoten(3,Seite.Rom, new Position(250,425));
 
 	//Testen der Hilfsfunktionen
-	
+
 	//optinalAI.used - tested!
 	@Test
 	public void usedtest1() {
@@ -52,7 +55,7 @@ public class optionalAITest {
 		Pew.kette(array, Seite.Kathargo, n0);
 		assertTrue(Pew.checkme(array, n0));
 	}
-	 
+
 	@Test
 	public void kettetest3() {
 		Pew.kette(array, Seite.Neutral, n1);
@@ -84,6 +87,11 @@ public class optionalAITest {
 			}
 		}
 		assertTrue(result);
+	}
+	@Test
+	public void savemetest(){
+		Zug resu = Pew.saveme();
+		assertTrue((resu.getStadt()== 2) | (resu.getStadt() == 1 ));
 	}
 
 
