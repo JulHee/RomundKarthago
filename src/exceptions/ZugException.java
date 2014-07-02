@@ -1,4 +1,4 @@
-package eigene_exceptions;
+package exceptions;
 
 /**
  * Projekt: Rom und Karthago
