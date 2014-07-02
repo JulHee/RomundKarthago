@@ -1,6 +1,7 @@
 package core;
 
 import core.datacontainers.*;
+import exceptions.KnotenException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -119,15 +120,13 @@ public class Graph implements Cloneable {
 	 *            ID des gesuchten Knoten
 	 * @return i oder null Knoten
 	 */
-	public Knoten findKnoten(int id) {
+	public Knoten findKnoten(int id) throws KnotenException{
 		for (Knoten i : l_knoten) {
 			if (i.id == id) {
 				return i;
 			}
 		}
-		System.out.println("Error: Keine Stadt passend zu der ID:" + id
-				+ " gefunden.");
-		return null;
+		throw new KnotenException("Keine Stadt passend zu der ID:" + id +"gefunden.");
 	}
 
 	/**
@@ -437,7 +436,7 @@ public class Graph implements Cloneable {
 	 *            Knoten der geprüft werden soll
 	 * @return Seite die der Knoten nach dem Aushungern hat
 	 */
-	private void checkAushungern(Knoten k, Seite spieler) {
+	private void checkAushungern(Knoten k, Seite spieler) throws KnotenException{
 		Boolean kHungertAus = true;
 		k = findKnoten(k.id); // setzte k auf den richtigen knoten aus lKnoten
 		/*
@@ -531,39 +530,43 @@ public class Graph implements Cloneable {
 	 * @return
 	 */
 	public Zustand run(String zug, Seite spieler) {
-		String retrn;
-		Zustand retrnZustand = new Zustand(0);
-		Zug myzug = new Zug(zug);
-		Graph temp = this.clone();
-		if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
-			retrnZustand.setName(this.convertToString());
-			if (letzterZugAusgesetzt) {
-				retrnZustand.setErrorcode(2);
-			} else {
-				retrnZustand.setErrorcode(1);
-				letzterZugAusgesetzt = true;
-			}
+        Zustand retrnZustand = new Zustand(0);
+        try {
+            Zug myzug = new Zug(zug);
+            Graph temp = this.clone();
+            if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
+                retrnZustand.setName(this.convertToString());
+                if (letzterZugAusgesetzt) {
+                    retrnZustand.setErrorcode(2);
+                } else {
+                    retrnZustand.setErrorcode(1);
+                    letzterZugAusgesetzt = true;
+                }
 
-		} else if (history.contains(temp.ssuf(temp, myzug).convertToString())) {
-			retrnZustand.setName(this.convertToString());
-			retrnZustand.setErrorcode(3);
-			letzterZugAusgesetzt = true;
-		} else {
-			String letzterZug = this.convertToString();
-			this.ssuf(myzug);
-			if (letzterZug.equals(this.convertToString())) {
-				if (letzterZugAusgesetzt) {
-					retrnZustand.setErrorcode(2);
-				}
-				retrnZustand.setErrorcode(1);
-				letzterZugAusgesetzt = true;
+            } else if (history.contains(temp.ssuf(temp, myzug).convertToString())) {
+                retrnZustand.setName(this.convertToString());
+                retrnZustand.setErrorcode(3);
+                letzterZugAusgesetzt = true;
+            } else {
+                String letzterZug = this.convertToString();
+                this.ssuf(myzug);
+                if (letzterZug.equals(this.convertToString())) {
+                    if (letzterZugAusgesetzt) {
+                        retrnZustand.setErrorcode(2);
+                    }
+                    retrnZustand.setErrorcode(1);
+                    letzterZugAusgesetzt = true;
+                }
+                retrnZustand.setName(this.convertToString());
+            }
+            history.add(retrnZustand.getName());
 
-			}
-			retrnZustand.setName(this.convertToString());
-		}
-		history.add(retrnZustand.getName());
-		return retrnZustand;
-	}
+        }catch (KnotenException kE){
+            System.out.println(kE.getMessage());}
+        finally {
+            return retrnZustand;
+        }
+    }
 
 	/**
 	 * Anwenden der Funktion ssuf mit der eigenen Klasse
@@ -572,7 +575,7 @@ public class Graph implements Cloneable {
 	 *            Der Zug
 	 * @return Der neue Graph nach dem Zug
 	 */
-	public Graph ssuf(Zug z) {
+	public Graph ssuf(Zug z)throws KnotenException{
 		return ssuf(this, z);
 	}
 
@@ -585,8 +588,8 @@ public class Graph implements Cloneable {
 	 *            Der Zug
 	 * @return Der neue Graph nachdem der Zug angewendet wurde
 	 */
-	public Graph ssuf(Graph g, Zug z) {
-		try {
+	public Graph ssuf(Graph g, Zug z) throws KnotenException{
+		//try {
 			Knoten aktKnoten = g.findKnoten(z.getStadt());
 			if (aktKnoten == null) {
 				return g;
@@ -636,10 +639,10 @@ public class Graph implements Cloneable {
 				// aushungert
 			}
 			return g;
-		} catch (Exception e) {
-			System.out.println(e.toString());
-			return g;
-		}
+	//	} catch (Exception e) {
+	//		System.out.println(e.toString());
+//			return g;
+	//	}
 
 	}
 
