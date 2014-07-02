@@ -62,8 +62,7 @@ public class Graph implements Cloneable {
 	/**
 	 * Verändert den Path und ließt die Map ein
 	 *
-	 * @param path
-	 *            Pfad zur datei
+	 * @param path Pfad zur datei
 	 */
 	public void setPath(String path) {
 		this.path = path;
@@ -74,8 +73,7 @@ public class Graph implements Cloneable {
 	 * Übergabe einer ArrayList<String> als Map. Dannach einlesen der
 	 * übergebenen Map
 	 *
-	 * @param map
-	 *            Die Map als ArrayList<String>
+	 * @param map Die Map als ArrayList<String>
 	 */
 	public void setPath(ArrayList<String> map) {
 		this.path = "Die Map wurde per TCP-IP gesendet !!!!!";
