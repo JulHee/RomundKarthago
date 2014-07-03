@@ -3,7 +3,9 @@ package test.network;
 import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.ai.Scrooge;
+import logik.ai.WaspAI;
 import network.Server;
+
 import org.junit.Test;
 
 public class Client_ServerTest {
@@ -30,14 +32,14 @@ public class Client_ServerTest {
    }
     
   */  
-    /*
+    
     @Test
     public void test_thread() throws Exception {
         Thread serverThread = new Thread() {
             @Override
             public void run() {
                 WaspAI myWasp = new WaspAI(Seite.Rom);
-                AIServer S = new AIServer(myWasp,port);
+                Server S = new Server(port,myWasp);
             }
         };
         serverThread.start();
@@ -45,10 +47,10 @@ public class Client_ServerTest {
         WaspAI myWasp = new WaspAI(Seite.Kathargo);
         myMechanik.game(ip,port,myWasp);
     }
-*/	
-
+	
+    /*
     @Test
-    public void test_thread() throws Exception {
+    public void test_thread2() throws Exception {
         Thread serverThread = new Thread() {
             @Override
             public void run() {
@@ -61,6 +63,7 @@ public class Client_ServerTest {
         Scrooge myScro = new Scrooge(Seite.Kathargo, myMechanik);
         myMechanik.game(ip,port,myScro);
     }
+    */
 
 
 }

@@ -34,7 +34,6 @@ public class Server {
         this.port = port;
         try {
             activeAI = true;
-            ai = ai;  //TODO check me
             // Starten des Servers
             run();
         } catch (IOException e) {
