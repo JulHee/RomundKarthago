@@ -3,7 +3,6 @@ package test.network;
 import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.ai.Killjoy;
-import logik.ai.Scrooge;
 import logik.ai.WaspAI;
 import network.Server;
 
@@ -14,7 +13,7 @@ public class Client_ServerTest {
     // Variable, welche in mehreren Test benötigt werden
     Mechanik myMechanik = new Mechanik("ext/GameBoard.txt");
     String ip = "127.0.0.1";
-    Integer port = 12345;
+    Integer port = 523;
 
     //Funktionieren jeweils einzeln.... irgendeine art close fehlt!
 /*
@@ -36,8 +35,7 @@ public class Client_ServerTest {
     
     @Test
     public void test_thread() throws Exception {
-        WaspAI myWasp = new WaspAI(Seite.Kathargo);
-        Killjoy killJoy = new Killjoy(Seite.Rom,myMechanik);
+        final WaspAI myWasp = new WaspAI(Seite.Kathargo);
         Thread serverThread = new Thread() {
             @Override
             public void run() {
