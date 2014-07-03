@@ -595,7 +595,6 @@ public class Graph implements Cloneable {
 	}
 
 	/**
-	 * Sollte eig funktionieren, wenn du getBesetztesGebiet() funktioniert.
 	 * Die Funktion holt sich, gegeben dem Fall, dass die Stadt neutral ist, das
 	 * "neutral besetzte" Gebiet.
 	 * Von diesem wird dann die Nachbarschaft ermittelt und diese darauf
@@ -603,11 +602,13 @@ public class Graph implements Cloneable {
 	 * Besetzungsmacht gehoeren. Gehoert auch nur eine einzelne Stadt dem
 	 * Gegner, koennen keine Punkte fuer
 	 * diese neutralen Staedte gezaehlt werden.
+	 * Fuer alle Staedte, die vom Spieler direkt besetzt werden, werden die Punkte
+	 * direkt zum Punktestand hinzugezaehlt.
 	 *
 	 * @param spieler    Die Seite des Spielers für den die Punkte gezählt werden
 	 * @return Punktestand
 	 */
-	public int besetztePunkteStandFuer(Seite spieler) {
+	public int getPunkteStandFuer(Seite spieler) {
 		HashSet<Knoten> punkteStaedte = new HashSet<>();
 		for (Knoten i : l_knoten) {
 			if (i.seite == spieler) {
