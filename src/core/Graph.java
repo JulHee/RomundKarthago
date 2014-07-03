@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 /**
  * Projekt: Rom und Karthago
@@ -84,11 +83,6 @@ public class Graph implements Cloneable {
 			System.out.println("Fehler beim Lesen der Map");
 		}
 	}
-
-    public HashSet<Knoten> getL_knoten() {
-        return l_knoten;
-    }
-
 
 	/**
 	 * Erzeugt aus einem String eine enumeration Seite
@@ -408,7 +402,7 @@ public class Graph implements Cloneable {
 	 * @param retrn   Akumulator für die Rekursion
 	 * @return retrn Das HashSet mit dem besetzten Gebiet
 	 */
-	private HashSet<Knoten> rekGBG(Knoten rekKnoten, HashSet retrn) {
+	private HashSet<Knoten> rekGBG(Knoten rekKnoten, HashSet<Knoten> retrn) {
 		retrn.add(rekKnoten);
 		for (Knoten i : getNachbarschaft(rekKnoten)) {
 			if (i.seite == rekKnoten.seite && !(retrn.contains(i))) {
@@ -423,7 +417,6 @@ public class Graph implements Cloneable {
 	 *
 	 * @param k
 	 *            Knoten der geprüft werden soll
-	 * @return Seite die der Knoten nach dem Aushungern hat
 	 */
 	private void checkAushungern(Knoten k, Seite spieler) throws KnotenException{
 		Boolean kHungertAus = true;
@@ -466,7 +459,7 @@ public class Graph implements Cloneable {
 
 	/**
 	 *  Checkt, ob der uebergebene Knoten aufgrund der aktuellen Spielsituation aushungert.
-	 * @param k
+	 * @param k Der Knoten von dem aus geprüft wird
 	 */
 	private void checkAushungernOhneGegner(Knoten k) {
 		Boolean kHungertAus = true;
@@ -480,26 +473,7 @@ public class Graph implements Cloneable {
 		}
 	}
 
-	/**
-	 * Gibt einen benachtbarten gegnerischen Knoten zurück
-	 *
-	 * @param aktKnoten
-	 * @return Knoten . Einen benachtbarten Knoten. Falls keiner existiert null
-	 */
-	public Knoten getEinenBenachbartenGegner(Knoten aktKnoten) throws KnotenException{
-		Seite gegner;
-		if (aktKnoten.getSeite() == Seite.Kathargo) {
-			gegner = Seite.Rom;
-		} else {
-			gegner = Seite.Kathargo;
-		}
 
-		for (Knoten i : getNachbarschaft(aktKnoten)) {
-			if (i.getSeite() == gegner)
-				return i;
-		}
-		throw new KnotenException("Es gibt keinen benachbarten Gegner");
-	}
 
 	public ArrayList<String> getMaptext() {
 		return maptext;
@@ -512,9 +486,9 @@ public class Graph implements Cloneable {
 	 * Errorcode = 2: Beende Spiel
 	 * Errorcode = 3: Stellung wiederholt
 	 *
-	 * @param zug
-	 * @param spieler
-	 * @return
+	 * @param zug   Der gemachte Zug
+	 * @param spieler     Der Spieler der den Zug ausführt
+	 * @return   retrnZustand Codierung siehe oben
 	 */
 	public Zustand run(String zug, Seite spieler) {
         Zustand retrnZustand = new Zustand(0);
@@ -549,7 +523,7 @@ public class Graph implements Cloneable {
             history.add(retrnZustand.getName());
 
         }catch (KnotenException kE){
-            System.out.println(kE.getMessage());}
+            System.out.println(kE.getStackTrace());}
         finally {
             return retrnZustand;
         }
@@ -605,7 +579,7 @@ public class Graph implements Cloneable {
 					checkAushungernOhneGegner(aktKnoten);
 					return g;
 				}
-				HashSet<Knoten> nachbarGegner = new HashSet<Knoten>(); // findet die benachbarten Gegner heraus
+				HashSet<Knoten> nachbarGegner = new HashSet<>(); // findet die benachbarten Gegner heraus
 				for (Knoten i : getNachbarschaft(aktKnoten)) {
 					if (i.getSeite() == gegner)
 						nachbarGegner.add(i);
@@ -630,29 +604,30 @@ public class Graph implements Cloneable {
 	 * Gegner, koennen keine Punkte fuer
 	 * diese neutralen Staedte gezaehlt werden.
 	 *
-	 * @param spieler
+	 * @param spieler    Die Seite des Spielers für den die Punkte gezählt werden
 	 * @return Punktestand
 	 */
 	public int besetztePunkteStandFuer(Seite spieler) {
-		HashSet<Knoten> punkteStaedte = new HashSet<Knoten>();
+		HashSet<Knoten> punkteStaedte = new HashSet<>();
 		for (Knoten i : l_knoten) {
 			if (i.seite == spieler) {
 				punkteStaedte.add(i);
 			} else if (i.seite == Seite.Neutral) {
-				punkteStaedte.addAll(checkNachbarschaft(i, spieler));
+				punkteStaedte.addAll(checkPunkteFuerNGebiet(i, spieler));
 			}
 		}
 		return punkteStaedte.size();
 	}
 
 	/**
-	 * checkNachbarschaft gibt alle neutralen Städte zurück, die Punkte fuer den entsprechenden Spieler einbringen.
+     * Hilfsfunktion für  besetzterPunktestandFuer
+	 * checkPunkteFuerNGebiet gibt alle neutralen Städte zurück, die Punkte fuer den entsprechenden Spieler einbringen.
 	 *
-	 * @param knot
-	 * @param spieler
+	 * @param knot       muss ein neutraler Knoten sein
+	 * @param spieler     Die Seite des Spielers
 	 * @return ein HashSet von Knoten
 	 */
-	private HashSet<Knoten> checkNachbarschaft(Knoten knot, Seite spieler) {
+	private HashSet<Knoten> checkPunkteFuerNGebiet(Knoten knot, Seite spieler) {
 		HashSet<Knoten> umzingeltesGebiet = getBesetztesGebiet(knot);
 		HashSet<Knoten> umzingelndeNachbarn = getNachbarschaft(umzingeltesGebiet);
 		for (Knoten i : umzingelndeNachbarn) {
