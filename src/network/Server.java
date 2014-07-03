@@ -32,6 +32,7 @@ public class Server {
     public Server(Integer port, AIPlayer ai) {
         // Setzen des Ports auf dem der Sever hört
         this.port = port;
+        this.ai = ai;
         try {
             activeAI = true;
             // Starten des Servers
