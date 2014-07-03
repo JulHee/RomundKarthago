@@ -14,7 +14,6 @@ public class Client_ServerTest {
     String ip = "127.0.0.1";
     Integer port = 10000;
 
-    //Funktionieren jeweils einzeln.... irgendeine art close fehlt!
     
     @Test
     public void test_thread() throws Exception {
