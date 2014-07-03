@@ -22,28 +22,28 @@ public class Scoring {
 	public void sScR() throws Exception {
 		graph.setPath(map3);
 		graph.read();
-		int x = graph.besetztePunkteStandFuer(Rom);
+		int x = graph.getPunkteStandFuer(Rom);
 		assertEquals(x,1);
 	}
 	@Test
 	public void sScK() throws Exception {
 		graph.setPath(map3);
 		graph.read();
-		int x = graph.besetztePunkteStandFuer(Kathargo);
+		int x = graph.getPunkteStandFuer(Kathargo);
 		assertEquals(x,1);
 	}
 	@Test
 	public void bScR() throws Exception {
 		graph.setPath(map4);
 		graph.read();
-		int x = graph.besetztePunkteStandFuer(Rom);
+		int x = graph.getPunkteStandFuer(Rom);
 		assertEquals(x,6);
 	}
 	@Test
 	public void bScK() throws Exception {
 		graph.setPath(map4);
 		graph.read();
-		int x = graph.besetztePunkteStandFuer(Kathargo);
+		int x = graph.getPunkteStandFuer(Kathargo);
 		assertEquals(x,2);
 	}
 }

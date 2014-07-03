@@ -5,7 +5,6 @@ import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
 import logik.Mechanik;
-import logik.ai.AIPlayer;
 
 /**
  * Projekt : RomUndKathargo
@@ -52,6 +51,6 @@ public class Scrooge extends AIPlayer {
     private Integer getPunkte(Zug z, Mechanik mechanik) {
         Mechanik mymechanik = mechanik.clone();
         mymechanik.auswerten(z.toFormat(), z.getSeite());
-        return mymechanik.getMyGraph().besetztePunkteStandFuer(z.getSeite());
+        return mymechanik.getMyGraph().getPunkteStandFuer(z.getSeite());
     }
 }

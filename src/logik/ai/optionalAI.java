@@ -3,12 +3,10 @@ package logik.ai;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import core.Graph;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
 import logik.Mechanik;
-import logik.ai.AIPlayer;
 
 /**
  * optionale KI fuer Ki - Turnier
@@ -40,8 +38,8 @@ public class optionalAI extends AIPlayer {
 	public Zug nextZug() {
 		Zug retrn;
 		if(mechanik.getLetzterZugAusgesetzt()){
-			int me = mechanik.getMyGraph().besetztePunkteStandFuer(meineSeite);
-			int enemy = mechanik.getMyGraph().besetztePunkteStandFuer(notmysite());
+			int me = mechanik.getMyGraph().getPunkteStandFuer(meineSeite);
+			int enemy = mechanik.getMyGraph().getPunkteStandFuer(notmysite());
 			if(me>enemy){
 				retrn = new Zug(meineSeite+" X");
 				return retrn;

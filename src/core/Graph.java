@@ -621,7 +621,7 @@ public class Graph implements Cloneable {
 	}
 
 	/**
-     * Hilfsfunktion für  besetzterPunktestandFuer
+     * Hilfsfunktion für  getPunkteStandFuer
 	 * checkPunkteFuerNGebiet gibt alle neutralen Städte zurück, die Punkte fuer den entsprechenden Spieler einbringen.
 	 *
 	 * @param knot       muss ein neutraler Knoten sein

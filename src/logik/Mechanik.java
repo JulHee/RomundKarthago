@@ -1,16 +1,16 @@
 package logik;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
-import logik.ai.AIPlayer;
-import network.Client;
 import core.Graph;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
 import core.datacontainers.Zustand;
+import logik.ai.AIPlayer;
+import network.Client;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Projekt: Rom und Karthago
@@ -136,10 +136,10 @@ public class Mechanik implements Cloneable {
         }
         System.out.println("Spiel beendet");
         System.out.println("Rom hat "
-                + myGraph.besetztePunkteStandFuer(Seite.Rom) + " Punkt(e)");
+                + myGraph.getPunkteStandFuer(Seite.Rom) + " Punkt(e)");
         System.out
                 .println("Kathargo hat "
-                        + myGraph.besetztePunkteStandFuer(Seite.Kathargo)
+                        + myGraph.getPunkteStandFuer(Seite.Kathargo)
                         + " Punkt(e)");
     }
 
@@ -209,10 +209,10 @@ public class Mechanik implements Cloneable {
         }
         System.out.println("Spiel beendet");
         System.out.println("Rom hat "
-                + myGraph.besetztePunkteStandFuer(Seite.Rom) + " Punkt(e)");
+                + myGraph.getPunkteStandFuer(Seite.Rom) + " Punkt(e)");
         System.out
                 .println("Kathargo hat "
-                        + myGraph.besetztePunkteStandFuer(Seite.Kathargo)
+                        + myGraph.getPunkteStandFuer(Seite.Kathargo)
                         + " Punkt(e)");
     }
 
@@ -238,10 +238,10 @@ public class Mechanik implements Cloneable {
         }
         System.out.println("Spiel beendet");
         System.out.println("Rom hat "
-                + myGraph.besetztePunkteStandFuer(Seite.Rom) + " Punkt(e)");
+                + myGraph.getPunkteStandFuer(Seite.Rom) + " Punkt(e)");
         System.out
                 .println("Kathargo hat "
-                        + myGraph.besetztePunkteStandFuer(Seite.Kathargo)
+                        + myGraph.getPunkteStandFuer(Seite.Kathargo)
                         + " Punkt(e)");
 
     }
