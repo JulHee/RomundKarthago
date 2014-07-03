@@ -26,7 +26,7 @@ public class Client_ServerTest {
             }
         };
         serverThread.start();
-        myMechanik.game(ip,port,myWasp);
+        myMechanik.game(ip,port+1,myWasp);
     }
 	
 
@@ -42,7 +42,7 @@ public class Client_ServerTest {
         serverThread.start();
 
         Scrooge myScro = new Scrooge(Seite.Kathargo, myMechanik);
-        myMechanik.game(ip,port,myScro);
+        myMechanik.game(ip,port+2,myScro);
     }
 
 

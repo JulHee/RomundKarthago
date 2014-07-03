@@ -89,7 +89,7 @@ public class Client {
                 // Auswerten des Zuges
                 myMechanik.auswerten(zug.toFormat(), mySeite);
                 in = input.readLine();
-                System.out.println("Lesen des Zuges: " + input);
+                System.out.println("Lesen des Zuges: " + in);
                 myMechanik.auswerten(in, Seite.Kathargo);
             }
             s.close();
