@@ -1,6 +1,7 @@
 package core;
 
 import core.datacontainers.*;
+import exceptions.DateiStrukturException;
 import exceptions.KnotenException;
 
 import java.io.BufferedReader;
@@ -29,7 +30,7 @@ public class Graph implements Cloneable {
 	// Relativer Pfad zur Datei zum lesen einer Beispieldatei
 	private String path = "ext/map2.txt";
 
-	// Konstrukte zum speichern der Informationen bzgl. des Graphen
+    // Konstrukte zum speichern der Informationen bzgl. des Graphen
 	public HashSet<Knoten> l_knoten = new HashSet<>();
 	public HashSet<Kante> l_kante = new HashSet<>();
 	private ArrayList<String> history = new ArrayList<>();
@@ -64,7 +65,7 @@ public class Graph implements Cloneable {
 	 *
 	 * @param path Pfad zur datei
 	 */
-	public void setPath(String path) {
+	public void setPath(String path)throws Exception{
 		this.path = path;
 		this.read();
 	}
@@ -83,6 +84,11 @@ public class Graph implements Cloneable {
 			System.out.println("Fehler beim Lesen der Map");
 		}
 	}
+
+    public HashSet<Knoten> getL_knoten() {
+        return l_knoten;
+    }
+
 
 	/**
 	 * Erzeugt aus einem String eine enumeration Seite
@@ -261,25 +267,15 @@ public class Graph implements Cloneable {
 	}
 
 	/**
-	 * Konvertiert die Knoten in ein Set
-	 *
-	 * @return Alle Knoten des Graphen
-	 */
-	public HashSet<Knoten> toHashSet() {
-		return l_knoten;
-	}
-
-	/**
 	 * Ließt eine Datei ein und erstellt daraus einen Graphen.
 	 *
 	 * @throws Exception
 	 *             Fehler, falls die Datei nicht den richtlinien entspricht.
 	 */
-	public void read() {
-		try {
+    //TODO wirft read nun auch KnotenException und DateiStrukturExceptions , da die ja von Exception erben.
+	public void read() throws Exception {
 			reset();
 			BufferedReader br = new BufferedReader(new FileReader(getPath()));
-			LinkedList<String> datei = new LinkedList<>();
 			String zeile;
 			int anzahl_an_Knoten = 0;
 			int gefundene_Knoten = 0;
@@ -305,23 +301,16 @@ public class Graph implements Cloneable {
 						Knoten nach = findKnoten(Integer.parseInt(split[2]));
 						l_kante.add(new Kante(von, nach));
 					} else {
-						throw new Exception("Fehler in der Struktur der Datei:"
+						throw new DateiStrukturException("Fehler in der Struktur der Datei:"
 								+ getPath());
 					}
-
 				}
 			}
 			if (!(anzahl_an_Knoten == gefundene_Knoten)) {
 				reset();
-				throw new Exception(
-						"Die Anzahl der Knoten stimmt nicht mit der überlieferten Zahl überein!");
+				throw new IOException("Die Anzahl der Knoten stimmt nicht mit der überlieferten Zahl überein!");
 			}
-		} catch (IOException ex) {
-			System.out.printf("Fehler beim lesen einer Zeile der Datei");
-		} catch (Exception e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
-		}
+
 	}
 
 	/**
