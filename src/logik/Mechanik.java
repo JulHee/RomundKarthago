@@ -44,8 +44,11 @@ public class Mechanik implements Cloneable {
     public Mechanik(String path) {
         this.path = path;
         myGraph = new Graph();
-        myGraph.setPath(this.path);
-        myGraph.read();
+        try {
+            myGraph.setPath(this.path);
+            myGraph.read();
+        }catch (Exception e){
+            System.out.println(e.getStackTrace());}
     }
 
     /**

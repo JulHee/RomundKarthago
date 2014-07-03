@@ -315,8 +315,9 @@ public class Graph implements Cloneable {
 
 	/**
 	 * Erstellt aus der uebergebenen ArrayList einen Graphen
-	 * @param map
-	 * @throws Exception
+	 * @param map    Die Map als ArrayList<String>
+	 * @throws Exception  DateiStrukturException, falls die angegebene Datei fehlerhaft formatiert ist
+     *                    IOException, falls das Einlesen fehlerhaft war und die Anz der Knoten vorher und nachher nicht gleich sind
 	 */
 	public void read(ArrayList<String> map) throws Exception {
 		reset();
@@ -340,13 +341,13 @@ public class Graph implements Cloneable {
 				Knoten nach = findKnoten(Integer.parseInt(split[2]));
 				l_kante.add(new Kante(von, nach));
 			} else {
-				throw new Exception("Fehler in der Struktur der Datei:"
+				throw new DateiStrukturException("Fehler in der Struktur der Datei:"
 						+ getPath());
 			}
 		}
 		if (!(anzahl_an_Knoten == gefundene_Knoten)) {
 			reset();
-			throw new Exception(
+			throw new IOException(
 					"Die Anzahl der Knoten stimmt nicht mit der überlieferten Zahl überein!");
 		}
 	}
@@ -359,7 +360,7 @@ public class Graph implements Cloneable {
 	 * @return Menge an Knoten
 	 */
 	public HashSet<Knoten> getNachbarschaft(Knoten knoten) {
-		HashSet<Knoten> retrn = new HashSet<Knoten>();
+		HashSet<Knoten> retrn = new HashSet<>();
 		for (Kante k : this.l_kante) {
 			if (k.getPunkt1().equals(knoten)) {
 				retrn.add(k.getPunkt2());
@@ -379,7 +380,7 @@ public class Graph implements Cloneable {
 	 * @return Nachbarn der Knotenmenge
 	 */
 	public HashSet<Knoten> getNachbarschaft(HashSet<Knoten> knotenListe) {
-		HashSet<Knoten> retrn = new HashSet<Knoten>();
+		HashSet<Knoten> retrn = new HashSet<>();
 		for (Knoten k : knotenListe) {
 			for (Knoten temp : getNachbarschaft(k)) {
 				retrn.add(temp);
@@ -392,19 +393,20 @@ public class Graph implements Cloneable {
 	/**
 	 * Berechnet alle verbuendeten Knoten, welche in direkter Linie mit dem Ausgangsknoten verbunden sind.
 	 *
-	 * @param knoten
-	 * @return
+	 * @param knoten  Der Knoten von dem aus das besetzte Gebiet bestimmt werden soll
+	 * @return Das HashSet mit dem besetzten Gebiet
 	 */
 	public HashSet<Knoten> getBesetztesGebiet(Knoten knoten) {
-		return rekGBG(knoten, new HashSet<Knoten>());
+
+        return rekGBG(knoten, new HashSet<Knoten>());
 	}
 
 	/**
 	 * rekursive Hilfsfunktion zu getBesetztesGebiet()
 	 *
-	 * @param rekKnoten
-	 * @param retrn
-	 * @return
+	 * @param rekKnoten  Stadt die geprüft wird
+	 * @param retrn   Akumulator für die Rekursion
+	 * @return retrn Das HashSet mit dem besetzten Gebiet
 	 */
 	private HashSet<Knoten> rekGBG(Knoten rekKnoten, HashSet retrn) {
 		retrn.add(rekKnoten);
@@ -436,9 +438,7 @@ public class Graph implements Cloneable {
 		 */
 		HashSet<Knoten> nachbarnUmUrsprung = getNachbarschaft(k);
 		for (Knoten kn : nachbarnUmUrsprung) {
-			Knoten lKnotenKn = findKnoten(kn.id); // ermittle über kn den
-			// richtigen Knoten aus
-			// lKnoten
+			Knoten lKnotenKn = findKnoten(kn.id); // ermittle über kn den richtigen Knoten aus lKnoten
 			if (lKnotenKn.seite == Seite.Neutral) {
 				kHungertAus = false;
 			}
@@ -486,7 +486,7 @@ public class Graph implements Cloneable {
 	 * @param aktKnoten
 	 * @return Knoten . Einen benachtbarten Knoten. Falls keiner existiert null
 	 */
-	public Knoten getEinenBenachbartenGegner(Knoten aktKnoten) {
+	public Knoten getEinenBenachbartenGegner(Knoten aktKnoten) throws KnotenException{
 		Seite gegner;
 		if (aktKnoten.getSeite() == Seite.Kathargo) {
 			gegner = Seite.Rom;
@@ -498,7 +498,7 @@ public class Graph implements Cloneable {
 			if (i.getSeite() == gegner)
 				return i;
 		}
-		return null;
+		throw new KnotenException("Es gibt keinen benachbarten Gegner");
 	}
 
 	public ArrayList<String> getMaptext() {
