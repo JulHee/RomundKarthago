@@ -2,6 +2,7 @@ package test.network;
 
 import core.datacontainers.Seite;
 import logik.Mechanik;
+import logik.ai.Killjoy;
 import logik.ai.Scrooge;
 import logik.ai.WaspAI;
 import network.Server;
@@ -35,16 +36,15 @@ public class Client_ServerTest {
     
     @Test
     public void test_thread() throws Exception {
+        WaspAI myWasp = new WaspAI(Seite.Kathargo);
+        Killjoy killJoy = new Killjoy(Seite.Rom,myMechanik);
         Thread serverThread = new Thread() {
             @Override
             public void run() {
-                WaspAI myWasp = new WaspAI(Seite.Rom);
                 Server S = new Server(port,myWasp);
             }
         };
         serverThread.start();
-
-        WaspAI myWasp = new WaspAI(Seite.Kathargo);
         myMechanik.game(ip,port,myWasp);
     }
 	
