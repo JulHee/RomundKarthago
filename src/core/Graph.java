@@ -84,6 +84,15 @@ public class Graph implements Cloneable {
 		}
 	}
 
+    /**
+     * Gibt an, ob der letzte Zug aussetzen war
+     *
+     * @return Boolean
+     */
+    public Boolean getletzterZugAusgesetzt() {
+        return letzterZugAusgesetzt;
+    }
+
 	/**
 	 * Erzeugt aus einem String eine enumeration Seite
 	 *

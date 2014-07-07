@@ -94,6 +94,15 @@ public class optionalAITest {
 		assertTrue((resu.getStadt()== 2) | (resu.getStadt() == 1 ));
 	}
 
+    @Test
+    public void beiFuehrungAussetzen(){
+        mecha.auswerten("C 0",Seite.Kathargo);
+        mecha.auswerten("R 1",Seite.Rom);
+        mecha.auswerten("C X",Seite.Kathargo);
+        String erg = Pew.nextZug().toFormat();
+        mecha.auswerten(erg,Seite.Rom);
+        assertEquals("R -1",erg);
+    }
 
 
 

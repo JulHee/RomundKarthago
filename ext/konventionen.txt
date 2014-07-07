@@ -1,0 +1,4 @@
+Aussetzen: Beispiel "R X"
+R gibt die Seite an (Enum)
+X ist das Symbol, welches aussetzen signalisiert. Beim Aufruf der Funktion .toFormat() wird der Stadt X der Index -1
+zugewiesen.
