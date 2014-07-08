@@ -85,12 +85,14 @@ public class Client {
                 Zug zug = ai.nextZug();
                 System.out.println("Senden des Zuges: " + zug.toFormat());
                 output.println(zug.toFormat());
+                System.out.println("Die Map: " + myMechanik.getMyGraph().convertToString());
 
                 // Auswerten des Zuges
                 myMechanik.auswerten(zug.toFormat(), mySeite);
                 in = input.readLine();
                 System.out.println("Lesen des Zuges: " + in);
                 myMechanik.auswerten(in, Seite.Kathargo);
+                System.out.println("Die Map: " + myMechanik.getMyGraph().convertToString());
             }
             s.close();
 
@@ -133,12 +135,13 @@ public class Client {
                     String zug = bufferRead.readLine();
                     System.out.println("Senden des Zuges: " + zug);
 
+
                     // Lesen des Zuges
                     output.println(zug);
 
                     // Auswerten
                     String move = myMechanik.auswerten(zug, mySeite);
-                    System.out.println(myMechanik.getMyGraph().convertToString());
+                    System.out.println("Die Map: " + myMechanik.getMyGraph().convertToString());
 
                     // Falls nach dem ersten letzen Zug, dass Spiel beendet wurde
                     if (!myMechanik.getSpiel()) {
@@ -147,11 +150,14 @@ public class Client {
 
                     // Lesen des Gegnerzuges
                     in = input.readLine();
+                    if (in == null){
+
+                    }
                     System.out.println("Der Gegner machte den Zug: " + in);
 
                     // Auswerten
                     myMechanik.auswerten(in, Seite.Kathargo);
-                    System.out.println(myMechanik.getMyGraph().convertToString());
+                    System.out.println("Die Map: " + myMechanik.getMyGraph().convertToString());
                 } catch (IOException e) {
                     e.getStackTrace();
                 }
