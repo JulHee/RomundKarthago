@@ -86,9 +86,6 @@ public class controller {
         initial();
         map.getChildren().addAll(paths);
         map.getChildren().addAll(buttons);
-        for (Node n : map.getChildren()) {
-            System.out.println(n.getId());
-        }
         ta_log.appendText("Die Daten wurden geladen \n");
     }
 
@@ -162,18 +159,22 @@ public class controller {
     private void zugmachen(Button button) {
         ta_log.appendText(button.getText() + "\n");
         Seite spieler = aktuellerSpieler();
-        ta_log.appendText("Es spielt: " + spieler.toString());
+        ta_log.appendText("Es spielt: " + spieler.toString() + "\n");
         String belegung = mechanik.auswerten(
-                String.valueOf(button.getText().charAt(0)) + " "
-                        + spieler.toString(), spieler);
-        ta_log.appendText(belegung);
+                String.valueOf(spieler.toString() + " "
+                        + button.getText().charAt(0)), spieler);
+        ta_log.appendText("Die aktuelle Karte:" + belegung + "\n");
         changebuttons(belegung);
     }
 
     private void changebuttons(String s) {
-        for (int i = 0; i <= s.length(); i++) {
-            buttons.get(i).setText(i + " " + s.charAt(i));
-        }
+        map.getChildren().sorted().stream().filter(n -> n instanceof Button).forEach(n -> {
+            String bttext = ((Button) n).getText();
+            Integer btid = Integer.parseInt(String.valueOf(bttext.charAt(0)));
+            ((Button) n).setText(btid + " " + String.valueOf(s.charAt(btid)));
+            System.out.println(bttext);
+
+        });
     }
 
 }
