@@ -19,7 +19,7 @@ public class HumanGUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            VBox page = (VBox) FXMLLoader.load(getClass().getResource("gui/HumanGUI.fxml"));
+            VBox page = (VBox) FXMLLoader.load(getClass().getResource("HumanGUI.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Rom und Kathargo");

@@ -6,16 +6,17 @@ import core.datacontainers.Seite;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
 import logik.Mechanik;
+import org.controlsfx.control.PopOver;
 
 import java.util.LinkedList;
 
@@ -26,6 +27,16 @@ import java.util.LinkedList;
  * Year    : 2014
  */
 public class HumanController {
+
+    // Verbindung
+    String  ip      = "localhost";
+    Integer port    = 2000;
+
+    // Popover für den Clienten
+    PopOver clientPop = null;
+
+    // Popover für den Server
+    PopOver serverPop = null;
 
     // FileChooser zum auswählen der Map
     FileChooser filechooser = new FileChooser();
@@ -68,19 +79,40 @@ public class HumanController {
     @FXML
     private Button bt_server;
 
+    /**
+     * Beenden des Programmes
+     * @param event Event des MenuItems
+     */
+
     @FXML
     void mi_quit_click(ActionEvent event) {
         System.exit(0);
     }
 
+    /**
+     * Wenn der Clientbutton geklickt wurde
+     * @param event Event des Buttons
+     */
+
     @FXML
     void bt_client_click(ActionEvent event) {
-
+        bt_server.setVisible(false);
+        clientPop = getClientPopover();
+        clientPop.show(bt_client);
+        // TODO Serveroperation
     }
+
+    /**
+     * Wenn der Serverbutton geklickt wurde
+     * @param event Event des Buttons
+     */
 
     @FXML
     void bt_server_click(ActionEvent event) {
-
+       bt_client.setVisible(false);
+        serverPop = getServerPopover();
+        serverPop.show(bt_server);
+        //TODO Clientoperation
     }
 
     private void initial() {
@@ -205,5 +237,127 @@ public class HumanController {
         for (String s : mechanik.getMyGraph().getHistory()){
             ta_history.appendText(s+"\n");
         }
+    }
+
+    /**
+     * Erstellt das Sever PopOver
+     * @return
+     */
+
+    private PopOver getServerPopover() {
+        PopOver tmp = new PopOver();
+        tmp.setDetachable(false);
+        tmp.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+        tmp.setAnchorX(5);
+        tmp.setAnchorY(10);
+        tmp.setContentNode(getServerInfo());
+        return tmp;
+    }
+
+    /**
+     * Erstellt den Inhalt des PopOvers mit dem Port
+     * @return Das GridPane mit dem Inhalt der Serverinformationen
+     */
+
+    private GridPane getServerInfo() {
+        final GridPane myGridPane = new GridPane();
+        myGridPane.setHgap(10);
+        myGridPane.setVgap(10);
+        myGridPane.setPadding(new Insets(10, 10, 10, 10));
+        final TextField tf_port = new TextField();
+        if (!(port == null)) {
+            tf_port.setText(String.valueOf(port));
+        }
+        Label l_port = new Label("Port");
+        Button db_ok = new Button("Ok");
+        db_ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                // TODO OK geklickt
+            }
+        });
+        Button db_abbrechen = new Button("Abbrechen");
+        db_abbrechen.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                serverPop.hide();
+            }
+
+        });
+        myGridPane.add(l_port, 1, 0);
+        myGridPane.add(tf_port, 2, 0);
+        GridPane mysubGridPane = new GridPane();
+        mysubGridPane.setVgap(10);
+        mysubGridPane.setHgap(10);
+        mysubGridPane.setPadding(new Insets(4, 0, 4, 0));
+        mysubGridPane.add(db_ok, 0, 0);
+        mysubGridPane.add(db_abbrechen, 1, 0);
+        myGridPane.add(mysubGridPane, 2, 1);
+        return myGridPane;
+    }
+
+    /**
+     * Erstellt das Client PopOver mit dem Port und der IP
+     * @return Das PopOver mit allen Informationen
+     */
+
+    private PopOver getClientPopover() {
+        PopOver tmp = new PopOver();
+        tmp.setDetachable(false);
+        tmp.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+        tmp.setAnchorX(5);
+        tmp.setAnchorY(10);
+        tmp.setContentNode(getClientInfo());
+        return tmp;
+    }
+
+
+    /**
+     * Der Inhalt des PopOvers
+     * @return Inhalt des PopOvers
+     */
+
+    private GridPane getClientInfo() {
+        final GridPane myGridPane = new GridPane();
+        myGridPane.setHgap(10);
+        myGridPane.setVgap(10);
+        myGridPane.setPadding(new Insets(10, 10, 10, 10));
+        final TextField tf_port = new TextField();
+        if (!(port == null)) {
+            tf_port.setText(String.valueOf(this.port));
+        }
+        final TextField tf_ip = new TextField();
+        if (!this.ip.isEmpty()){
+            tf_ip.setText(this.ip);
+        }
+        Label l_port = new Label("Port");
+        Label l_ip = new Label("IP");
+        Button db_ok = new Button("Ok");
+        db_ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                // TODO OK geklickt
+            }
+        });
+        Button db_abbrechen = new Button("Abbrechen");
+        db_abbrechen.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                serverPop.hide();
+            }
+
+        });
+        myGridPane.add(l_ip,1,0);
+        myGridPane.add(tf_ip,2,0);
+        myGridPane.add(l_port, 1, 1);
+        myGridPane.add(tf_port, 2, 1);
+        GridPane mysubGridPane = new GridPane();
+        mysubGridPane.setVgap(10);
+        mysubGridPane.setHgap(10);
+        mysubGridPane.setPadding(new Insets(4, 0, 4, 0));
+        mysubGridPane.add(db_ok, 0, 0);
+        mysubGridPane.add(db_abbrechen, 1, 0);
+        myGridPane.add(mysubGridPane, 2, 2);
+        return myGridPane;
     }
 }

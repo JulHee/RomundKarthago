@@ -96,15 +96,6 @@ public class Graph implements Cloneable {
         return spielZustandWiederholt;
     }
 
-    /**
-     * Gibt die History zurück
-     *
-     * @return history
-     */
-    public List<String> getHistory() {
-        return history;
-    }
-
 	/**
 	 * Erzeugt aus einem String eine enumeration Seite
 	 *
