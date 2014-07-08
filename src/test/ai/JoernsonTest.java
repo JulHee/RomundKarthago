@@ -14,7 +14,7 @@ import core.datacontainers.Position;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
 
-public class optionalAITest {
+public class JoernsonTest {
 
 	// Variablen zur Erzeugung der Test
 	Mechanik mecha = new Mechanik("ext/Gameboard.txt");
@@ -61,7 +61,7 @@ public class optionalAITest {
 		Pew.kette(array, Seite.Neutral, n1);
 		assertTrue(Pew.checkme(array, n2));
 	}
-	//optionalAI.getchainz
+	//Joernson.getchainz
 	@Test
 	public void chainztest(){
 		Pew.getchainz();
