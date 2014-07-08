@@ -17,7 +17,7 @@ import logik.Mechanik;
 
 // komplette AI noch in Arbeit!
 
-public class optionalAI extends AIPlayer {
+public class Joernson extends AIPlayer {
 	
 	public Mechanik mechanik;
 	public Seite meineSeite;
@@ -28,12 +28,12 @@ public class optionalAI extends AIPlayer {
 	public ArrayList<ArrayList<Knoten>> Kchainz = new ArrayList<ArrayList<Knoten>>();
 	public Knoten Target;
 	
-	public optionalAI(Seite s,Mechanik mechanik) {
+	public Joernson(Seite s, Mechanik mechanik) {
 		this.meineSeite = s;
 		this.mechanik = mechanik;
 	};
 
-    public optionalAI(Seite s){
+    public Joernson(Seite s){
         this.meineSeite = s;
     }
 

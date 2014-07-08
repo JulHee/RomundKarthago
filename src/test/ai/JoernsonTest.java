@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import logik.Mechanik;
-import logik.ai.optionalAI;
+import logik.ai.Joernson;
 
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class JoernsonTest {
 
 	// Variablen zur Erzeugung der Test
 	Mechanik mecha = new Mechanik("ext/Gameboard.txt");
-	optionalAI Pew = new optionalAI(Seite.Rom,mecha);
+	Joernson Pew = new Joernson(Seite.Rom,mecha);
 
 	ArrayList<Knoten> array = new ArrayList();
 	ArrayList<ArrayList<Knoten>> arrayarray = new ArrayList();
