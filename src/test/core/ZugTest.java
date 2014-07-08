@@ -20,5 +20,11 @@ public class ZugTest {
         assertNull("Object wurde nicht erzeugt",zug.getSeite());
     }
 
+    @Test
+    public void testToFormat()throws Exception{
+        String tmp= "R X";
+        Zug zug = new Zug(tmp);
+        assertEquals("R X",zug.toFormat());
+    }
 
 }
