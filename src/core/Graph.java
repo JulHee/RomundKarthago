@@ -459,10 +459,11 @@ public class Graph implements Cloneable {
 				for (Knoten kno : meineNachbarn) {
 					if (kno.seite == Seite.Neutral) {
 						neutralGefunden = true;
+                        kHungertAus=false;
 					}
 				}
 				if (!neutralGefunden) {
-					kHungertAus = false;
+					kHungertAus = true;
 					for (Knoten knot : alleMeins) {
 						knot.setSeite(Seite.Neutral);
 					}
