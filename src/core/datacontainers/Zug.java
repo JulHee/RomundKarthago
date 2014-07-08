@@ -59,6 +59,7 @@ public class Zug {
      * @return Format des Zuges als abkürzung
      */
     public String toFormat(){
+        if(stadt==-1) return seite.toString() + " X" ;
         return seite.toString() + " " + stadt;
     }
 
