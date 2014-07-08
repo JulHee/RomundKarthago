@@ -18,6 +18,13 @@ import javafx.stage.FileChooser;
 import logik.Mechanik;
 import org.controlsfx.control.PopOver;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -28,9 +35,20 @@ import java.util.LinkedList;
  */
 public class HumanController {
 
+    // Läuft ein Spiel ?
+    Boolean runningGame = false;
+
+    // Ist der Benutzer am zug
+    Boolean aktiveHuman = false;
+
+    // Server
+    ServerSocket server = null;
+    Socket client = null;
+
+
     // Verbindung
-    String  ip      = "localhost";
-    Integer port    = 2000;
+    String ip = "localhost";
+    Integer port = 2000;
 
     // Popover für den Clienten
     PopOver clientPop = null;
@@ -81,6 +99,7 @@ public class HumanController {
 
     /**
      * Beenden des Programmes
+     *
      * @param event Event des MenuItems
      */
 
@@ -91,28 +110,34 @@ public class HumanController {
 
     /**
      * Wenn der Clientbutton geklickt wurde
+     *
      * @param event Event des Buttons
      */
 
     @FXML
     void bt_client_click(ActionEvent event) {
-        bt_server.setVisible(false);
-        clientPop = getClientPopover();
-        clientPop.show(bt_client);
-        // TODO Serveroperation
+        if (!runningGame) {
+            bt_server.setVisible(false);
+            clientPop = getClientPopover();
+            clientPop.show(bt_client);
+            // TODO Clientoperation
+        }
     }
 
     /**
      * Wenn der Serverbutton geklickt wurde
+     *
      * @param event Event des Buttons
      */
 
     @FXML
     void bt_server_click(ActionEvent event) {
-       bt_client.setVisible(false);
-        serverPop = getServerPopover();
-        serverPop.show(bt_server);
-        //TODO Clientoperation
+        if (!runningGame) {
+            bt_client.setVisible(false);
+            serverPop = getServerPopover();
+            serverPop.show(bt_server);
+            //TODO Serveroperation
+        }
     }
 
     private void initial() {
@@ -138,6 +163,7 @@ public class HumanController {
 
     /**
      * Erzeigt einen Button der einen Knoten represäntiert
+     *
      * @param knoten Der Knoten der als Button angezeigt werden soll
      * @return
      */
@@ -159,8 +185,9 @@ public class HumanController {
 
     /**
      * Erzeugt eine Linine zwischen zwei Punkten
-     * @param kante Die Kante mit den zwei betreffenden Buttons
-     * @param width Die breite des Buttons
+     *
+     * @param kante  Die Kante mit den zwei betreffenden Buttons
+     * @param width  Die breite des Buttons
      * @param height Die Höhe des Buttons
      * @return Ein Path der die Linie zwischen zwei Buttons beschreibt
      */
@@ -198,23 +225,30 @@ public class HumanController {
 
     /**
      * Funktion die den Buttons zugeweisen werden. Jeder Klick auf einen Button simuliert einen Zug
+     *
      * @param sender Der Button der geklickt wurde
      */
 
     private void zugmachen(Button sender) {
-        ta_log.appendText(sender.getText() + "\n");
-        Seite spieler = aktuellerSpieler();
-        ta_log.appendText("Es spielt: " + spieler.toString() + "\n");
-        String belegung = mechanik.auswerten(
-                String.valueOf(spieler.toString() + " "
-                        + sender.getText().charAt(0)), spieler);
-        ta_log.appendText("Die aktuelle Karte:" + belegung + "\n");
-        changebuttons(belegung);
-        refreshHistory();
+        if (aktiveHuman && !(client == null)) {
+            try {
+                // Öffnen der Streams zum lesen der I/O Eingaben zwischen den Sockets und der Eingabe der Tastatur
+                BufferedReader tastatur_input = new BufferedReader(
+                        new InputStreamReader(System.in));
+                PrintWriter output = new PrintWriter(client.getOutputStream(), true /* autolush */);
+                BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+                // TODO Zug senen / auf neuen Warten
+            }catch(IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
     }
 
     /**
      * Aktuallisiert die Beschriftung der Buttons
+     *
      * @param s Beschreibung des Graphen wobei jedes Zeichen einer ID/Button zugeordnet ist
      */
 
@@ -232,15 +266,16 @@ public class HumanController {
      * Aktuallisiert das History-Log mit den aktuellen History
      */
 
-    private void refreshHistory(){
+    private void refreshHistory() {
         ta_history.clear();
-        for (String s : mechanik.getMyGraph().getHistory()){
-            ta_history.appendText(s+"\n");
+        for (String s : mechanik.getMyGraph().getHistory()) {
+            ta_history.appendText(s + "\n");
         }
     }
 
     /**
      * Erstellt das Sever PopOver
+     *
      * @return
      */
 
@@ -256,6 +291,7 @@ public class HumanController {
 
     /**
      * Erstellt den Inhalt des PopOvers mit dem Port
+     *
      * @return Das GridPane mit dem Inhalt der Serverinformationen
      */
 
@@ -273,6 +309,7 @@ public class HumanController {
         db_ok.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                runServer();
                 // TODO OK geklickt
             }
         });
@@ -298,6 +335,7 @@ public class HumanController {
 
     /**
      * Erstellt das Client PopOver mit dem Port und der IP
+     *
      * @return Das PopOver mit allen Informationen
      */
 
@@ -314,6 +352,7 @@ public class HumanController {
 
     /**
      * Der Inhalt des PopOvers
+     *
      * @return Inhalt des PopOvers
      */
 
@@ -327,16 +366,19 @@ public class HumanController {
             tf_port.setText(String.valueOf(this.port));
         }
         final TextField tf_ip = new TextField();
-        if (!this.ip.isEmpty()){
+        if (!this.ip.isEmpty()) {
             tf_ip.setText(this.ip);
         }
+
+        //TODO FILEOPENER plus Label hinzufügen um die Map anzugeben
         Label l_port = new Label("Port");
         Label l_ip = new Label("IP");
         Button db_ok = new Button("Ok");
         db_ok.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                // TODO OK geklickt
+                ip = tf_ip.getText();
+                port = Integer.parseInt(tf_port.getText());
             }
         });
         Button db_abbrechen = new Button("Abbrechen");
@@ -347,8 +389,8 @@ public class HumanController {
             }
 
         });
-        myGridPane.add(l_ip,1,0);
-        myGridPane.add(tf_ip,2,0);
+        myGridPane.add(l_ip, 1, 0);
+        myGridPane.add(tf_ip, 2, 0);
         myGridPane.add(l_port, 1, 1);
         myGridPane.add(tf_port, 2, 1);
         GridPane mysubGridPane = new GridPane();
@@ -360,4 +402,105 @@ public class HumanController {
         myGridPane.add(mysubGridPane, 2, 2);
         return myGridPane;
     }
+
+    private void runServer() {
+        System.out.println("Laden des Servers....");
+        try {
+
+            // Initialiseren des Servers
+            server = new ServerSocket(port);
+            System.out.println("Server erfolgreich erstellt..");
+            System.out.println("Der Server läuft und hört auf Port:" + port);
+            System.out.println("Server wartet auf Verbindungen...");
+
+            // Warten auf einen Clienten und versuch die Verbidnung herzustellen
+            try {
+
+                //Warten auf Client
+                client = server.accept();
+                System.out.println("Verbindung hergestellt:" + client.getLocalAddress().toString().substring(0) + ":" + client.getLocalPort());
+
+                // Abfertigung des Clienten
+                handleClient();
+            } catch (IOException e) {
+                client.close();
+                server.close();
+                e.printStackTrace();
+            } finally {
+                // Wenn die Verbindung des Clienten nicht geschlossen wurde, wird dies nun getan
+                if (client != null)
+                    try {
+                        client.close();
+                    } catch (IOException e) {
+                    }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void handleClient()throws Exception {
+
+
+        // Öffnen der Streams zum lesen der I/O Eingaben zwischen den Sockets und der Eingabe der Tastatur
+        BufferedReader tastatur_input = new BufferedReader(
+                new InputStreamReader(System.in));
+        PrintWriter output = new PrintWriter(client.getOutputStream(), true /* autolush */);
+        BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+        // Status ausgeben
+        System.out.println("Der Client " + client.getLocalAddress() + ":"
+                + client.getLocalPort() + " wurde verbunden");
+
+        System.out.println("Warten auf die Map");
+
+        // Einlesen der Map, welche vom Client gesendet wird
+        ArrayList<String> map = new ArrayList<String>();
+        String line = null;
+        Boolean karte = true;
+        while (karte) {
+            line = input.readLine();
+            System.out.println(line);
+
+            // Beenden des Map einlesen, fall der erste Zug gesendet wird
+            if (line.startsWith("C") | line.startsWith("R") | line.startsWith("X")) {
+                break;
+            } else {
+                map.add(line);
+            }
+        }
+
+        System.out.println("Prüfen der Map");
+
+        /*
+        // Prüfen ob die Map inordnung ist
+        if (!checkmap(map)) {
+            throw new Exception(
+                    "Die Map entspricht nicht den Spezifikationen");
+        }
+        System.out.println("Map ok \nFüge sie ins Spiel ein....");
+        */
+
+        // Einlesen der Map
+        mechanik = new Mechanik(map);
+
+        showMap();
+
+        System.out.println("Ok... \nBeginnen des Spiels");
+
+        // Da der Client mit dem Zug beginnt wird zuerst der Zug ausgewertet
+        System.out.println("Der Gegner macht den Zug: " + line);
+        changebuttons(mechanik.auswerten(line, Seite.Rom));
+        showMap();
+        aktiveHuman = true;
+    }
+
+    /**
+     * Zeigt die aktuelle Map an
+     */
+
+    private void showMap(){
+        System.out.println("Aktuelle Map: " + myMechanik.getMyGraph().convertToString());
+    }
+}
 }
