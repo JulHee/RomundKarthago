@@ -148,6 +148,13 @@ public class Server {
 
         // Einlesen der Map
         myMechanik = new Mechanik(map);
+        if (activeAI) {
+            if (ai.getMechanik() == null) {
+                ai.setMechanik(myMechanik);
+            }
+        }
+
+
         System.out.println("Die Map: " + myMechanik.getMyGraph().convertToString());
 
         System.out.println("Ok... \nBeginnen des Spiels");

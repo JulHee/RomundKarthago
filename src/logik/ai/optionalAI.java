@@ -33,7 +33,11 @@ public class optionalAI extends AIPlayer {
 		this.mechanik = mechanik;
 	};
 
-	//TODO at the end
+    public optionalAI(Seite s){
+        this.meineSeite = s;
+    }
+
+    //TODO at the end
 	@Override
 	public Zug nextZug() {
 		Zug retrn;
