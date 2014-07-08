@@ -1,4 +1,4 @@
-package gui;
+package gui.old;
 
 import core.*;
 import core.datacontainers.Kante;

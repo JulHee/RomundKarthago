@@ -29,7 +29,7 @@ import core.datacontainers.Kante;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 
-public class controller {
+public class controller_gui {
 
     // FileChooser zum auswählen der Map
     FileChooser filechooser = new FileChooser();
