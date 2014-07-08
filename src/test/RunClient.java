@@ -2,9 +2,9 @@ package test;
 
 import core.datacontainers.Seite;
 import logik.Mechanik;
+import logik.ai.Joernson;
 import logik.ai.Killjoy;
 import logik.ai.Sloth;
-import logik.ai.optionalAI;
 
 /**
  * Projekt : RomUndKathargo
@@ -18,7 +18,7 @@ public class RunClient {
         Mechanik myMechanik = new Mechanik("ext/map4.txt");
         Killjoy myKilljoy = new Killjoy(Seite.Rom,myMechanik);
         Sloth mySloth = new Sloth(Seite.Rom,myMechanik);
-        optionalAI joern = new optionalAI(Seite.Rom,myMechanik);
+        Joernson joern = new Joernson(Seite.Rom,myMechanik);
 
         myMechanik.game("137.248.56.178",63823,joern);
     }

@@ -1,7 +1,7 @@
 package test;
 
 import core.datacontainers.Seite;
-import logik.ai.optionalAI;
+import logik.ai.Joernson;
 import network.Server;
 
 /**
@@ -19,7 +19,7 @@ public class RunServer {
         // TODO Die Mechanik muss der AI später übergeben werden get und Setter setzen !!!!!!!!
 
         final Integer port = 9999;
-        optionalAI joern = new optionalAI(Seite.Kathargo,null);
+        Joernson joern = new Joernson(Seite.Kathargo,null);
         Server hum = new Server(port);
     }
 }
