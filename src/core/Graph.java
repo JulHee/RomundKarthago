@@ -83,6 +83,10 @@ public class Graph implements Cloneable {
 		}
 	}
 
+    public ArrayList<String> getHistory() {
+        return history;
+    }
+
     /**
      * Gibt an, ob der letzte Zug aussetzen war
      *
@@ -90,15 +94,6 @@ public class Graph implements Cloneable {
      */
     public Boolean getSpielZustandWiederholt() {
         return spielZustandWiederholt;
-    }
-
-    /**
-     * Gibt die History zurück
-     *
-     * @return history
-     */
-    public List<String> getHistory() {
-        return history;
     }
 
 	/**
