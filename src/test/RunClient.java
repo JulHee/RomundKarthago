@@ -15,11 +15,11 @@ import logik.ai.Sloth;
 public class RunClient {
 
     public static void main(String[] args) {
-        Mechanik myMechanik = new Mechanik("ext/map4.txt");
+        Mechanik myMechanik = new Mechanik("ext/Gameboard.txt");
         Killjoy myKilljoy = new Killjoy(Seite.Rom,myMechanik);
         Sloth mySloth = new Sloth(Seite.Rom,myMechanik);
         Joernson joern = new Joernson(Seite.Rom,myMechanik);
 
-        myMechanik.game("137.248.56.178",63823,joern);
+        myMechanik.game("localhost",9999,joern);
     }
 }

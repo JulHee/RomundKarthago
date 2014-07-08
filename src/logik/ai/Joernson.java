@@ -38,22 +38,27 @@ public class Joernson extends AIPlayer {
     }
 
     //TODO at the end
+    //TODO exception? selber aushungen lassen?
 	@Override
 	public Zug nextZug() {
-		Zug retrn;
-		if(mechanik.getLetzterZugAusgesetzt()){
-			int me = mechanik.getMyGraph().getPunkteStandFuer(meineSeite);
+        System.out.println("Joernson anfang");
+        Zug retrn;
+		if(mechanik.getLetzterZugAusgesetzt() || mechanik.getMyGraph().getSpielZustandWiederholt()){
+            System.out.println("GewinnerPfad");
+            int me = mechanik.getMyGraph().getPunkteStandFuer(meineSeite);
 			int enemy = mechanik.getMyGraph().getPunkteStandFuer(notmysite());
 			if(me>enemy){
 				retrn = new Zug(meineSeite+" X");
 				return retrn;
 			}
 		}
-		if (checktarget()){
-			retrn = new Zug(meineSeite,Target.id);
+		if (checkTarget()){
+            System.out.println("CheckTarget");
+            retrn = new Zug(meineSeite,Target.id);
 			return retrn;
 		}
-		retrn = saveme();
+        System.out.println("saveMe");
+        retrn = saveme();
 		return retrn;
 	}
 
@@ -88,16 +93,16 @@ public class Joernson extends AIPlayer {
 	 */
 	public Zug saveme(){
 		Zug save = null;
-		HashSet<Knoten> mapknoten = mechanik.getMyGraph().l_knoten;
-		ArrayList<Knoten> neuknoten = new ArrayList<Knoten>();
-		for(Knoten a : mapknoten){
+		HashSet<Knoten> mapKnoten = mechanik.getMyGraph().l_knoten;
+		ArrayList<Knoten> neuKnoten = new ArrayList<Knoten>();
+		for(Knoten a : mapKnoten){
 			if(a.getSeite()== Seite.Neutral){
-				neuknoten.add(a);
+				neuKnoten.add(a);
 			}
 		}
 		Knoten kn = null;
 		Integer knint = 0;
-		for(Knoten b : neuknoten){
+		for(Knoten b : neuKnoten){
 			Integer tempint = 0;
 			HashSet<Knoten> neighbours = mechanik.getMyGraph().getNachbarschaft(b);
 			for(Knoten c : neighbours){
@@ -105,7 +110,7 @@ public class Joernson extends AIPlayer {
 					tempint+=1;
 				}
 			}
-			if(tempint>=knint){
+			if(tempint>=knint  ){ //&& checkHistory(b)
 				kn = b;
 				knint = tempint;
 			}
@@ -120,7 +125,8 @@ public class Joernson extends AIPlayer {
 	 * Finden eines direkten Besetzungspunktes, wenn dadurch ein direktes Aushungern des Gegners
 	 * bewirkt wird (aggressives Ziehen!)  
 	 */
-	public Boolean checktarget(){
+	public Boolean checkTarget(){
+        getchainz();
 		if(this.meineSeite == Seite.Rom){
 			if(checkt(Kchainz)){
 				return true;};
@@ -131,7 +137,7 @@ public class Joernson extends AIPlayer {
 		return false;
 	}
 	/**
-	 * Hilfsfunktion für checktarget
+	 * Hilfsfunktion für checkTarget
 	 * Berechnet die Nachbarschaft einer GegnerKette und zählt 
 	 * die neutralen Nachbar. Ist diese Zahl = 1 -> besetzung des
 	 * Nachbarn um aushungern einzuleiten
@@ -151,7 +157,7 @@ public class Joernson extends AIPlayer {
 					}
 				}
 			}
-			if(zaehl == 1){
+			if(zaehl == 1 && checkHistory(neuNeigh.get(0))){
 				Target = neuNeigh.get(0);
 				return true;
 			}
@@ -274,5 +280,13 @@ public class Joernson extends AIPlayer {
 				System.out.println(d);
 			}
 		}
-	};
+	}
+
+   public Boolean checkHistory(Knoten b){
+       try{
+       return !(mechanik.getMyGraph().getHistory().contains(mechanik.getMyGraph().ssuf(new Zug(meineSeite.toString()+" "+b.id)).convertToString()));
+       }catch (Exception e){
+           System.out.println(e.getStackTrace());}
+       return  false;
+   }
 }

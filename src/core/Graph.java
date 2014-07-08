@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Projekt: Rom und Karthago
@@ -93,6 +94,15 @@ public class Graph implements Cloneable {
      */
     public Boolean getSpielZustandWiederholt() {
         return spielZustandWiederholt;
+    }
+
+    /**
+     * Gibt die History zurück
+     *
+     * @return history
+     */
+    public List<String> getHistory() {
+        return history;
     }
 
 	/**

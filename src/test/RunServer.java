@@ -19,7 +19,7 @@ public class RunServer {
         // TODO Die Mechanik muss der AI später übergeben werden get und Setter setzen !!!!!!!!
 
         final Integer port = 9999;
-        Joernson joern = new Joernson(Seite.Kathargo,null);
+        //Joernson joern = new Joernson(Seite.Kathargo,null);
         Server hum = new Server(port);
     }
 }

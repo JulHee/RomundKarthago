@@ -101,9 +101,15 @@ public class JoernsonTest {
         mecha.auswerten("C X",Seite.Kathargo);
         String erg = Pew.nextZug().toFormat();
         mecha.auswerten(erg,Seite.Rom);
-        assertEquals("R -1",erg);
+        assertEquals("R X",erg);
     }
 
+    @Test
+    public void checkTargetTest(){
+        String erg = Pew.nextZug().toFormat();
+        mecha.auswerten(erg,Seite.Rom);
+        assertEquals("NRNR",mecha.getMyGraph().convertToString());
+    }
 
 
 
