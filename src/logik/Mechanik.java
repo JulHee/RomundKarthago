@@ -22,7 +22,7 @@ public class Mechanik implements Cloneable {
 
     String path;
     Graph myGraph;
-    //Boolean letzterZugAusgesetzt = false;
+    Boolean letzterZugAusgesetzt = false;
     Boolean spiel = true;
 
     public Graph getMyGraph() {
@@ -33,7 +33,7 @@ public class Mechanik implements Cloneable {
         return spiel;
     }
 
-    public Boolean getLetzterZugAusgesetzt(){return myGraph.getletzterZugAusgesetzt();}
+    public Boolean getLetzterZugAusgesetzt(){return letzterZugAusgesetzt;}
 
     /**
      * Initialisiert der Mechanik durch initialisierung des Graphen, über die im Netzwerk gesendete Map

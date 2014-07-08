@@ -17,12 +17,10 @@ import java.util.HashSet;
  * Year : 2014
  */
 
-
 /**
  * Diese Klasse verwaltet alle fuer das laufende Spiel notwendigen Informationen
  * bezueglich der Map, auf der gespielt wird, und den Spielverlauf.
  */
-
 
 public class Graph implements Cloneable {
 
@@ -33,20 +31,20 @@ public class Graph implements Cloneable {
 	public HashSet<Knoten> l_knoten = new HashSet<>();
 	public HashSet<Kante> l_kante = new HashSet<>();
 	private ArrayList<String> history = new ArrayList<>();
-	private boolean letzterZugAusgesetzt = false;
+	private boolean spielZustandWiederholt = false;
 	private ArrayList<String> maptext = new ArrayList<>();
 
 	public Graph() {
 	}
 
 	public Graph(String path, HashSet<Knoten> l_knoten, HashSet<Kante> l_kante,
-	             ArrayList<String> history, boolean letzterZugAusgesetzt,
+	             ArrayList<String> history, boolean spielZustandWiederholt,
 	             ArrayList<String> maptext) {
 		this.path = path;
 		this.l_knoten = l_knoten;
 		this.l_kante = l_kante;
 		this.history = history;
-		this.letzterZugAusgesetzt = letzterZugAusgesetzt;
+		this.spielZustandWiederholt = spielZustandWiederholt;
 		this.maptext = maptext;
 	}
 
@@ -89,8 +87,8 @@ public class Graph implements Cloneable {
      *
      * @return Boolean
      */
-    public Boolean getletzterZugAusgesetzt() {
-        return letzterZugAusgesetzt;
+    public Boolean getSpielZustandWiederholt() {
+        return spielZustandWiederholt;
     }
 
 	/**
@@ -218,7 +216,7 @@ public class Graph implements Cloneable {
 			myGraph = new Graph(path,
 					erzeugeNeueKnotenListe(l_knoten),
 					erzeugeNeueKanteListe(l_kante),
-					erzeugeNeueHistory(history), letzterZugAusgesetzt,
+					erzeugeNeueHistory(history), spielZustandWiederholt,
 					erzeugeNeueMaptext(maptext));
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -265,7 +263,7 @@ public class Graph implements Cloneable {
 		l_knoten.clear();
 		l_kante.clear();
 		history.clear();
-		letzterZugAusgesetzt = false;
+		spielZustandWiederholt = false;
 		maptext.clear();
 	}
 
@@ -506,26 +504,26 @@ public class Graph implements Cloneable {
             Graph temp = this.clone();
             if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
                 retrnZustand.setName(this.convertToString());
-                if (letzterZugAusgesetzt) {
+                if (spielZustandWiederholt) {
                     retrnZustand.setErrorcode(2);
                 } else {
                     retrnZustand.setErrorcode(1);
-                    letzterZugAusgesetzt = true;
+                    spielZustandWiederholt = true;
                 }
 
             } else if (history.contains(temp.ssuf(temp, myzug).convertToString())) {
                 retrnZustand.setName(this.convertToString());
                 retrnZustand.setErrorcode(3);
-                letzterZugAusgesetzt = true;
+                spielZustandWiederholt = true;
             } else {
                 String letzterZug = this.convertToString();
                 this.ssuf(myzug);
                 if (letzterZug.equals(this.convertToString())) {
-                    if (letzterZugAusgesetzt) {
+                    if (spielZustandWiederholt) {
                         retrnZustand.setErrorcode(2);
                     }
                     retrnZustand.setErrorcode(1);
-                    letzterZugAusgesetzt = true;
+                    spielZustandWiederholt = true;
                 }
                 retrnZustand.setName(this.convertToString());
             }
