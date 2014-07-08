@@ -4,6 +4,7 @@ import core.datacontainers.Seite;
 import logik.Mechanik;
 import logik.ai.Killjoy;
 import logik.ai.Sloth;
+import logik.ai.optionalAI;
 
 /**
  * Projekt : RomUndKathargo
@@ -14,10 +15,11 @@ import logik.ai.Sloth;
 public class RunClient {
 
     public static void main(String[] args) {
-        Mechanik myMechanik = new Mechanik("ext/Gameboard.txt");
+        Mechanik myMechanik = new Mechanik("ext/map4.txt");
         Killjoy myKilljoy = new Killjoy(Seite.Rom,myMechanik);
         Sloth mySloth = new Sloth(Seite.Rom,myMechanik);
+        optionalAI joern = new optionalAI(Seite.Rom,myMechanik);
 
-        myMechanik.game("127.0.0.1",9998);
+        myMechanik.game("137.248.56.178",63823,joern);
     }
 }

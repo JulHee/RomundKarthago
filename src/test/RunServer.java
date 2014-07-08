@@ -1,5 +1,7 @@
 package test;
 
+import core.datacontainers.Seite;
+import logik.ai.optionalAI;
 import network.Server;
 
 /**
@@ -14,7 +16,10 @@ public class RunServer {
 
     public static void main(String[] args) throws Exception {
 
+        // TODO Die Mechanik muss der AI später übergeben werden get und Setter setzen !!!!!!!!
+
         final Integer port = 9999;
+        optionalAI joern = new optionalAI(Seite.Kathargo,null);
         Server hum = new Server(port);
     }
 }
