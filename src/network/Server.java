@@ -155,14 +155,14 @@ public class Server {
         }
 
 
-        System.out.println("Die Map: " + myMechanik.getMyGraph().convertToString());
+        showMap();
 
         System.out.println("Ok... \nBeginnen des Spiels");
 
         // Da der Client mit dem Zug beginnt wird zuerst der Zug ausgewertet
         System.out.println("Der Gegner macht den Zug: " + line);
         myMechanik.auswerten(line, Seite.Rom);
-        System.out.println("Spielstatus: " + myMechanik.getMyGraph().convertToString());
+        showMap();
 
         // Beginnen des Spiels
         String zug = null;
@@ -181,7 +181,7 @@ public class Server {
 
             // Auswerten des Zuges
             myMechanik.auswerten(zug, mySeite);
-            System.out.println("Spielstatus: " + myMechanik.getMyGraph().convertToString());
+            showMap();
 
             //Falls der letzte Zug das Spiel schon beendet hat
             if (!myMechanik.getSpiel()) {
@@ -194,11 +194,20 @@ public class Server {
 
             // Auswerten
             myMechanik.auswerten(zug_gegner, Seite.Rom);
-            System.out.println("Spielstatus: " + myMechanik.getMyGraph().convertToString());
+            showMap();
         }
         client.close();
 
         System.out.println("Das Spiel wurde beendet");
+    }
+
+
+    /**
+     * Zeigt die aktuelle Map an
+     */
+
+    private void showMap(){
+        System.out.println("Aktuelle Map: " + myMechanik.getMyGraph().convertToString());
     }
 
     /**
