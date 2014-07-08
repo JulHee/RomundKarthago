@@ -82,6 +82,10 @@ public class Graph implements Cloneable {
 		}
 	}
 
+    public ArrayList<String> getHistory() {
+        return history;
+    }
+
     /**
      * Gibt an, ob der letzte Zug aussetzen war
      *
