@@ -59,7 +59,7 @@ public class optionalAI extends AIPlayer {
 
 	/*
 	 * Konzept: 
-	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  TODO option testen!
+	 * 0) Gegner ausgesetzt -> Pkt checken -> AI > Gegner -> ausetzen -> Ende  ! Done
 	 * 1) Targets zum Aushungern des Gegners sofort besetzen DONE
 	 * 2) Strategie TODO Strategie entwickeln
 	 * 3) Sicherer Zug. Knoten mit max neutral Nachbarn -> wenn Anzahl = 0 aussetzen ! DONE
