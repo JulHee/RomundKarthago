@@ -77,7 +77,7 @@ public class HumanController
 
 	// Verbindung
 	String ip = "localhost";
-	Integer port = 2000;
+	Integer port = 9998;
 
 	// Popover für den Clienten
 	PopOver clientPop = null;
@@ -431,7 +431,9 @@ public class HumanController
 			@Override
 			public void handle (ActionEvent e)
 			{
+				ta_log.appendText( "OK geklick \n" );
 				port = Integer.valueOf( tf_port.getText() );
+				ta_log.appendText( tf_port.getText()+"\n" );
 				runServer();
 			}
 		} );
@@ -442,7 +444,8 @@ public class HumanController
 			public void handle (ActionEvent event)
 			{
 				serverPop.hide();
-				if (server == null && client == null){
+				if ( server == null && client == null )
+				{
 					bt_client.setVisible( true );
 				}
 			}
@@ -534,7 +537,8 @@ public class HumanController
 			public void handle (ActionEvent event)
 			{
 				clientPop.hide();
-				if (server == null && client == null){
+				if ( server == null && client == null )
+				{
 					bt_server.setVisible( true );
 				}
 			}
@@ -559,15 +563,28 @@ public class HumanController
 	private void runServer ()
 	{
 
-		ta_log.appendText( "Laden des Servers...." );
+		ta_log.appendText( "Laden des Servers....\n" );
 		try
 		{
 
-			// Initialiseren des Servers
-			server = new ServerSocket( port );
-			ta_log.appendText( "Server erfolgreich erstellt.." );
-			ta_log.appendText( "Der Server läuft und hört auf Port:" + port );
-			ta_log.appendText( "Server wartet auf Verbindungen..." );
+			Thread serverThread = new Thread()
+			{
+				@Override
+				public void run ()
+				{
+					try
+					{
+						server = new ServerSocket( port );
+					} catch ( IOException e )
+					{
+						e.printStackTrace();
+					}
+				}
+			};
+			serverThread.start();
+			ta_log.appendText( "Server erfolgreich erstellt..\n" );
+			ta_log.appendText( "Der Server läuft und hört auf Port:" + port +"\n");
+			ta_log.appendText( "Server wartet auf Verbindungen...\n" );
 
 			// Warten auf einen Clienten und versuch die Verbidnung herzustellen
 			try
@@ -577,7 +594,7 @@ public class HumanController
 				client = server.accept();
 				ta_log.appendText(
 						"Verbindung hergestellt:" + client.getLocalAddress().toString().substring( 0 ) + ":" + client
-								.getLocalPort() );
+								.getLocalPort()+"\n" );
 
 				// Setzen der Seiten
 				eigenSeite = Seite.Kathargo;
