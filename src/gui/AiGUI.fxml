@@ -7,40 +7,40 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox minHeight="300.0" minWidth="300.0" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.AiController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="Datei">
+        <Menu fx:id="m_datei" mnemonicParsing="false" text="Datei">
           <items>
-                  <MenuItem mnemonicParsing="false" text="TODO" />
+                  <MenuItem fx:id="m_datei_start" mnemonicParsing="false" text="Start" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="m_datei_quit" mnemonicParsing="false" onAction="#quit_click" text="Quit" />
           </items>
         </Menu>
-            <Menu mnemonicParsing="false" text="Map">
+            <Menu fx:id="m_map" mnemonicParsing="false" text="Map">
               <items>
-            <MenuItem mnemonicParsing="false" text="Load Map" />
+            <MenuItem fx:id="m_map_load" mnemonicParsing="false" onAction="#mi_load" text="Load Map" />
               </items>
             </Menu>
-        <Menu mnemonicParsing="false" text="Seite">
+        <Menu fx:id="m_seite" mnemonicParsing="false" text="Seite">
           <items>
-                  <RadioMenuItem mnemonicParsing="false" text="Rom" />
-                  <RadioMenuItem mnemonicParsing="false" text="Karthago" />
+                  <RadioMenuItem fx:id="m_seite_rom" mnemonicParsing="false" onAction="#set_rom" text="Rom" />
+                  <RadioMenuItem fx:id="m_seite_carthage" mnemonicParsing="false" onAction="#set_carthage" text="Karthago" />
           </items>
         </Menu>
-            <Menu mnemonicParsing="false" text="kuenstliche Intelligenzen">
+            <Menu fx:id="m_ki" mnemonicParsing="false" text="kuenstliche Intelligenzen">
               <items>
-                  <RadioMenuItem mnemonicParsing="false" text="Joernson" />
-                  <RadioMenuItem mnemonicParsing="false" text="KillJoy" />
-                  <RadioMenuItem mnemonicParsing="false" text="Sloth" />
-                  <RadioMenuItem mnemonicParsing="false" text="Scrooge" />
-                  <RadioMenuItem mnemonicParsing="false" text="Wasp" />
+                  <RadioMenuItem fx:id="m_ki_joernson" mnemonicParsing="false" text="Joernson" />
+                  <RadioMenuItem fx:id="m_ki_killjoy" mnemonicParsing="false" text="KillJoy" />
+                  <RadioMenuItem fx:id="m_ki_sloth" mnemonicParsing="false" text="Sloth" />
+                  <RadioMenuItem fx:id="m_ki_scrooge" mnemonicParsing="false" text="Scrooge" />
+                  <RadioMenuItem fx:id="m_ki_wasp" mnemonicParsing="false" text="Wasp" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Reset">
+            <Menu fx:id="m_reset" mnemonicParsing="false" text="Reset">
                <items>
-                  <MenuItem mnemonicParsing="false" text="TODO" />
+                  <MenuItem fx:id="m_reset_all" mnemonicParsing="false" text="ALL" />
                </items>
             </Menu>
       </menus>
@@ -57,13 +57,14 @@
                <items>
                   <AnchorPane prefHeight="373.0" prefWidth="110.0">
                      <children>
-                        <Button layoutX="14.0" layoutY="59.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Start" />
-                        <Button layoutX="14.0" layoutY="108.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Reset" />
+                        <Button fx:id="bt_start" layoutX="14.0" layoutY="59.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Start" />
+                        <Button fx:id="bt_reset" layoutX="14.0" layoutY="108.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Reset" />
+                        <Button fx:id="bt_close" layoutX="14.0" layoutY="308.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#quit_click" prefHeight="37.0" prefWidth="90.0" text="Close" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TextArea prefHeight="373.0" prefWidth="461.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextArea fx:id="ta_text" prefHeight="373.0" prefWidth="461.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </items>
