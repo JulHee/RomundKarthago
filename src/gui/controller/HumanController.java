@@ -58,7 +58,7 @@ public class HumanController
 	 *
 	 *
 	 * Client:
-	 * 
+	 * Der Client sendet die Map und den ersten Zug und wartet dannach auf die Rückmeldung des Servers.
      */
 
 	// Variablen abhängig ob Server oder Client läuft
@@ -98,8 +98,8 @@ public class HumanController
 
 	// Button und Path die bei Laufzeit erstellt wird
 
-	private final LinkedList<Button> buttons = new LinkedList<Button>();
-	private final LinkedList<Path> paths = new LinkedList<Path>();
+	private final LinkedList<Button> buttons = new LinkedList<>();
+	private final LinkedList<Path> paths = new LinkedList<>();
 
 	// Button größe
 
@@ -115,16 +115,31 @@ public class HumanController
 	private AnchorPane ap_map;
 
 	@FXML
+	private Label lb_aktuell_port;
+
+	@FXML
 	private Button bt_client;
 
 	@FXML
+	private Button bt_spielBeenden;
+
+	@FXML
 	private TextArea ta_history;
+
+	@FXML
+	private Tab t_log;
+
+	@FXML
+	private Label lb_aktuell_ip;
 
 	@FXML
 	private TextArea ta_log;
 
 	@FXML
 	private Button bt_server;
+
+	@FXML
+	private Label lb_letzerZug;
 
 	/**
 	 * Beenden des Programmes
@@ -173,14 +188,26 @@ public class HumanController
 		}
 	}
 
+	@FXML
+	void bt_spielBeenden_click (ActionEvent event)
+	{
+
+	}
+
+	/**
+	 * Initialisert die Oberfläche in dem sie die Buttons und Linien auf das Pane malt
+	 */
+
 	private void initial ()
 	{
-		try
+		// Hinzufügen der Beschriftung in den unteren ButtonBar
+		if ( ip != null )
 		{
-			mechanik.getMyGraph().read();
-		} catch ( Exception ex )
+			lb_aktuell_ip.setText( ip );
+		}
+		if ( port != null )
 		{
-			ta_log.appendText( ex.getMessage() );
+			lb_aktuell_port.setText( String.valueOf( port ) );
 		}
 
 		// Linien hinzufügen
@@ -197,6 +224,9 @@ public class HumanController
 			buttons.add( buttonalegen( i ) );
 		}
 
+		// Elemente auf das Pane legen
+		ap_map.getChildren().addAll( paths );
+		ap_map.getChildren().addAll( buttons );
 	}
 
 	/**
@@ -283,6 +313,7 @@ public class HumanController
 			try
 			{
 				aktiveHuman = false;
+
 				// Öffnen der Streams zum lesen der I/O Eingaben zwischen den Sockets und der Eingabe der Tastatur
 				BufferedReader tastatur_input = new BufferedReader( new InputStreamReader( System.in ) );
 				PrintWriter output = new PrintWriter( client.getOutputStream(), true /* autolush */ );
@@ -293,6 +324,7 @@ public class HumanController
 
 				// Zug senden
 				output.println( zug );
+				refreshHistory();
 
 				// Auswerten des Zuges
 				changebuttons( mechanik.auswerten( zug, eigenSeite ) );
@@ -308,6 +340,7 @@ public class HumanController
 
 				// Auswerten
 				changebuttons( mechanik.auswerten( zug_gegner, Seite.Rom ) );
+				refreshHistory();
 
 				aktiveHuman = true;
 			} catch ( IOException ex )
@@ -409,6 +442,9 @@ public class HumanController
 			public void handle (ActionEvent event)
 			{
 				serverPop.hide();
+				if (server == null && client == null){
+					bt_client.setVisible( true );
+				}
 			}
 
 		} );
@@ -497,7 +533,10 @@ public class HumanController
 			@Override
 			public void handle (ActionEvent event)
 			{
-				serverPop.hide();
+				clientPop.hide();
+				if (server == null && client == null){
+					bt_server.setVisible( true );
+				}
 			}
 
 		} );
