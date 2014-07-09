@@ -8,6 +8,7 @@ package gui.controller;
  * Year    : 2014
  */
 public class AiController {
-
+	
+	//Server oder Client
 
 }

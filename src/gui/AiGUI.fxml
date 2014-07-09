@@ -39,9 +39,9 @@
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Reset">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
+               <items>
+                  <MenuItem mnemonicParsing="false" text="TODO" />
+               </items>
             </Menu>
       </menus>
     </MenuBar>
@@ -53,14 +53,12 @@
           </font>
         </Label>
             <VBox />
-            <SplitPane dividerPositions="0.13636363636363635" layoutX="171.0" layoutY="126.0" prefHeight="375.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane dividerPositions="0.18808777429467086" layoutX="171.0" layoutY="126.0" prefHeight="375.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <items>
                   <AnchorPane prefHeight="373.0" prefWidth="110.0">
                      <children>
-                        <Button layoutX="14.0" layoutY="14.0" minHeight="25.0" minWidth="52.0" mnemonicParsing="false" text="Start" />
-                        <Button layoutX="14.0" layoutY="45.0" minHeight="25.0" minWidth="52.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="14.0" layoutY="76.0" minHeight="25.0" minWidth="52.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="14.0" layoutY="108.0" minHeight="25.0" minWidth="52.0" mnemonicParsing="false" text="Button" />
+                        <Button layoutX="14.0" layoutY="59.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Start" />
+                        <Button layoutX="14.0" layoutY="108.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Reset" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
