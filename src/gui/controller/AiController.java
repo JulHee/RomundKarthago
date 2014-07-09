@@ -12,6 +12,12 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import logik.Mechanik;
+import logik.ai.AIPlayer;
+import logik.ai.Joernson;
+import logik.ai.Killjoy;
+import logik.ai.Scrooge;
+import logik.ai.Sloth;
+import logik.ai.WaspAI;
 
 
 /**
@@ -94,11 +100,37 @@ public class AiController {
 	Seite eigenSeite = null;
 	Seite gegner = null;
 	
+	AIPlayer ai = null;
+	
+	//TODO wieso funktionieren die append_text nicht?!
 	
 	/*
 	 * Funktionen, welche die GUI steuern
 	 */
 	
+	/*
+	 * Reset Funktion
+	 */
+	@FXML
+	void do_reset(ActionEvent event){
+		mechanik = null;
+		eigenSeite = null;
+		gegner = null;
+		ai = null;
+		//TODO Filechooser zurücksetzen?
+		
+		
+		//deselect all
+		m_seite_carthage.setSelected(false);
+		m_seite_rom.setSelected(false);
+		m_ki_joernson.setSelected(false);
+		m_ki_killjoy.setSelected(false);
+		m_ki_scrooge.setSelected(false);
+		m_ki_sloth.setSelected(false);
+		m_ki_wasp.setSelected(false);
+		
+		ta_text.appendText("Reset durchgefuehrt! \n Bitte neue Einstellungen vornehmen \n");
+	}
 	
 	
 	/*
@@ -134,6 +166,7 @@ public class AiController {
 		m_seite_carthage.setSelected(false);
 		eigenSeite = Seite.Rom;
 		gegner = Seite.Kathargo;
+		ta_text.appendText("Rom als Seite ausgewählt \n");
 	}
 	/*
 	 * setzt die Seite Karthago in Seite_Karthago
@@ -143,7 +176,73 @@ public class AiController {
 		m_seite_rom.setSelected(false);
 		eigenSeite = Seite.Kathargo;
 		gegner = Seite.Rom;
+		ta_text.appendText("Kathargo als Seite ausgewählt \n");
 	}
-
+	/*
+	 * setzen der AI : Joernson
+	 */
+	@FXML
+	void set_joernson(ActionEvent event){
+		m_ki_killjoy.setSelected(false);
+		m_ki_sloth.setSelected(false);
+		m_ki_scrooge.setSelected(false);
+		m_ki_wasp.setSelected(false);
+		ai = new Joernson(eigenSeite,mechanik);
+		
+		ta_text.appendText("Ausgewählte AI: Joernson");
+	}
+	/*
+	 * setzen der AI : Killjoy
+	 */
+	@FXML
+	void set_killjoy(ActionEvent event){
+		m_ki_joernson.setSelected(false);
+		m_ki_sloth.setSelected(false);
+		m_ki_scrooge.setSelected(false);
+		m_ki_wasp.setSelected(false);
+		ai = new Killjoy(eigenSeite,mechanik);
+		
+		ta_text.appendText("Ausgewählte AI: Killjoy");
+	}
+	/*
+	 * setzen der AI : Sloth
+	 */
+	@FXML
+	void set_sloth(ActionEvent event){
+		m_ki_joernson.setSelected(false);
+		m_ki_killjoy.setSelected(false);
+		m_ki_scrooge.setSelected(false);
+		m_ki_wasp.setSelected(false);
+		ai = new Sloth(eigenSeite,mechanik);
+		
+		ta_text.appendText("Ausgewählte AI: Sloth");
+	}
+	/*
+	 * setzen der AI : Scrooge
+	 */
+	@FXML
+	void set_scrooge(ActionEvent event){
+		m_ki_joernson.setSelected(false);
+		m_ki_killjoy.setSelected(false);
+		m_ki_sloth.setSelected(false);
+		m_ki_wasp.setSelected(false);
+		ai = new Scrooge(eigenSeite,mechanik);
+		
+		ta_text.appendText("Ausgewählte AI: Scrooge");
+	}
+	/*
+	 * setzen der AI : Wasp   //TODO warum nur Wasp keine mechanik?
+	 */
+	@FXML
+	void set_wasp(ActionEvent event){
+		m_ki_joernson.setSelected(false);
+		m_ki_killjoy.setSelected(false);
+		m_ki_sloth.setSelected(false);
+		m_ki_scrooge.setSelected(false);
+		ai = new WaspAI(eigenSeite);
+		
+		ta_text.appendText("Ausgewählte AI: Wasp");
+	}
+	
 
 }

@@ -31,16 +31,16 @@
         </Menu>
             <Menu fx:id="m_ki" mnemonicParsing="false" text="kuenstliche Intelligenzen">
               <items>
-                  <RadioMenuItem fx:id="m_ki_joernson" mnemonicParsing="false" text="Joernson" />
-                  <RadioMenuItem fx:id="m_ki_killjoy" mnemonicParsing="false" text="KillJoy" />
-                  <RadioMenuItem fx:id="m_ki_sloth" mnemonicParsing="false" text="Sloth" />
-                  <RadioMenuItem fx:id="m_ki_scrooge" mnemonicParsing="false" text="Scrooge" />
-                  <RadioMenuItem fx:id="m_ki_wasp" mnemonicParsing="false" text="Wasp" />
+                  <RadioMenuItem fx:id="m_ki_joernson" mnemonicParsing="false" onAction="#set_joernson" text="Joernson" />
+                  <RadioMenuItem fx:id="m_ki_killjoy" mnemonicParsing="false" onAction="#set_killjoy" text="KillJoy" />
+                  <RadioMenuItem fx:id="m_ki_sloth" mnemonicParsing="false" onAction="#set_sloth" text="Sloth" />
+                  <RadioMenuItem fx:id="m_ki_scrooge" mnemonicParsing="false" onAction="#set_scrooge" text="Scrooge" />
+                  <RadioMenuItem fx:id="m_ki_wasp" mnemonicParsing="false" onAction="#set_wasp" text="Wasp" />
               </items>
             </Menu>
             <Menu fx:id="m_reset" mnemonicParsing="false" text="Reset">
                <items>
-                  <MenuItem fx:id="m_reset_all" mnemonicParsing="false" text="ALL" />
+                  <MenuItem fx:id="m_reset_all" mnemonicParsing="false" onAction="#do_reset" text="ALL" />
                </items>
             </Menu>
       </menus>
@@ -58,7 +58,7 @@
                   <AnchorPane prefHeight="373.0" prefWidth="110.0">
                      <children>
                         <Button fx:id="bt_start" layoutX="14.0" layoutY="59.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Start" />
-                        <Button fx:id="bt_reset" layoutX="14.0" layoutY="108.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Reset" />
+                        <Button fx:id="bt_reset" layoutX="14.0" layoutY="108.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#do_reset" prefHeight="37.0" prefWidth="90.0" text="Reset" />
                         <Button fx:id="bt_close" layoutX="14.0" layoutY="308.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#quit_click" prefHeight="37.0" prefWidth="90.0" text="Close" />
                      </children>
                   </AnchorPane>
