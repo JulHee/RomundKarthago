@@ -15,20 +15,26 @@ import java.util.logging.Logger;
  * Date    : 08.07.14
  * Year    : 2014
  */
-public class HumanGUI extends Application {
-    @Override
-    public void start(Stage primaryStage) {
-        try {
-            VBox page = (VBox) FXMLLoader.load(getClass().getResource("HumanGUI.fxml"));
-            Scene scene = new Scene(page);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Rom und Kathargo");
-            primaryStage.show();
-        } catch (Exception ex) {
-            Logger.getLogger(HumanGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class HumanGUI extends Application
+{
+	@Override
+	public void start (Stage primaryStage)
+	{
+		try
+		{
+			VBox page = ( VBox ) FXMLLoader.load( getClass().getResource( "HumanGUI.fxml" ) );
+			Scene scene = new Scene( page );
+			primaryStage.setScene( scene );
+			primaryStage.setTitle( "Rom und Kathargo" );
+			primaryStage.show();
+		} catch ( Exception ex )
+		{
+			Logger.getLogger( HumanGUI.class.getName() ).log( Level.SEVERE, null, ex );
+		}
+	}
+
+	public static void main (String[] args)
+	{
+		launch( args );
+	}
 }
