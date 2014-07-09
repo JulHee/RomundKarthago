@@ -5,9 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox minHeight="300.0" minWidth="300.0" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.HumanController">
+<VBox minHeight="300.0" minWidth="300.0" prefHeight="572.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.HumanController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar minWidth="300.0" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -16,12 +16,20 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="300.0" minWidth="300.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
 <children><SplitPane dividerPositions="0.6802507836990596" focusTraversable="true" layoutX="179.0" layoutY="203.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-  <items><VBox prefHeight="200.0" prefWidth="100.0">
-<children><HBox alignment="CENTER" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="200.0">
-<children><Button fx:id="bt_client" mnemonicParsing="false" onAction="#bt_client_click" text="Client" /><Label prefHeight="16.0" prefWidth="57.0" /><Button fx:id="bt_server" mnemonicParsing="false" onAction="#bt_server_click" text="Server" />
-</children></HBox><AnchorPane fx:id="ap_map">
+  <items><VBox minWidth="400.0" prefHeight="200.0" prefWidth="400.0">
+<children>
+                        <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <items><Button fx:id="bt_client" mnemonicParsing="false" onAction="#bt_client_click" text="Client" /><Button fx:id="bt_server" mnemonicParsing="false" onAction="#bt_server_click" text="Server" />
+                              <Button fx:id="bt_spielBeenden" mnemonicParsing="false" onAction="#bt_spielBeenden_click" text="Spiel Beenden" />
+                              <Label text="Letzer Zug des Gegners:" />
+                              <Label fx:id="lb_letzerZug" />
+                           </items>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </ToolBar><AnchorPane fx:id="ap_map" prefHeight="324.0" prefWidth="382.0" VBox.vgrow="ALWAYS">
 <VBox.margin>
 <Insets />
 </VBox.margin>
@@ -40,7 +48,7 @@
     </Tab>
     <Tab fx:id="t_log" text="Log">
 <content><AnchorPane>
-<children><TextArea fx:id="ta_log" prefHeight="229.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+<children><TextArea fx:id="ta_log" prefHeight="229.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" editable="true" />
 </children></AnchorPane>
 </content>
     </Tab>
@@ -51,5 +59,14 @@
 </SplitPane>
 </children>
     </AnchorPane>
+      <ToolBar minHeight="25.0" prefHeight="25.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+        <items>
+            <Label text="IP:" />
+            <Label fx:id="lb_aktuell_ip" prefHeight="17.0" prefWidth="59.0" />
+            <Label prefHeight="17.0" prefWidth="63.0" />
+            <Label text="Port:" />
+            <Label fx:id="lb_aktuell_port" prefHeight="17.0" prefWidth="47.0" />
+        </items>
+      </ToolBar>
   </children>
 </VBox>
