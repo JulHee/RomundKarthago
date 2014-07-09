@@ -18,10 +18,7 @@ import javafx.stage.FileChooser;
 import logik.Mechanik;
 import org.controlsfx.control.PopOver;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -35,6 +32,10 @@ import java.util.LinkedList;
  */
 public class HumanController {
 
+    // Variablen abhängig ob Server oder Client läuft
+    Seite eigenSeite = null;
+    Seite gegner = null;
+
     // Läuft ein Spiel ?
     Boolean runningGame = false;
 
@@ -44,7 +45,6 @@ public class HumanController {
     // Server
     ServerSocket server = null;
     Socket client = null;
-
 
     // Verbindung
     String ip = "localhost";
@@ -136,7 +136,6 @@ public class HumanController {
             bt_client.setVisible(false);
             serverPop = getServerPopover();
             serverPop.show(bt_server);
-            //TODO Serveroperation
         }
     }
 
@@ -144,7 +143,7 @@ public class HumanController {
         try {
             mechanik.getMyGraph().read();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ta_log.appendText(ex.getMessage());
         }
 
         // Linien hinzufügen
@@ -176,7 +175,7 @@ public class HumanController {
         temp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println(temp.getText());
+                ta_log.appendText(temp.getText());
                 zugmachen(temp);
             }
         });
@@ -230,16 +229,37 @@ public class HumanController {
      */
 
     private void zugmachen(Button sender) {
-        if (aktiveHuman && !(client == null)) {
+        if (aktiveHuman && client != null) {
             try {
+                aktiveHuman = false;
                 // Öffnen der Streams zum lesen der I/O Eingaben zwischen den Sockets und der Eingabe der Tastatur
                 BufferedReader tastatur_input = new BufferedReader(
                         new InputStreamReader(System.in));
                 PrintWriter output = new PrintWriter(client.getOutputStream(), true /* autolush */);
                 BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-                // TODO Zug senen / auf neuen Warten
-            }catch(IOException ex) {
+                String buttonText = sender.getText();
+                String zug = buttonText.charAt(0) + " " + eigenSeite.toString();
+
+                // Zug senden
+                output.println(zug);
+
+                // Auswerten des Zuges
+                changebuttons(mechanik.auswerten(zug, eigenSeite));
+
+                //Falls der letzte Zug das Spiel schon beendet hat
+                if (!mechanik.getSpiel()) {
+                    // TODO Spiel muss unterbrochen werden, falls mit dem eingenen Zug das Spiel beendet wurde
+                }
+
+                // Lesen des Gegnerzuges
+                String zug_gegner = input.readLine();
+
+                // Auswerten
+                changebuttons(mechanik.auswerten(zug_gegner, Seite.Rom));
+
+                aktiveHuman = true;
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
@@ -257,7 +277,7 @@ public class HumanController {
             String bttext = ((Button) n).getText();
             Integer btid = Integer.parseInt(String.valueOf(bttext.charAt(0)));
             ((Button) n).setText(btid + " " + String.valueOf(s.charAt(btid)));
-            System.out.println(bttext);
+            ta_log.appendText(bttext);
 
         });
     }
@@ -309,8 +329,8 @@ public class HumanController {
         db_ok.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                port = Integer.valueOf(tf_port.getText());
                 runServer();
-                // TODO OK geklickt
             }
         });
         Button db_abbrechen = new Button("Abbrechen");
@@ -369,16 +389,27 @@ public class HumanController {
         if (!this.ip.isEmpty()) {
             tf_ip.setText(this.ip);
         }
-
-        //TODO FILEOPENER plus Label hinzufügen um die Map anzugeben
         Label l_port = new Label("Port");
         Label l_ip = new Label("IP");
+        Label l_map = new Label("Map");
+        Button bt_map = new Button("Pfad zu der Map");
+        bt_map.setOnAction(new EventHandler<ActionEvent>() {
+                               @Override
+                               public void handle(ActionEvent e) {
+                                   File file = filechooser.showOpenDialog(null);
+                                   if (file != null) {
+                                       mechanik = new Mechanik(file.getAbsolutePath());
+                                   }
+                               }
+                           }
+        );
         Button db_ok = new Button("Ok");
         db_ok.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 ip = tf_ip.getText();
-                port = Integer.parseInt(tf_port.getText());
+                port = Integer.valueOf(tf_port.getText());
+                runClient();
             }
         });
         Button db_abbrechen = new Button("Abbrechen");
@@ -393,32 +424,39 @@ public class HumanController {
         myGridPane.add(tf_ip, 2, 0);
         myGridPane.add(l_port, 1, 1);
         myGridPane.add(tf_port, 2, 1);
+        myGridPane.add(l_map,1,2);
+        myGridPane.add(bt_map,2,2);
         GridPane mysubGridPane = new GridPane();
         mysubGridPane.setVgap(10);
         mysubGridPane.setHgap(10);
         mysubGridPane.setPadding(new Insets(4, 0, 4, 0));
         mysubGridPane.add(db_ok, 0, 0);
         mysubGridPane.add(db_abbrechen, 1, 0);
-        myGridPane.add(mysubGridPane, 2, 2);
+        myGridPane.add(mysubGridPane, 2, 3);
         return myGridPane;
     }
 
     private void runServer() {
-        System.out.println("Laden des Servers....");
+
+        ta_log.appendText("Laden des Servers....");
         try {
 
             // Initialiseren des Servers
             server = new ServerSocket(port);
-            System.out.println("Server erfolgreich erstellt..");
-            System.out.println("Der Server läuft und hört auf Port:" + port);
-            System.out.println("Server wartet auf Verbindungen...");
+            ta_log.appendText("Server erfolgreich erstellt..");
+            ta_log.appendText("Der Server läuft und hört auf Port:" + port);
+            ta_log.appendText("Server wartet auf Verbindungen...");
 
             // Warten auf einen Clienten und versuch die Verbidnung herzustellen
             try {
 
                 //Warten auf Client
                 client = server.accept();
-                System.out.println("Verbindung hergestellt:" + client.getLocalAddress().toString().substring(0) + ":" + client.getLocalPort());
+                ta_log.appendText("Verbindung hergestellt:" + client.getLocalAddress().toString().substring(0) + ":" + client.getLocalPort());
+
+                // Setzen der Seiten
+                eigenSeite = Seite.Kathargo;
+                gegner = Seite.Rom;
 
                 // Abfertigung des Clienten
                 handleClient();
@@ -432,6 +470,7 @@ public class HumanController {
                     try {
                         client.close();
                     } catch (IOException e) {
+                        e.printStackTrace();
                     }
             }
         } catch (Exception ex) {
@@ -439,8 +478,10 @@ public class HumanController {
         }
     }
 
-    private void handleClient()throws Exception {
+    private void handleClient() throws Exception {
 
+        // Zeichenen der Map
+        initial();
 
         // Öffnen der Streams zum lesen der I/O Eingaben zwischen den Sockets und der Eingabe der Tastatur
         BufferedReader tastatur_input = new BufferedReader(
@@ -449,10 +490,10 @@ public class HumanController {
         BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
         // Status ausgeben
-        System.out.println("Der Client " + client.getLocalAddress() + ":"
+        ta_log.appendText("Der Client " + client.getLocalAddress() + ":"
                 + client.getLocalPort() + " wurde verbunden");
 
-        System.out.println("Warten auf die Map");
+        ta_log.appendText("Warten auf die Map");
 
         // Einlesen der Map, welche vom Client gesendet wird
         ArrayList<String> map = new ArrayList<String>();
@@ -460,7 +501,7 @@ public class HumanController {
         Boolean karte = true;
         while (karte) {
             line = input.readLine();
-            System.out.println(line);
+            ta_log.appendText(line);
 
             // Beenden des Map einlesen, fall der erste Zug gesendet wird
             if (line.startsWith("C") | line.startsWith("R") | line.startsWith("X")) {
@@ -470,7 +511,7 @@ public class HumanController {
             }
         }
 
-        System.out.println("Prüfen der Map");
+        ta_log.appendText("Prüfen der Map");
 
         /*
         // Prüfen ob die Map inordnung ist
@@ -478,29 +519,33 @@ public class HumanController {
             throw new Exception(
                     "Die Map entspricht nicht den Spezifikationen");
         }
-        System.out.println("Map ok \nFüge sie ins Spiel ein....");
+        ta_log.appendTextn("Map ok \nFüge sie ins Spiel ein....");
         */
 
         // Einlesen der Map
         mechanik = new Mechanik(map);
+        initial();
 
         showMap();
 
-        System.out.println("Ok... \nBeginnen des Spiels");
+        ta_log.appendText("Ok... \nBeginnen des Spiels");
 
         // Da der Client mit dem Zug beginnt wird zuerst der Zug ausgewertet
-        System.out.println("Der Gegner macht den Zug: " + line);
+        ta_log.appendText("Der Gegner macht den Zug: " + line);
         changebuttons(mechanik.auswerten(line, Seite.Rom));
         showMap();
         aktiveHuman = true;
+    }
+
+    public void runClient(){
+
     }
 
     /**
      * Zeigt die aktuelle Map an
      */
 
-    private void showMap(){
-        System.out.println("Aktuelle Map: " + myMechanik.getMyGraph().convertToString());
+    private void showMap() {
+        ta_log.appendText("Aktuelle Map: " + mechanik.getMyGraph().convertToString());
     }
-}
 }
