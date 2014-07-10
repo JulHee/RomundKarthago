@@ -369,11 +369,11 @@ public class AiController
 								   if ( eigenSeite == Seite.Rom )
 								   {
 
-									   guiClient aiplayer = new guiClient( port, ip, mechanik,ta_text );
+									   guiClient aiplayer = new guiClient( port, ip, mechanik, ta_text );
 								   }
 								   if ( eigenSeite == Seite.Kathargo )
 								   {
-									   guiServer aiplayer = new guiServer( port, ai,ta_text );
+									   guiServer aiplayer = new guiServer( port, ai, ta_text );
 									   if ( eigenSeite == Seite.Rom )
 									   {
 										   ip = tf_ip.getText();
@@ -417,11 +417,7 @@ public class AiController
 		GridPane mysubGridPane = new GridPane();
 		mysubGridPane.setVgap( 10 );
 		mysubGridPane.setHgap( 10 );
-		mysubGridPane.setPadding( new
-
-										  Insets( 4, 0, 4, 0 )
-
-								);
+		mysubGridPane.setPadding( new Insets( 4, 0, 4, 0 ) );
 		mysubGridPane.add( db_ok, 0, 0 );
 		mysubGridPane.add( db_abbrechen, 1, 0 );
 		myGridPane.add( mysubGridPane, 2, 3 );
