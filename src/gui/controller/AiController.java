@@ -2,6 +2,8 @@ package gui.controller;
 
 import java.io.File;
 
+import network.Client;
+import network.Server;
 import core.datacontainers.Seite;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -78,7 +80,7 @@ public class AiController {
 	//all in reset
 	@FXML
 	private MenuItem m_reset_all;
-	
+
 	//button start
 	@FXML
 	private Button bt_start;
@@ -89,37 +91,45 @@ public class AiController {
 	@FXML
 	private Button bt_close;
 	//text area
+	@FXML
 	private TextArea ta_text;
-	
-	
+
+
 	/*
 	 * Funktionsvariablen um Spiel zu ermöglichen
 	 */
 	FileChooser filechooser = new FileChooser();
 	Mechanik mechanik = null;
+	//TODO set port/ip
+	Integer port = 0;
+	String ip= "localhost";
+	
 	Seite eigenSeite = null;
 	Seite gegner = null;
-	
+	Boolean runningGame = false;
+
 	AIPlayer ai = null;
-	
+
 	//TODO wieso funktionieren die append_text nicht?!
-	
+
 	/*
 	 * Funktionen, welche die GUI steuern
 	 */
-	
+
 	/*
 	 * Reset Funktion
 	 */
+
 	@FXML
 	void do_reset(ActionEvent event){
+		runningGame = false;
 		mechanik = null;
 		eigenSeite = null;
 		gegner = null;
 		ai = null;
 		//TODO Filechooser zurücksetzen?
-		
-		
+
+
 		//deselect all
 		m_seite_carthage.setSelected(false);
 		m_seite_rom.setSelected(false);
@@ -128,11 +138,31 @@ public class AiController {
 		m_ki_scrooge.setSelected(false);
 		m_ki_sloth.setSelected(false);
 		m_ki_wasp.setSelected(false);
-		
-		ta_text.appendText("Reset durchgefuehrt! \n Bitte neue Einstellungen vornehmen \n");
+
+		ta_text.clear();
+		ta_text.appendText("Reset durchgefuehrt! \nBitte neue Einstellungen vornehmen \n");
 	}
-	
-	
+	/*
+	 * TODO Start Funktion - Logik
+	 */
+	@FXML
+	void do_start(ActionEvent event){
+		if(!runningGame){
+			runningGame = true;	
+			ta_text.appendText("Spiel wurde gestartet!\n");
+			if ((eigenSeite==Seite.Rom)&&(ai!=null)){
+				Client aiplayer = new Client(port,ip,mechanik);
+			}if((eigenSeite==Seite.Kathargo)&&(ai!=null)){
+				Server aiplayer = new Server(port,ai);
+			}else{
+				ta_text.appendText("Fehler! Bitte zuerst alle Einstellungen vornehmen\n");
+			}
+		}else{
+			ta_text.appendText("Fehler! Das Spiel muss erst zurückgesetzt werden(Reset)\n");
+		}
+	}
+
+
 	/*
 	 * schließt das Fenster
 	 * Verwendung in datei_quit und button_close
@@ -145,19 +175,19 @@ public class AiController {
 	 *  TODO mapload oder besser Auswahl anbieten
 	 */
 	@FXML
-    void mi_load(ActionEvent event) {
+	void mi_load(ActionEvent event) {
 		File file = filechooser.showOpenDialog(null);
-        if (file != null) {
-            mechanik = new Mechanik(file.getAbsolutePath());
-        }
-        try {
+		if (file != null) {
+			mechanik = new Mechanik(file.getAbsolutePath());
+		}
+		try {
 			mechanik.getMyGraph().read();
 			ta_text.appendText("Die Map wurde geladen \n");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-    }
-	
+	}
+
 	/*
 	 * setzt die Seite Rom in Seite_rom
 	 */
@@ -188,8 +218,8 @@ public class AiController {
 		m_ki_scrooge.setSelected(false);
 		m_ki_wasp.setSelected(false);
 		ai = new Joernson(eigenSeite,mechanik);
-		
-		ta_text.appendText("Ausgewählte AI: Joernson");
+
+		ta_text.appendText("Ausgewählte AI: Joernson \n");
 	}
 	/*
 	 * setzen der AI : Killjoy
@@ -201,8 +231,8 @@ public class AiController {
 		m_ki_scrooge.setSelected(false);
 		m_ki_wasp.setSelected(false);
 		ai = new Killjoy(eigenSeite,mechanik);
-		
-		ta_text.appendText("Ausgewählte AI: Killjoy");
+
+		ta_text.appendText("Ausgewählte AI: Killjoy \n");
 	}
 	/*
 	 * setzen der AI : Sloth
@@ -214,8 +244,8 @@ public class AiController {
 		m_ki_scrooge.setSelected(false);
 		m_ki_wasp.setSelected(false);
 		ai = new Sloth(eigenSeite,mechanik);
-		
-		ta_text.appendText("Ausgewählte AI: Sloth");
+
+		ta_text.appendText("Ausgewählte AI: Sloth \n");
 	}
 	/*
 	 * setzen der AI : Scrooge
@@ -227,13 +257,11 @@ public class AiController {
 		m_ki_sloth.setSelected(false);
 		m_ki_wasp.setSelected(false);
 		ai = new Scrooge(eigenSeite,mechanik);
-		
-		ta_text.appendText("Ausgewählte AI: Scrooge");
+
+		ta_text.appendText("Ausgewählte AI: Scrooge \n");
 	}
 	/*
-	 * setzen der AI : Wasp   //TODO warum nur Wasp keine mechanik?
-	 * Weil die Wasp den ersten möglichen, vllt auch illegalen Move macht. Also "Seite + 0"
-	 * Dabei ist keine Mechanik von nöten
+	 * setzen der AI : Wasp   
 	 */
 	@FXML
 	void set_wasp(ActionEvent event){
@@ -242,9 +270,9 @@ public class AiController {
 		m_ki_sloth.setSelected(false);
 		m_ki_scrooge.setSelected(false);
 		ai = new WaspAI(eigenSeite);
-		
-		ta_text.appendText("Ausgewählte AI: Wasp");
+
+		ta_text.appendText("Ausgewählte AI: Wasp \n");
 	}
-	
+
 
 }

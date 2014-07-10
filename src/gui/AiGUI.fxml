@@ -13,7 +13,7 @@
       <menus>
         <Menu fx:id="m_datei" mnemonicParsing="false" text="Datei">
           <items>
-                  <MenuItem fx:id="m_datei_start" mnemonicParsing="false" text="Start" />
+                  <MenuItem fx:id="m_datei_start" mnemonicParsing="false" onAction="#do_start" text="Start" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="m_datei_quit" mnemonicParsing="false" onAction="#quit_click" text="Quit" />
           </items>
@@ -57,7 +57,7 @@
                <items>
                   <AnchorPane prefHeight="373.0" prefWidth="110.0">
                      <children>
-                        <Button fx:id="bt_start" layoutX="14.0" layoutY="59.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="90.0" text="Start" />
+                        <Button fx:id="bt_start" layoutX="14.0" layoutY="59.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#do_start" prefHeight="37.0" prefWidth="90.0" text="Start" />
                         <Button fx:id="bt_reset" layoutX="14.0" layoutY="108.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#do_reset" prefHeight="37.0" prefWidth="90.0" text="Reset" />
                         <Button fx:id="bt_close" layoutX="14.0" layoutY="308.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#quit_click" prefHeight="37.0" prefWidth="90.0" text="Close" />
                      </children>
