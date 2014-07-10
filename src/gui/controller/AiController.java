@@ -232,6 +232,8 @@ public class AiController {
 	}
 	/*
 	 * setzen der AI : Wasp   //TODO warum nur Wasp keine mechanik?
+	 * Weil die Wasp den ersten möglichen, vllt auch illegalen Move macht. Also "Seite + 0"
+	 * Dabei ist keine Mechanik von nöten
 	 */
 	@FXML
 	void set_wasp(ActionEvent event){
