@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
@@ -18,11 +19,6 @@
             <MenuItem fx:id="m_datei_quit" mnemonicParsing="false" onAction="#quit_click" text="Quit" />
           </items>
         </Menu>
-            <Menu fx:id="m_map" mnemonicParsing="false" text="Map">
-              <items>
-            <MenuItem fx:id="m_map_load" mnemonicParsing="false" onAction="#mi_load" text="Load Map" />
-              </items>
-            </Menu>
         <Menu fx:id="m_seite" mnemonicParsing="false" text="Seite">
           <items>
                   <RadioMenuItem fx:id="m_seite_rom" mnemonicParsing="false" onAction="#set_rom" text="Rom" />
@@ -47,28 +43,24 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
-            <VBox />
-            <SplitPane dividerPositions="0.18808777429467086" layoutX="171.0" layoutY="126.0" prefHeight="375.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <items>
-                  <AnchorPane prefHeight="373.0" prefWidth="110.0">
-                     <children>
-                        <Button fx:id="bt_start" layoutX="14.0" layoutY="59.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#do_start" prefHeight="37.0" prefWidth="90.0" text="Start" />
-                        <Button fx:id="bt_reset" layoutX="14.0" layoutY="108.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#do_reset" prefHeight="37.0" prefWidth="90.0" text="Reset" />
-                        <Button fx:id="bt_close" layoutX="14.0" layoutY="308.0" minHeight="40.0" minWidth="90.0" mnemonicParsing="false" onAction="#quit_click" prefHeight="37.0" prefWidth="90.0" text="Close" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <TextArea fx:id="ta_text" prefHeight="373.0" prefWidth="461.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                  <Button fx:id="bt_start" mnemonicParsing="false" onAction="#do_start" text="Start" />
+                  <Button fx:id="bt_reset" mnemonicParsing="false" onAction="#do_reset" text="Reset" />
+                  <Button fx:id="bt_close" mnemonicParsing="false" onAction="#quit_click" text="Close" />
+              </items>
+               <opaqueInsets>
+                  <Insets left="20.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </ToolBar>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+               <children>
+                  <TextArea fx:id="ta_text" prefHeight="373.0" prefWidth="461.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
       </children>
     </AnchorPane>
   </children>
