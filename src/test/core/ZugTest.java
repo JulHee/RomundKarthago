@@ -1,6 +1,7 @@
 package test.core;
 
 import core.datacontainers.Zug;
+import exceptions.KeinBesetzerException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,8 +17,11 @@ public class ZugTest {
     @Test
     public void  testKonstruktorFail() throws Exception{
         String test = "O 2";
-        Zug zug = new Zug(test);
-        assertNull("Object wurde nicht erzeugt",zug.getSeite());
+        try {
+            Zug zug = new Zug(test);
+        }catch (KeinBesetzerException e) {
+            assertEquals("Keine geeigneten Besetzer gefunden",e.getMessage() );
+        }
     }
 
     @Test

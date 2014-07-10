@@ -2,6 +2,7 @@ package core;
 
 import core.datacontainers.*;
 import exceptions.DateiStrukturException;
+import exceptions.KeinBesetzerException;
 import exceptions.KnotenException;
 
 import java.io.BufferedReader;
@@ -105,7 +106,7 @@ public class Graph implements Cloneable {
 	 * @throws Exception
 	 *             Ungültiger String
 	 */
-	public Seite getSeite(String x) throws Exception {
+	public Seite getSeite(String x) throws KeinBesetzerException {
 		Seite resu;
 		if (x.equals("N")) {
 			resu = Seite.Neutral;
@@ -116,7 +117,7 @@ public class Graph implements Cloneable {
 				if (x.equals("C")) {
 					resu = Seite.Kathargo;
 				} else {
-					throw new Exception("Keine geeigneten Besetzer gefunden");
+					throw new KeinBesetzerException("Keine geeigneten Besetzer gefunden");
 				}
 			}
 		}
@@ -325,7 +326,7 @@ public class Graph implements Cloneable {
 	 * @throws Exception  DateiStrukturException, falls die angegebene Datei fehlerhaft formatiert ist
      *                    IOException, falls das Einlesen fehlerhaft war und die Anz der Knoten vorher und nachher nicht gleich sind
 	 */
-	public void read(ArrayList<String> map) throws Exception {
+	public void read(ArrayList<String> map) throws DateiStrukturException,IOException,KeinBesetzerException,KnotenException {
 		reset();
 		int anzahl_an_Knoten = Integer.parseInt(map.get(0));
 		int gefundene_Knoten = 0;
@@ -524,7 +525,7 @@ public class Graph implements Cloneable {
             } else {
                 String letzterZug = this.convertToString();
                 this.ssuf(myzug);
-                if (letzterZug.equals(this.convertToString())) {
+                if (letzterZug == (this.convertToString())) {            //prüft suizid und lässt es als aushungern zählen
                     if (spielZustandWiederholt) {
                         retrnZustand.setErrorcode(2);
                     }

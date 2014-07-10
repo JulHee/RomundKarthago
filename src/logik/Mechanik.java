@@ -4,6 +4,9 @@ import core.Graph;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
 import core.datacontainers.Zustand;
+import exceptions.DateiStrukturException;
+import exceptions.KeinBesetzerException;
+import exceptions.KnotenException;
 import logik.ai.AIPlayer;
 import network.Client;
 
@@ -47,8 +50,16 @@ public class Mechanik implements Cloneable {
         try {
             myGraph.setPath(this.path);
             myGraph.read();
-        }catch (Exception e){
-            System.out.println(e.getStackTrace());}
+        }catch (KeinBesetzerException e){
+            System.out.println(e.getMessage());}
+        catch (DateiStrukturException e){
+            System.out.println(e.getMessage());}
+        catch (KnotenException e){
+            System.out.println(e.getMessage());}
+        catch (IOException e){
+            System.out.println(e.getMessage());}
+        catch (Exception e){
+            System.out.println(e.getMessage()+" dies ist keine ordnungsgemäß gefangene Exception");}
     }
 
     /**
@@ -146,8 +157,7 @@ public class Mechanik implements Cloneable {
     public void game(AIPlayer computer) {
         Seite aktuellerSpieler = Seite.Rom;
         myGraph.map();
-        System.out
-                .println("Bitte geben sie ob der Computer (R)om oder (C)athargo sein soll:");
+        System.out.println("Bitte geben sie ob der Computer (R)om oder (C)athargo sein soll:");
         try {
             BufferedReader bufferRead = new BufferedReader(
                     new InputStreamReader(System.in));

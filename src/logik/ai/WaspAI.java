@@ -2,6 +2,8 @@ package logik.ai;
 
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import exceptions.KeinBesetzerException;
+import exceptions.ZugException;
 import logik.ai.AIPlayer;
 
 
@@ -19,7 +21,13 @@ public class WaspAI  extends AIPlayer {
     }
 
     public Zug nextZug() {
-        Zug erg = new Zug(meineSeite.toString()+" 0");
-        return erg;
+        try {
+           Zug erg = new Zug(meineSeite.toString() + " 0");
+            return erg;
+        }catch (KeinBesetzerException e){
+            System.out.println(e.getMessage());}
+        catch (ZugException e){
+            System.out.println(e.getMessage());}
+        return null;
     }
 }

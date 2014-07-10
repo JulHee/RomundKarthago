@@ -1,5 +1,8 @@
 package core.datacontainers;
 
+import exceptions.KeinBesetzerException;
+import exceptions.ZugException;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -18,10 +21,9 @@ public class Zug {
         this.stadt = stadt;
     }
 
-    public Zug(String zug){
+    public Zug(String zug) throws ZugException,KeinBesetzerException{
         String[] temp = zug.split(" ");
         if (temp.length > 1){
-            try{
                 this.seite = readSeite(temp[0]);
                 if (temp[1].equals("X")){
                     this.stadt = -1;
@@ -29,12 +31,8 @@ public class Zug {
                     this.stadt = Integer.parseInt(temp[1]);
                 }
                 if (this.seite == null){
-                    throw new ExceptionInInitializerError("Fehler beim erstellen des Zuges, ein Wert ist nicht gesetzt");
+                    throw new ZugException("Fehler beim erstellen des Zuges, ein Wert ist nicht gesetzt");
                 }
-            } catch (Exception ex){
-                System.out.println(ex.getMessage());
-            }
-
         }
     }
 
@@ -70,7 +68,7 @@ public class Zug {
 	 * @return Die Seite
 	 * @throws Exception Ungültiger String
 	 */
-	private Seite readSeite(String x) throws Exception {
+	private Seite readSeite(String x) throws KeinBesetzerException {
 		Seite resu;
 		if (x.equals("N")) {
 			resu = Seite.Neutral;
@@ -81,7 +79,7 @@ public class Zug {
 				if (x.equals("C")) {
 					resu = Seite.Kathargo;
 				} else {
-					throw new Exception("Keine geeigneten Besetzer gefunden");
+					throw new KeinBesetzerException("Keine geeigneten Besetzer gefunden");
 				}
 			}
 		}

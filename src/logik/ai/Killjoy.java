@@ -3,6 +3,8 @@ import core.*;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import exceptions.KeinBesetzerException;
+import exceptions.ZugException;
 import logik.Mechanik;
 
 /**
@@ -30,13 +32,21 @@ public class Killjoy extends AIPlayer {
         Integer minPunkte = -1;
         Zug retrn = null;
         Graph myGraph = mechanik.getMyGraph();
-        for (Knoten k : myGraph.l_knoten) {
-            Zug temp = new Zug(meineSeite + " " + k.id);
-            if (minPunkte > getPunkte(temp, mechanik)) {
-                retrn = temp;
+        try {
+                for (Knoten k : myGraph.l_knoten) {
+                    Zug temp = new Zug(meineSeite + " " + k.id);
+                    if (minPunkte > getPunkte(temp, mechanik)) {
+                        retrn = temp;
+                    }
+                    return retrn;
+                }
+            } catch (KeinBesetzerException e) {
+                System.out.println(e.getMessage());
+            } catch (ZugException e) {
+                System.out.println(e.getMessage());
             }
-        }
-        return retrn;
+        return null;    //kann nicht vor kommen, da falls der try-catch block ausgeführt wird ein return enthalten ist,
+                        // und falls nicht eine Exception das Programm beendet
     }
 
     /**

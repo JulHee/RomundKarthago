@@ -4,6 +4,8 @@ import core.*;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import exceptions.KeinBesetzerException;
+import exceptions.ZugException;
 import logik.Mechanik;
 
 /**
@@ -31,8 +33,16 @@ public class Scrooge extends AIPlayer {
         Integer maxPunkte = -1;
         Zug retrn = null;
         Graph myGraph = mechanik.getMyGraph();
+
         for (Knoten k : myGraph.l_knoten) {
-            Zug temp = new Zug(meineSeite + " " + k.id);
+            Zug temp = null;
+            try {
+                temp = new Zug(meineSeite + " " + k.id);
+            } catch (ZugException e) {
+                System.out.println(e.getMessage());
+            } catch (KeinBesetzerException e) {
+                System.out.println(e.getMessage());
+            }
             if (maxPunkte < getPunkte(temp, mechanik)) {
                 retrn = temp;
             }

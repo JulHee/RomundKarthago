@@ -6,6 +6,8 @@ import java.util.HashSet;
 import core.datacontainers.Knoten;
 import core.datacontainers.Seite;
 import core.datacontainers.Zug;
+import exceptions.KeinBesetzerException;
+import exceptions.ZugException;
 import logik.Mechanik;
 
 /**
@@ -48,8 +50,13 @@ public class Joernson extends AIPlayer {
             int me = mechanik.getMyGraph().getPunkteStandFuer(meineSeite);
 			int enemy = mechanik.getMyGraph().getPunkteStandFuer(notmysite());
 			if(me>enemy){
-				retrn = new Zug(meineSeite+" X");
-				return retrn;
+                try {
+                    retrn = new Zug(meineSeite + " X");
+                    return retrn;
+                }catch (KeinBesetzerException e){
+                    System.out.println(e.getMessage());}
+                catch (ZugException e){
+                    System.out.println(e.getMessage());}
 			}
 		}
 		if (checkTarget()){

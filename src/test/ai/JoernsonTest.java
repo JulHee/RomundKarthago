@@ -20,6 +20,9 @@ public class JoernsonTest {
 	Mechanik mecha = new Mechanik("ext/Gameboard.txt");
 	Joernson Pew = new Joernson(Seite.Rom,mecha);
 
+    Mechanik mechaAiTest = new Mechanik ("ext/aiTestMap.txt");
+    Joernson joernson2 = new Joernson(Seite.Rom,mechaAiTest);
+
 	ArrayList<Knoten> array = new ArrayList();
 	ArrayList<ArrayList<Knoten>> arrayarray = new ArrayList();
 	Knoten n0 = new Knoten(0, Seite.Kathargo, new Position(350, 125));
@@ -111,6 +114,20 @@ public class JoernsonTest {
         assertEquals("NRNR",mecha.getMyGraph().convertToString());
     }
 
+    @Test
+    public void mysterioesesAussetzten1Test()throws Exception{
+        Knoten neun = mechaAiTest.getMyGraph().findKnoten(9);
+        neun.seite = Seite.Neutral;
+        mechaAiTest.auswerten("R 2",Seite.Rom);
+        //mechaAiTest.auswerten("C X",Seite.Kathargo);
+        mechaAiTest.auswerten("R 6",Seite.Rom);
+        mechaAiTest.auswerten("C 9",Seite.Kathargo);
+        System.out.println(mechaAiTest.getMyGraph().convertToString());
+        String erg = joernson2.nextZug().toFormat();
+        mechaAiTest.auswerten(erg,Seite.Rom);
+
+        assertNotEquals("R X", erg);
+    }
 
 
 

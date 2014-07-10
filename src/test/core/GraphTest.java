@@ -69,12 +69,12 @@ public class GraphTest {
         assertEquals("CNCN",newGraph.convertToString());
     }
     @Test
-    public void testssuf_map04() throws Exception{
+    public void testSsuf_map04() throws Exception{
         Graph myGraph = new Graph();
         myGraph.setPath("ext/0_3.map.02.txt");
         Zug myZug = new Zug("R 1");
         myGraph.read();
         Graph newGraph = myGraph.ssuf(myGraph,myZug);
-        assertEquals("CNCN",newGraph.convertToString());
+        assertEquals("NRCN",newGraph.convertToString());
     }
 }
