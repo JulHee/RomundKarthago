@@ -110,7 +110,6 @@ public class AiController {
 
 	AIPlayer ai = null;
 
-	//TODO wieso funktionieren die append_text nicht?!
 
 	/*
 	 * Funktionen, welche die GUI steuern
@@ -127,7 +126,6 @@ public class AiController {
 		eigenSeite = null;
 		gegner = null;
 		ai = null;
-		//TODO Filechooser zurücksetzen?
 
 
 		//deselect all
