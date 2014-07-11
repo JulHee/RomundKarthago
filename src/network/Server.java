@@ -105,7 +105,7 @@ public class Server {
                     //Warten auf Client
                     client = server.accept();
                     out("Verbindung hergestellt:" + client.getLocalAddress().toString().substring(0) + ":"
-                                    + client.getLocalPort());
+                            + client.getLocalPort());
 
                     // Abfertigung des Clienten
                     handleClient(client);
@@ -239,7 +239,7 @@ public class Server {
         if (outputstream == null) {
             System.out.println("Aktuelle Map: " + myMechanik.getMyGraph().convertToString());
         } else {
-            outputstream.appendText("Aktuelle Map: " + myMechanik.getMyGraph().convertToString()+"\n");
+            outputstream.appendText("Aktuelle Map: " + myMechanik.getMyGraph().convertToString() + "\n");
         }
     }
 
