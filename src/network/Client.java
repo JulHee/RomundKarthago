@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javafx.scene.control.TextArea;
 import logik.ai.AIPlayer;
 import logik.Mechanik;
 import core.datacontainers.Seite;
@@ -22,15 +23,25 @@ public class Client
 	private Integer port = 0;
 	private String ip = "";
 	private final Mechanik myMechanik;
+    private TextArea outputstream = null;
 
 	public Client (Integer port,
 				   String ip,
-				   Mechanik m)
+				   Mechanik m,TextArea outputstream)
 	{
 		this.port = port;
 		this.ip = ip;
 		this.myMechanik = m;
+        this.outputstream = outputstream;
 	}
+    public Client (Integer port,
+                   String ip,
+                   Mechanik m)
+    {
+        this.port = port;
+        this.ip = ip;
+        this.myMechanik = m;
+    }
 
 	public Integer getPort ()
 	{
@@ -106,16 +117,16 @@ public class Client
 
 				// Senden des Zuges
 				Zug zug = ai.nextZug();
-				System.out.println( "Senden des Zuges: " + zug.toFormat() );
+				out( "Senden des Zuges: " + zug.toFormat() );
 				output.println( zug.toFormat() );
-				System.out.println( "Die Map: " + myMechanik.getMyGraph().convertToString() );
+				out( "Die Map: " + myMechanik.getMyGraph().convertToString() );
 
 				// Auswerten des Zuges
 				myMechanik.auswerten( zug.toFormat(), mySeite );
 				in = input.readLine();
-				System.out.println( "Lesen des Zuges: " + in );
+                out( "Lesen des Zuges: " + in );
 				myMechanik.auswerten( in, Seite.Kathargo );
-				System.out.println( "Die Map: " + myMechanik.getMyGraph().convertToString() );
+                out( "Die Map: " + myMechanik.getMyGraph().convertToString() );
 			}
 			s.close();
 
@@ -151,18 +162,18 @@ public class Client
 			{
 				output.println( l );
 			}
-			System.out.println( "Die Map: " + myMechanik.getMyGraph().convertToString() );
+            out( "Die Map: " + myMechanik.getMyGraph().convertToString() );
 
 			//Spiel-Loop
 			while ( myMechanik.getSpiel() )
 			{
-				System.out.println( "Bitte Zug angeben:" );
+                out( "Bitte Zug angeben:" );
 				try
 				{
 
 					//Lesen des Zuges
 					String zug = bufferRead.readLine();
-					System.out.println( "Senden des Zuges: " + zug );
+                    out( "Senden des Zuges: " + zug );
 
 
 					// Lesen des Zuges
@@ -170,7 +181,7 @@ public class Client
 
 					// Auswerten
 					String move = myMechanik.auswerten( zug, mySeite );
-					System.out.println( "Die Map: " + myMechanik.getMyGraph().convertToString() );
+                    out( "Die Map: " + myMechanik.getMyGraph().convertToString() );
 
 					// Falls nach dem ersten letzen Zug, dass Spiel beendet wurde
 					if ( ! myMechanik.getSpiel() )
@@ -184,11 +195,11 @@ public class Client
 					{
 
 					}
-					System.out.println( "Der Gegner machte den Zug: " + in );
+                    out( "Der Gegner machte den Zug: " + in );
 
 					// Auswerten
 					myMechanik.auswerten( in, Seite.Kathargo );
-					System.out.println( "Die Map: " + myMechanik.getMyGraph().convertToString() );
+                    out( "Die Map: " + myMechanik.getMyGraph().convertToString() );
 				} catch ( IOException e )
 				{
 					e.getStackTrace();
@@ -232,4 +243,11 @@ public class Client
 		}
 
 	}
+    private void out(String message){
+        if (outputstream == null){
+            System.out.println(message);
+        } else{
+            outputstream.appendText(message+"\n");
+        }
+    }
 }

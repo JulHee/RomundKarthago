@@ -1,7 +1,6 @@
 package gui.controller;
 
 import java.io.File;
-import java.io.PrintStream;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,8 +19,6 @@ import logik.ai.Killjoy;
 import logik.ai.Scrooge;
 import logik.ai.Sloth;
 import logik.ai.WaspAI;
-import network.guiClient;
-import network.guiServer;
 import org.controlsfx.control.PopOver;
 
 
@@ -369,11 +366,11 @@ public class AiController
 								   if ( eigenSeite == Seite.Rom )
 								   {
 
-									   guiClient aiplayer = new guiClient( port, ip, mechanik, ta_text );
+									   Client aiplayer = new Client( port, ip, mechanik, ta_text );
 								   }
 								   if ( eigenSeite == Seite.Kathargo )
 								   {
-									   guiServer aiplayer = new guiServer( port, ai, ta_text );
+									   Server aiplayer = new Server( port, ai, ta_text );
 									   if ( eigenSeite == Seite.Rom )
 									   {
 										   ip = tf_ip.getText();
