@@ -109,9 +109,9 @@ public class Client {
 
                 // Senden des Zuges
                 Zug zug = ai.nextZug();
-                out("Senden des Zuges: " + zug.toFormat());
+                out("> " + zug.toFormat());
                 output.println(zug.toFormat());
-                out("Die Map: " + myMechanik.getMyGraph().convertToString());
+                out(myMechanik.getMyGraph().convertToString());
 
                 // Auswerten des Zuges
                 myMechanik.auswerten(zug.toFormat(), mySeite);
@@ -122,14 +122,10 @@ public class Client {
                     break;
                 }
 
-                out("Lesen des Zuges: " + in);
+                out("< " + in);
 
                 myMechanik.auswerten(in, Seite.Kathargo);
-                out("Die Map: " + myMechanik.getMyGraph().convertToString());
-
-                out("====");
-                out("Die Logik sagt: "+myMechanik.getSpiel().toString());
-                out("====");
+                out(myMechanik.getMyGraph().convertToString());
             }
             s.close();
 
@@ -174,7 +170,7 @@ public class Client {
 
                     //Lesen des Zuges
                     String zug = bufferRead.readLine();
-                    out("Senden des Zuges: " + zug);
+                    out("> " + zug);
 
 
                     // Lesen des Zuges
@@ -182,7 +178,7 @@ public class Client {
 
                     // Auswerten
                     String move = myMechanik.auswerten(zug, mySeite);
-                    out("Die Map: " + myMechanik.getMyGraph().convertToString());
+                    out(myMechanik.getMyGraph().convertToString());
 
                     // Falls nach dem ersten letzen Zug, dass Spiel beendet wurde
                     if (!myMechanik.getSpiel()) {
@@ -196,11 +192,11 @@ public class Client {
                         out("Die Mechanik meint: "+myMechanik.getSpiel().toString());
                         break;
                     }
-                    out("Der Gegner machte den Zug: " + in);
+                    out("< " + in);
 
                     // Auswerten
                     myMechanik.auswerten(in, Seite.Kathargo);
-                    out("Die Map: " + myMechanik.getMyGraph().convertToString());
+                    out(myMechanik.getMyGraph().convertToString());
                 } catch (IOException e) {
                     e.getStackTrace();
                 }

@@ -191,7 +191,7 @@ public class Server {
         out("Ok... \nBeginnen des Spiels");
 
         // Da der Client mit dem Zug beginnt wird zuerst der Zug ausgewertet
-        out("Der Gegner macht den Zug: " + line);
+        out("< " + line);
         myMechanik.auswerten(line, Seite.Rom);
         showMap();
 
@@ -205,7 +205,7 @@ public class Server {
                 zug = tastatur_input.readLine();
             }
 
-            out("Senden des Zuges: " + zug);
+            out("> " + zug);
 
             // Zug senden
             output.println(zug);
@@ -225,7 +225,7 @@ public class Server {
                 out("Der Gegner hat keinen Zug gemacht, sondern: "+zug_gegner);
                 break;
             }
-            out("Der Gegner macht den Zug: " + zug_gegner);
+            out("< " + zug_gegner);
 
             // Auswerten
             myMechanik.auswerten(zug_gegner, Seite.Rom);
