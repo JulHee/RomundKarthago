@@ -246,9 +246,9 @@ public class Server {
 
     private void showMap() {
         if (outputstream == null) {
-            System.out.println("Aktuelle Map: " + myMechanik.getMyGraph().convertToString());
+            System.out.println(myMechanik.getMyGraph().convertToString());
         } else {
-            outputstream.appendText("Aktuelle Map: " + myMechanik.getMyGraph().convertToString() + "\n");
+            outputstream.appendText(myMechanik.getMyGraph().convertToString() + "\n");
         }
     }
 

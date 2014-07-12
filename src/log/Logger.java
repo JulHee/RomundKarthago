@@ -27,7 +27,8 @@ public class Logger {
             date = new Date();
             String time = df.format(date);
             this.file = new File("log", time + "_RuK.log");
-            System.out.println(file.getAbsolutePath());
+            System.out.println("Der Log wird nach: "+file.getAbsolutePath()+" geschrieben");
+            System.out.println(" ");
             this.fileWriter = new FileWriter(file);
         } catch (IOException e) {
             e.printStackTrace();
