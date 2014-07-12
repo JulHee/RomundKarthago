@@ -188,7 +188,8 @@ public class Server {
 
         showMap();
 
-        out("Ok... \nBeginnen des Spiels");
+        out("Ok...");
+        out("Beginnen des Spiels");
 
         // Da der Client mit dem Zug beginnt wird zuerst der Zug ausgewertet
         out("< " + line);
@@ -245,6 +246,7 @@ public class Server {
      */
 
     private void showMap() {
+        log.log(myMechanik.getMyGraph().convertToString());
         if (outputstream == null) {
             System.out.println(myMechanik.getMyGraph().convertToString());
         } else {
