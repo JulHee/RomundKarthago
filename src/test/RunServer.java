@@ -2,6 +2,7 @@ package test;
 
 import core.datacontainers.Seite;
 import logik.ai.Joernson;
+import logik.ai.Scrooge;
 import network.Server;
 
 /**
@@ -17,9 +18,10 @@ public class RunServer {
     public static void main(String[] args) throws Exception {
 
         // TODO Die Mechanik muss der AI später übergeben werden get und Setter setzen !!!!!!!!
-
-        final Integer port = 9999;
+        Scrooge myScrooge = new Scrooge(Seite.Kathargo,null);
+        final Integer port = 8888;
         //Joernson joern = new Joernson(Seite.Kathargo,null);
-        Server hum = new Server(port);
+
+        Server hum = new Server(port,myScrooge);
     }
 }

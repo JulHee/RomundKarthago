@@ -6,11 +6,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javafx.scene.control.TextArea;
+import log.Logger;
 import logik.Mechanik;
 import core.datacontainers.Seite;
 import logik.ai.AIPlayer;
 
 public class Server {
+
+    // Eingener Logger
+    Logger log = new Logger();
 
     static Seite mySeite = Seite.Kathargo;
     static Integer port;
@@ -93,9 +97,6 @@ public class Server {
 
             out("Server wartet auf Verbindungen...");
 
-            // Loop um alle Clients zu bearbeiten
-            while (true) {
-
                 // Initialisierung des Socket des Clienten
                 Socket client = null;
 
@@ -109,6 +110,8 @@ public class Server {
 
                     // Abfertigung des Clienten
                     handleClient(client);
+                    server.close();
+                    log.close();
                 } catch (IOException e) {
                     client.close();
                     server.close();
@@ -122,7 +125,6 @@ public class Server {
                         }
                     }
                 }
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -197,7 +199,7 @@ public class Server {
         String zug = null;
         while (myMechanik.getSpiel()) {
             if (activeAI) {
-                zug = ai.nextZug().toString();
+                zug = ai.nextZug().toFormat();
             } else {
                 out("Bitte geben Sie ihren Zug ein:");
                 zug = tastatur_input.readLine();
@@ -219,6 +221,10 @@ public class Server {
 
             // Lesen des Gegnerzuges
             String zug_gegner = input.readLine();
+            if (zug_gegner == null){
+                out("Der Gegner hat keinen Zug gemacht, sondern: "+zug_gegner);
+                break;
+            }
             out("Der Gegner macht den Zug: " + zug_gegner);
 
             // Auswerten
@@ -227,7 +233,10 @@ public class Server {
         }
         client.close();
 
+        out("==============================");
         out("Das Spiel wurde beendet");
+        out("Rom: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Rom));
+        out("Kathargo: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Kathargo));
     }
 
 
@@ -278,6 +287,7 @@ public class Server {
     }
 
     private void out(String message) {
+        log.log(message);
         if (outputstream == null) {
             System.out.println(message);
         } else {

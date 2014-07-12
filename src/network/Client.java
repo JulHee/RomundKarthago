@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javafx.scene.control.TextArea;
+import log.Logger;
 import logik.ai.AIPlayer;
 import logik.Mechanik;
 import core.datacontainers.Seite;
@@ -17,6 +18,9 @@ import core.datacontainers.Zug;
  * Year : 2014
  */
 public class Client {
+
+    // Eigener Log
+    Logger log = new Logger();
 
     Seite mySeite = Seite.Rom;
     private Integer port = 0;
@@ -60,6 +64,7 @@ public class Client {
                 Socket s = new Socket(ip, port)
         ) {
             handleSocket_ai(s, ai);
+            log.close();
         } catch (IOException e) {
             e.getStackTrace();
         }
@@ -74,6 +79,7 @@ public class Client {
                 Socket s = new Socket(ip, port)
         ) {
             handleSocket_hum(s);
+            log.close();
         } catch (IOException e) {
             e.getStackTrace();
         }
@@ -110,11 +116,26 @@ public class Client {
                 // Auswerten des Zuges
                 myMechanik.auswerten(zug.toFormat(), mySeite);
                 in = input.readLine();
+                if (in == null | !s.isConnected()) {
+                    out("Der Gegner hat keinen Zug gemacht, sondern: "+in);
+                    out("Die Mechanik meint: "+myMechanik.getSpiel().toString());
+                    break;
+                }
+
                 out("Lesen des Zuges: " + in);
+
                 myMechanik.auswerten(in, Seite.Kathargo);
                 out("Die Map: " + myMechanik.getMyGraph().convertToString());
+
+                out("====");
+                out("Die Logik sagt: "+myMechanik.getSpiel().toString());
+                out("====");
             }
             s.close();
+
+            out("Das Spiel wurde beendet");
+            out("Rom: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Rom));
+            out("Kathargo: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Kathargo));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -171,7 +192,9 @@ public class Client {
                     // Lesen des Gegnerzuges
                     in = input.readLine();
                     if (in == null) {
-
+                        out("Der Gegner hat keinen Zug gemacht, sondern: "+in);
+                        out("Die Mechanik meint: "+myMechanik.getSpiel().toString());
+                        break;
                     }
                     out("Der Gegner machte den Zug: " + in);
 
@@ -183,6 +206,9 @@ public class Client {
                 }
             }
             s.close();
+            out("Das Spiel wurde beendet");
+            out("Rom: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Rom));
+            out("Kathargo: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Kathargo));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -217,6 +243,7 @@ public class Client {
     }
 
     private void out(String message) {
+        log.log(message);
         if (outputstream == null) {
             System.out.println(message);
         } else {
