@@ -17,7 +17,6 @@ public class RunServer {
 
     public static void main(String[] args) throws Exception {
 
-        // TODO Die Mechanik muss der AI später übergeben werden get und Setter setzen !!!!!!!!
         Scrooge myScrooge = new Scrooge(Seite.Kathargo,null);
         final Integer port = 8888;
         //Joernson joern = new Joernson(Seite.Kathargo,null);

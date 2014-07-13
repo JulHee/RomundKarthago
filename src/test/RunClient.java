@@ -15,7 +15,7 @@ import logik.ai.Sloth;
 public class RunClient {
 
     public static void main(String[] args) {
-        Mechanik myMechanik = new Mechanik("ext/map4.txt");
+        Mechanik myMechanik = new Mechanik("ext/aiTestMap.txt");
         Killjoy myKilljoy = new Killjoy(Seite.Rom,myMechanik);
         Sloth mySloth = new Sloth(Seite.Rom,myMechanik);
         Joernson joern = new Joernson(Seite.Rom,myMechanik);

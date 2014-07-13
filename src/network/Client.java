@@ -111,10 +111,12 @@ public class Client {
                 Zug zug = ai.nextZug();
                 out("> " + zug.toFormat());
                 output.println(zug.toFormat());
-                out(myMechanik.getMyGraph().convertToString());
 
                 // Auswerten des Zuges
                 myMechanik.auswerten(zug.toFormat(), mySeite);
+
+                out(myMechanik.getMyGraph().convertToString());
+
                 in = input.readLine();
                 if (in == null | !s.isConnected()) {
                     out("Der Gegner hat keinen Zug gemacht, sondern: "+in);
