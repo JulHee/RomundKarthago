@@ -132,12 +132,11 @@ public class Mechanik implements Cloneable {
         AIPlayer aktuellerSpieler = rom;
         myGraph.map();
         while (spiel) {
-            System.out.println(aktuellerSpieler.meineSeite.toString()
-                    + " spielt folgenden Zug: ");
-            String move = auswerten(aktuellerSpieler.nextZug().toFormat(),
+            String zug = aktuellerSpieler.nextZug().toFormat();
+            String move = auswerten(zug,
                     aktuellerSpieler.meineSeite);
-            System.out.println(move);
-
+            System.out.println(aktuellerSpieler.meineSeite.toString()
+                    + " spielt folgenden Zug: "+ zug );
             if (aktuellerSpieler.meineSeite == Seite.Rom) {
                 aktuellerSpieler = kathargo;
             } else {
