@@ -20,6 +20,6 @@ public class RunClient {
         Sloth mySloth = new Sloth(Seite.Rom,myMechanik);
         Joernson joern = new Joernson(Seite.Rom,myMechanik);
 
-        myMechanik.game("localhost",8888/*9999*/,mySloth);
+        myMechanik.game("localhost",9999,joern);
     }
 }

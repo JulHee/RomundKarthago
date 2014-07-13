@@ -19,8 +19,8 @@ public class RunServer {
 
         Scrooge myScrooge = new Scrooge(Seite.Kathargo,null);
         final Integer port = 8888;
-        //Joernson joern = new Joernson(Seite.Kathargo,null);
+        Joernson joern = new Joernson(Seite.Kathargo,null);
 
-        Server hum = new Server(port,myScrooge);
+        Server hum = new Server(port,joern);
     }
 }

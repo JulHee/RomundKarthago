@@ -296,4 +296,10 @@ public class Joernson extends AIPlayer {
            System.out.println(e.getStackTrace());}
        return  false;
    }
+
+	@Override
+	public String toString ()
+	{
+		return "Joernson";
+	}
 }

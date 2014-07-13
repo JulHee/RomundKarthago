@@ -180,9 +180,7 @@ public class Server {
         // Einlesen der Map
         myMechanik = new Mechanik(map);
         if (activeAI) {
-            if (ai.getMechanik() == null) {
-                ai.setMechanik(myMechanik);
-            }
+            ai.setMechanik( myMechanik );
         }
 
 
@@ -200,6 +198,7 @@ public class Server {
         String zug = null;
         while (myMechanik.getSpiel()) {
             if (activeAI) {
+				// TODO ERROR beim zugriff auf den Zug java.lang.NullPointerException
                 zug = ai.nextZug().toFormat();
             } else {
                 out("Bitte geben Sie ihren Zug ein:");
