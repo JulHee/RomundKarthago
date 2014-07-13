@@ -4,6 +4,7 @@ import core.datacontainers.*;
 import exceptions.DateiStrukturException;
 import exceptions.KeinBesetzerException;
 import exceptions.KnotenException;
+import exceptions.ZugException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -182,7 +183,7 @@ public class Graph implements Cloneable {
      * @return Sortierte Liste mit den Kante
      */
     public ArrayList<Kante> toArrayListKante(HashSet<Kante> kanteList) {
-        ArrayList<Kante> retrn = new ArrayList<>();
+        ArrayList<Kante> retrn = new ArrayList<Kante>();
         for (int i = 0; i < kanteList.size(); i++) {
             for (Kante k : kanteList) {
                 if (k.getPunkt1().id == i)
@@ -499,41 +500,48 @@ public class Graph implements Cloneable {
      */
     public Zustand run(String zug, Seite spieler) {
         Zustand retrnZustand = new Zustand(0);
+        Zug myzug = null;
         try {
-            Zug myzug = new Zug(zug);
-            Graph temp = this.clone();
-            if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
-                retrnZustand.setName(this.convertToString());
-                if (spielZustandWiederholt) {
-                    retrnZustand.setErrorcode(2);
-                } else {
-                    retrnZustand.setErrorcode(1);
-                    spielZustandWiederholt = true;
-                }
+            myzug = new Zug(zug);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        if (myzug != null) {
+            try {
 
-            } else if (history.contains(temp.ssuf(temp, myzug).convertToString())) {
-                retrnZustand.setName(this.convertToString());
-                retrnZustand.setErrorcode(3);
-                spielZustandWiederholt = true;
-            } else {
-                String letzterZug = this.convertToString();
-                this.ssuf(myzug);
-                if (letzterZug == (this.convertToString())) {            //prüft suizid und lässt es als aushungern zählen
+                Graph temp = this.clone();
+                if (myzug.getStadt() == -1 || myzug.getSeite() != spieler) {
+                    retrnZustand.setName(this.convertToString());
                     if (spielZustandWiederholt) {
                         retrnZustand.setErrorcode(2);
+                    } else {
+                        retrnZustand.setErrorcode(1);
+                        spielZustandWiederholt = true;
                     }
-                    retrnZustand.setErrorcode(1);
-                    spielZustandWiederholt = true;
-                }
-                retrnZustand.setName(this.convertToString());
-            }
-            history.add(retrnZustand.getName());
 
-        } catch (KnotenException kE) {
-            System.out.println(kE.getStackTrace());
-        } finally {
-            return retrnZustand;
+                } else if (history.contains(temp.ssuf(temp, myzug).convertToString())) {
+                    retrnZustand.setName(this.convertToString());
+                    retrnZustand.setErrorcode(3);
+                    spielZustandWiederholt = true;
+                } else {
+                    String letzterZug = this.convertToString();
+                    this.ssuf(myzug);
+                    if (letzterZug == (this.convertToString())) {            //prüft suizid und lässt es als aushungern zählen
+                        if (spielZustandWiederholt) {
+                            retrnZustand.setErrorcode(2);
+                        }
+                        retrnZustand.setErrorcode(1);
+                        spielZustandWiederholt = true;
+                    }
+                    retrnZustand.setName(this.convertToString());
+                }
+
+            } catch (KnotenException kE) {
+                System.out.println(kE.getMessage());
+            }
         }
+        history.add(retrnZustand.getName());
+        return retrnZustand;
     }
 
     /**
