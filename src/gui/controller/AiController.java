@@ -347,7 +347,7 @@ public class AiController {
                                       port = Integer.valueOf(tf_port.getText());
                                       // TODO Button ok gelickt
                                   }
-
+                                  serverPop.hide(); //entfernen des popups
                               }
                           }
 
