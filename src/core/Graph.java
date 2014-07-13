@@ -212,53 +212,6 @@ public class Graph implements Cloneable {
         }
     }
 
-    @Override
-    public Graph clone() {
-        Graph myGraph = null;
-        try {
-            myGraph = new Graph(path,
-                    erzeugeNeueKnotenListe(l_knoten),
-                    erzeugeNeueKanteListe(l_kante),
-                    erzeugeNeueHistory(history), spielZustandWiederholt,
-                    erzeugeNeueMaptext(maptext));
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-        return myGraph;
-    }
-
-    public HashSet<Knoten> erzeugeNeueKnotenListe(HashSet<Knoten> alte) {
-        HashSet<Knoten> neue = new HashSet<>();
-        for (Knoten i : alte) {
-            neue.add(new Knoten(i.id, i.seite, i.position));
-        }
-        return neue;
-    }
-
-    public HashSet<Kante> erzeugeNeueKanteListe(HashSet<Kante> alte) {
-        HashSet<Kante> neue = new HashSet<>();
-        for (Kante i : alte) {
-            neue.add(new Kante(i.getPunkt1(), i.getPunkt2()));
-        }
-        return neue;
-    }
-
-    public ArrayList<String> erzeugeNeueHistory(ArrayList<String> alte) {
-        ArrayList<String> neue = new ArrayList<>();
-        for (String i : alte) {
-            neue.add(i);
-        }
-        return neue;
-    }
-
-    public ArrayList<String> erzeugeNeueMaptext(ArrayList<String> alte) {
-        ArrayList<String> neue = new ArrayList<>();
-        for (String i : alte) {
-            neue.add(i);
-        }
-        return neue;
-    }
-
     /**
      * Setz alle Werte einer vorherigen Spiels zurück
      */
@@ -519,21 +472,26 @@ public class Graph implements Cloneable {
                         spielZustandWiederholt = true;
                     }
 
-                } else if (history.contains(temp.ssuf(temp, myzug).convertToString())) {
-                    retrnZustand.setName(this.convertToString());
-                    retrnZustand.setErrorcode(3);
-                    spielZustandWiederholt = true;
                 } else {
-                    String letzterZug = this.convertToString();
-                    this.ssuf(myzug);
-                    if (letzterZug == (this.convertToString())) {            //prüft suizid und lässt es als aushungern zählen
-                        if (spielZustandWiederholt) {
-                            retrnZustand.setErrorcode(2);
-                        }
-                        retrnZustand.setErrorcode(1);
+                    // TODO Bitte verändern wurde nur zu Testzwecken mit println versehen
+                    String tempGraphZustand = temp.ssuf(temp, myzug).convertToString();
+                    System.out.println("tempGraphZustand: " +tempGraphZustand);
+                    if (history.contains(tempGraphZustand)) {
+                        retrnZustand.setName(this.convertToString());
+                        retrnZustand.setErrorcode(3);
                         spielZustandWiederholt = true;
+                    } else {
+                        String letzterZug = this.convertToString();
+                        this.ssuf(myzug);
+                        if (letzterZug.equals(this.convertToString())) {            //prüft suizid und lässt es als aushungern zählen
+                            if (spielZustandWiederholt) {
+                                retrnZustand.setErrorcode(2);
+                            }
+                            retrnZustand.setErrorcode(1);
+                            spielZustandWiederholt = true;
+                        }
+                        retrnZustand.setName(this.convertToString());
                     }
-                    retrnZustand.setName(this.convertToString());
                 }
 
             } catch (KnotenException kE) {
@@ -647,6 +605,53 @@ public class Graph implements Cloneable {
             }
         }
         return umzingeltesGebiet;
+    }
+
+    @Override
+    public Graph clone() {
+        Graph myGraph = null;
+        try {
+            myGraph = new Graph(path,
+                    erzeugeNeueKnotenListe(l_knoten),
+                    erzeugeNeueKanteListe(l_kante),
+                    erzeugeNeueHistory(history), spielZustandWiederholt,
+                    erzeugeNeueMaptext(maptext));
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        return myGraph;
+    }
+
+    public HashSet<Knoten> erzeugeNeueKnotenListe(HashSet<Knoten> alte) {
+        HashSet<Knoten> neue = new HashSet<>();
+        for (Knoten i : alte) {
+            neue.add(new Knoten(i.id, i.seite, i.position));
+        }
+        return neue;
+    }
+
+    public HashSet<Kante> erzeugeNeueKanteListe(HashSet<Kante> alte) {
+        HashSet<Kante> neue = new HashSet<>();
+        for (Kante i : alte) {
+            neue.add(new Kante(i.getPunkt1(), i.getPunkt2()));
+        }
+        return neue;
+    }
+
+    public ArrayList<String> erzeugeNeueHistory(ArrayList<String> alte) {
+        ArrayList<String> neue = new ArrayList<>();
+        for (String i : alte) {
+            neue.add(i);
+        }
+        return neue;
+    }
+
+    public ArrayList<String> erzeugeNeueMaptext(ArrayList<String> alte) {
+        ArrayList<String> neue = new ArrayList<>();
+        for (String i : alte) {
+            neue.add(i);
+        }
+        return neue;
     }
 
 }

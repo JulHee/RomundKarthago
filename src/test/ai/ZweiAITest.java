@@ -8,8 +8,12 @@ import logik.ai.WaspAI;
 import org.junit.Test;
 
 /**
- * Created by Acer on 13.07.2014.
+ * Projekt: Rom und Karthago
+ * Author : Julian Heeger, Markus Poell, Christian Bruene, Joern Kabuth
+ * Date : 26.04.14
+ * Year : 2014
  */
+
 public class ZweiAITest {
     @Test
     public void testNextZug() throws Exception {
