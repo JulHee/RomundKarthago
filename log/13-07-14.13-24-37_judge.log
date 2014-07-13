@@ -1,0 +1,37 @@
+> R 8
+NRNNNNNNRC (Continue)
+> C 9
+NRNNNNNNRC (The move had no effect on the map)
+> R 7
+NRNNNNNRRC (Continue)
+> C 9
+NRNNNNNRRC (The move had no effect on the map)
+> R 6
+NRNNNNRRRC (Continue)
+> C 9
+NRNNNNRRRC (The move had no effect on the map)
+> R 5
+NRNNNRRRRC (Continue)
+> C 9
+NRNNNRRRRC (The move had no effect on the map)
+> R 4
+NRNNRRRRRC (Continue)
+> C 9
+NRNNRRRRRC (The move had no effect on the map)
+> R 3
+NRNRRRRRRC (Continue)
+> C 9
+NRNRRRRRRC (The move had no effect on the map)
+> R 2
+NNNNNNNNNC (Continue)
+> C 9
+NNNNNNNNNC (The move had no effect on the map)
+> R 2
+NNRNNNNNNC (Continue)
+> C 9
+NNRNNNNNNC (The move had no effect on the map)
+> R 2
+NNRNNNNNNC (End of game)
+========== End of game =============
+Rome: 1
+Chartage: 2
