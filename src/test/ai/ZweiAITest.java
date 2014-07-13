@@ -20,9 +20,9 @@ public class ZweiAITest {
     public void testNextZug() throws Exception {
         Mechanik myMechanik = new Mechanik("ext/aiTestMap.txt");
         Sloth mySloth = new Sloth(Seite.Rom, myMechanik);
-        //Scrooge myScrooge = new Scrooge(Seite.Kathargo, myMechanik);
-        Joernson joernson = new Joernson(Seite.Kathargo,myMechanik);
+        Joernson rom = new Joernson(Seite.Rom,myMechanik);
+		Joernson kathargo = new Joernson( Seite.Kathargo, myMechanik );
 
-        myMechanik.game(mySloth, joernson);
+        myMechanik.game(rom,kathargo);
     }
 }

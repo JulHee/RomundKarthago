@@ -38,32 +38,18 @@ public class Mechanik implements Cloneable {
 
     public Boolean getLetzterZugAusgesetzt(){return letzterZugAusgesetzt;}
 
-	public void setPath (String path)
-	{
-		this.path = path;
-	}
-
-	public void setMyGraph (Graph myGraph)
-	{
-		this.myGraph = myGraph;
-	}
-
-	public void setLetzterZugAusgesetzt (Boolean letzterZugAusgesetzt)
-	{
-		this.letzterZugAusgesetzt = letzterZugAusgesetzt;
-	}
-
-	public void setSpiel (Boolean spiel)
-	{
-		this.spiel = spiel;
-	}
 
 	public String getPath ()
 	{
 		return path;
 	}
 
-	public Mechanik(){}
+	public Mechanik(String path, Graph myGraph,Boolean letzterZugAusgesetzt, Boolean spiel){
+		this.path = path;
+		this.myGraph = myGraph;
+		this.letzterZugAusgesetzt = letzterZugAusgesetzt;
+		this.spiel = spiel;
+	}
 
 	/**
      * Initialisiert der Mechanik durch initialisierung des Graphen, über die im Netzwerk gesendete Map
@@ -297,13 +283,8 @@ public class Mechanik implements Cloneable {
     @Override
     public Mechanik clone() {
         try {
-            Mechanik cloneMechanik = new Mechanik();
-			cloneMechanik.setLetzterZugAusgesetzt( this.letzterZugAusgesetzt );
-			cloneMechanik.setMyGraph( this.myGraph.clone() );
-			cloneMechanik.setPath( this.getPath() );
-			cloneMechanik.setSpiel( this.getSpiel() );
+            Mechanik cloneMechanik = new Mechanik(this.path,this.myGraph.clone(),this.letzterZugAusgesetzt,this.spiel);
 			return cloneMechanik;
-
         } catch (Exception e) {
             // Kann eigentlich nicht passieren, da Cloneable
             throw new InternalError();
