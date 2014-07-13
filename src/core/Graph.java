@@ -482,14 +482,15 @@ public class Graph implements Cloneable {
                         spielZustandWiederholt = true;
                     } else {
                         String letzterZug = this.convertToString();
-                        this.ssuf(myzug);
-                        if (letzterZug.equals(this.convertToString())) {            //prüft suizid und lässt es als aushungern zählen
+                        Graph tempSuizid = this.clone();
+                        if (letzterZug.equals(tempSuizid.ssuf(myzug).convertToString())) {            //prüft suizid und lässt es als aushungern zählen
                             if (spielZustandWiederholt) {
                                 retrnZustand.setErrorcode(2);
                             }
                             retrnZustand.setErrorcode(1);
                             spielZustandWiederholt = true;
                         }
+                        this.ssuf(myzug);
                         retrnZustand.setName(this.convertToString());
                     }
                 }
