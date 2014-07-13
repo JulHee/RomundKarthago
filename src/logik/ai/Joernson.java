@@ -18,7 +18,7 @@ import logik.Mechanik;
  */
 
 // komplette AI noch in Arbeit!
-
+//TODO checkTarget bei 2 neutralen Nachbarn ?!
 public class Joernson extends AIPlayer {
 	
 	public Mechanik mechanik;

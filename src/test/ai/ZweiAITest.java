@@ -2,6 +2,7 @@ package test.ai;
 
 import core.datacontainers.Seite;
 import logik.Mechanik;
+import logik.ai.Joernson;
 import logik.ai.Scrooge;
 import logik.ai.Sloth;
 import logik.ai.WaspAI;
@@ -19,8 +20,9 @@ public class ZweiAITest {
     public void testNextZug() throws Exception {
         Mechanik myMechanik = new Mechanik("ext/aiTestMap.txt");
         Sloth mySloth = new Sloth(Seite.Rom, myMechanik);
-        Scrooge myScrooge = new Scrooge(Seite.Kathargo, myMechanik);
+        //Scrooge myScrooge = new Scrooge(Seite.Kathargo, myMechanik);
+        Joernson joernson = new Joernson(Seite.Kathargo,myMechanik);
 
-        myMechanik.game(mySloth, myScrooge);
+        myMechanik.game(mySloth, joernson);
     }
 }
