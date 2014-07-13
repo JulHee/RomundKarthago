@@ -206,7 +206,7 @@ public class Graph implements Cloneable {
         }
     }
 
-    public void map() {
+    public void map() {                                               |
         for (Knoten k : toArrayList(l_knoten)) {
             System.out.println(k.id + "(" + k.seite.toString() + ")");
         }
@@ -476,7 +476,13 @@ public class Graph implements Cloneable {
                     // TODO Bitte verändern wurde nur zu Testzwecken mit println versehen
                     String tempGraphZustand = temp.ssuf(temp, myzug).convertToString();
                     System.out.println("tempGraphZustand: " +tempGraphZustand+ " | Spieler "+ spieler + "| Zug "+ myzug);
-                    if (history.contains(tempGraphZustand)) {
+					Boolean gefunden = false;
+					for (String s : history){
+						if (s.equals( tempGraphZustand )){
+							gefunden = true;
+						}
+					}
+                    if (gefunden) {
                         retrnZustand.setName(this.convertToString());
                         retrnZustand.setErrorcode(3);
                         spielZustandWiederholt = true;
