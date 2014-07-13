@@ -38,11 +38,40 @@ public class Mechanik implements Cloneable {
 
     public Boolean getLetzterZugAusgesetzt(){return letzterZugAusgesetzt;}
 
-    /**
+	public void setPath (String path)
+	{
+		this.path = path;
+	}
+
+	public void setMyGraph (Graph myGraph)
+	{
+		this.myGraph = myGraph;
+	}
+
+	public void setLetzterZugAusgesetzt (Boolean letzterZugAusgesetzt)
+	{
+		this.letzterZugAusgesetzt = letzterZugAusgesetzt;
+	}
+
+	public void setSpiel (Boolean spiel)
+	{
+		this.spiel = spiel;
+	}
+
+	public String getPath ()
+	{
+		return path;
+	}
+
+	public Mechanik(){}
+
+	/**
      * Initialisiert der Mechanik durch initialisierung des Graphen, über die im Netzwerk gesendete Map
      *
      * @param path Pfad zur Datei, inder die Map beschrieben wird
      */
+
+
 
     public Mechanik(String path) {
         this.path = path;
@@ -133,10 +162,10 @@ public class Mechanik implements Cloneable {
         myGraph.map();
         while (spiel) {
             String zug = aktuellerSpieler.nextZug().toFormat();
-            String move = auswerten(zug,
-                    aktuellerSpieler.meineSeite);
+            auswerten(zug,aktuellerSpieler.meineSeite);
             System.out.println(aktuellerSpieler.meineSeite.toString()
                     + " spielt folgenden Zug: "+ zug );
+
             if (aktuellerSpieler.meineSeite == Seite.Rom) {
                 aktuellerSpieler = kathargo;
             } else {
@@ -268,8 +297,14 @@ public class Mechanik implements Cloneable {
     @Override
     public Mechanik clone() {
         try {
-            return (Mechanik) super.clone();
-        } catch (CloneNotSupportedException e) {
+            Mechanik cloneMechanik = new Mechanik();
+			cloneMechanik.setLetzterZugAusgesetzt( this.letzterZugAusgesetzt );
+			cloneMechanik.setMyGraph( this.myGraph.clone() );
+			cloneMechanik.setPath( this.getPath() );
+			cloneMechanik.setSpiel( this.getSpiel() );
+			return cloneMechanik;
+
+        } catch (Exception e) {
             // Kann eigentlich nicht passieren, da Cloneable
             throw new InternalError();
         }
