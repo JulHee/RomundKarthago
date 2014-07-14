@@ -584,10 +584,7 @@ public class Graph implements Cloneable
 
 				} else
 				{
-					// TODO Bitte verändern wurde nur zu Testzwecken mit println versehen
 					String tempGraphZustand = temp.ssuf( temp, myzug ).convertToString();
-					System.out.println(
-							"tempGraphZustand: " + tempGraphZustand + " | Spieler " + spieler + "| Zug " + myzug );
 					Boolean gefunden = false;
 					for ( String s : history )
 					{
