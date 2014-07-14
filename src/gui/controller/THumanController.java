@@ -146,8 +146,8 @@ public class THumanController
 
 	// Button und Path die bei Laufzeit erstellt wird
 
-	private  LinkedList<Button> buttons = new LinkedList<>();
-	private  LinkedList<Path> paths = new LinkedList<>();
+	private LinkedList<Button> buttons = new LinkedList<>();
+	private LinkedList<Path> paths = new LinkedList<>();
 
 	// Button größe
 
@@ -319,41 +319,64 @@ public class THumanController
 
 		if ( runningGame )
 		{
-			if ( mechanik.getSpiel() ){
+			if ( mechanik.getSpiel() )
+			{
+				if ( isAi )
+				{
 
-			// Eigener Zug
+					// Eigener Zug
 
-			String buttonText = button.getText();
-			String zug = eigeneSeite.toString() + " " + buttonText.charAt( 0 );
-			ta_log.appendText( zug + "\n" );
+					String buttonText = button.getText();
+					String zug = eigeneSeite.toString() + " " + buttonText.charAt( 0 );
+					ta_log.appendText( zug + "\n" );
 
-			// Auswerten des Zuges
-			String neuerGraph = mechanik.auswerten( zug, eigeneSeite );
-			ta_log.appendText(neuerGraph + "\n" );
+					// Auswerten des Zuges
+					String neuerGraph = mechanik.auswerten( zug, eigeneSeite );
+					ta_log.appendText( neuerGraph + "\n" );
 
-			changebuttons( neuerGraph );
-			refreshHistory();
+					changebuttons( neuerGraph );
+					refreshHistory();
 
-			// Zug der AI
+					// Zug der AI
 
-			Zug aizug = ai.nextZug();
-			ta_log.appendText(aizug.toFormat() + "\n" );
-			neuerGraph = mechanik.auswerten( aizug.toFormat(), gegner );
-			changebuttons( neuerGraph );
-			ta_log.appendText( neuerGraph + "\n" );
-			lb_letzerZug.setText( aizug.toFormat() );
-			refreshHistory();
+					Zug aizug = ai.nextZug();
+					ta_log.appendText( aizug.toFormat() + "\n" );
+					neuerGraph = mechanik.auswerten( aizug.toFormat(), gegner );
+					changebuttons( neuerGraph );
+					ta_log.appendText( neuerGraph + "\n" );
+					lb_letzerZug.setText( aizug.toFormat() );
+					refreshHistory();
+				} else
+				{
+					// Spiel zwischen zwei Menschen an einem Rechner
+					// Eigener Zug
 
-		} else
-		{
-			lb_letzerZug.setText( "Das Spiel ist vorbei" );
-			ta_log.appendText( "Rom: " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Rom ) +"\n" );
-			ta_log.appendText( "Kathargo: " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Kathargo ) +"\n" );
-			runningGame = false;
+					String buttonText = button.getText();
+					String zug = spieler.toString() + " " + buttonText.charAt( 0 );
+					ta_log.appendText( zug + "\n" );
+
+					// Auswerten des Zuges
+					String neuerGraph = mechanik.auswerten( zug, spieler );
+					ta_log.appendText( neuerGraph + "\n" );
+
+					changebuttons( neuerGraph );
+					refreshHistory();
+					spieler = spieler == Seite.Rom ? Seite.Kathargo : Seite.Rom;
+
+				}
+			} else
+			{
+				lb_letzerZug.setText(
+						"Das Spiel ist vorbei: Rom: " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Rom )
+						+ " | Kathargo: " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Kathargo ) );
+				ta_log.appendText( "Rom: " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Rom ) + "\n" );
+				ta_log.appendText( "Kathargo: " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Kathargo ) + "\n" );
+				runningGame = false;
+			}
+
 		}
-	}
 
-}
+	}
 
 	/**
 	 * Initialisert die Oberfläche in dem sie die Buttons und Linien auf das Pane malt
