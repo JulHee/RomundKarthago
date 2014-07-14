@@ -319,15 +319,21 @@ public class THumanController
 
 		if ( runningGame )
 		{
-			if ( mechanik.getSpiel() )
+			if ( isAi )
 			{
-				if ( isAi )
+
+				// Eigener Zug
+				if ( mechanik.getSpiel() )
 				{
-
-					// Eigener Zug
-
+					String zug;
 					String buttonText = button.getText();
-					String zug = eigeneSeite.toString() + " " + buttonText.charAt( 0 );
+					if ( buttonText.equals( "Aussetzen" ) )
+					{
+						zug = eigeneSeite.toString() + " X";
+					} else
+					{
+						zug = eigeneSeite.toString() + " " + buttonText.charAt( 0 );
+					}
 					ta_log.appendText( zug + "\n" );
 
 					// Auswerten des Zuges
@@ -336,21 +342,25 @@ public class THumanController
 
 					changebuttons( neuerGraph );
 					refreshHistory();
+				}
 
-					// Zug der AI
-
+				// Zug der AI
+				if ( mechanik.getSpiel() )
+				{
 					Zug aizug = ai.nextZug();
 					ta_log.appendText( aizug.toFormat() + "\n" );
-					neuerGraph = mechanik.auswerten( aizug.toFormat(), gegner );
+					String neuerGraph = mechanik.auswerten( aizug.toFormat(), gegner );
 					changebuttons( neuerGraph );
 					ta_log.appendText( neuerGraph + "\n" );
 					lb_letzerZug.setText( aizug.toFormat() );
 					refreshHistory();
-				} else
+				}
+			} else
+			{
+				// Spiel zwischen zwei Menschen an einem Rechner
+				// Eigener Zug
+				if ( mechanik.getSpiel() )
 				{
-					// Spiel zwischen zwei Menschen an einem Rechner
-					// Eigener Zug
-
 					String buttonText = button.getText();
 					String zug = spieler.toString() + " " + buttonText.charAt( 0 );
 					ta_log.appendText( zug + "\n" );
@@ -362,9 +372,10 @@ public class THumanController
 					changebuttons( neuerGraph );
 					refreshHistory();
 					spieler = spieler == Seite.Rom ? Seite.Kathargo : Seite.Rom;
-
 				}
-			} else
+			}
+
+			if ( ! mechanik.getSpiel() )
 			{
 				lb_letzerZug.setText(
 						"Das Spiel ist vorbei: Rom: " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Rom )
@@ -411,6 +422,23 @@ public class THumanController
 		// Elemente auf das Pane legen
 		ap_map.getChildren().addAll( paths );
 		ap_map.getChildren().addAll( buttons );
+
+		// AussetzenButton hinzufügen
+
+		final Button bt_aussetzen = new Button();
+		bt_aussetzen.setText( "Aussetzen" );
+		bt_aussetzen.setLayoutX( 5 );
+		bt_aussetzen.setLayoutY( 5 );
+		bt_aussetzen.setOnAction( new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle (ActionEvent e)
+			{
+				zug( bt_aussetzen );
+			}
+		} );
+
+		ap_map.getChildren().add( bt_aussetzen );
 	}
 
 
@@ -480,8 +508,12 @@ public class THumanController
 	{
 		ap_map.getChildren().sorted().stream().filter( n -> n instanceof Button ).forEach( n -> {
 			String bttext = ( ( Button ) n ).getText();
-			Integer btid = Integer.parseInt( String.valueOf( bttext.charAt( 0 ) ) );
-			( ( Button ) n ).setText( btid + " " + String.valueOf( s.charAt( btid ) ) );
+			if ( ! bttext.equals( "Aussetzen" ) )
+			{
+				Integer btid = Integer.parseInt( String.valueOf( bttext.charAt( 0 ) ) );
+				( ( Button ) n ).setText( btid + " " + String.valueOf( s.charAt( btid ) ) );
+			}
+
 		} );
 	}
 
