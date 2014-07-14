@@ -32,6 +32,8 @@ import java.util.LinkedList;
  */
 public class HumanController {
 
+
+
     /*
      * Der Controller an sich ist in zwei fast identische Teile geteilt die sich beide Ausschließen. Der eine reagiert
 	 * wie der Server der als Kathargo auf eine Verbindung wartet und sich mit dem ersten Klienten der die Verbindung
