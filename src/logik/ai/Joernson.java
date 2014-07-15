@@ -302,4 +302,14 @@ public class Joernson extends AIPlayer {
 	{
 		return "Joernson";
 	}
+
+	public void setMechanik (Mechanik mechanik)
+	{
+		this.mechanik = mechanik;
+	}
+
+	public Mechanik getMechanik ()
+	{
+		return mechanik;
+	}
 }

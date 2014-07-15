@@ -26,7 +26,7 @@ public class Logger {
             DateFormat df = new SimpleDateFormat("dd-MM-yy.HH-mm-ss");
             date = new Date();
             String time = df.format(date);
-            this.file = new File("log", time + "_RuK.log");
+            this.file = new File(time + "_RuK.log");
             System.out.println("Der Log wird nach: "+file.getAbsolutePath()+" geschrieben");
             System.out.println(" ");
             this.fileWriter = new FileWriter(file);
