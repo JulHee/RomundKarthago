@@ -300,7 +300,7 @@ public class THumanController
 					Zug aizug = ai.nextZug();
 					ta_log.appendText( "Die AI zieht: " + aizug.toFormat() + "\n" );
 					String neuerGraph = mechanik.auswerten( aizug.toFormat(), gegner );
-					changebuttons( neuerGraph );
+					changeButtons(neuerGraph);
 					ta_log.appendText( neuerGraph + "\n" );
 					lb_letzerZug.setText( aizug.toFormat() );
 					refreshHistory();
@@ -340,19 +340,19 @@ public class THumanController
 					String neuerGraph = mechanik.auswerten( zug, eigeneSeite );
 					ta_log.appendText( neuerGraph + "\n" );
 
-					changebuttons( neuerGraph );
+					changeButtons(neuerGraph);
 					refreshHistory();
 				}
 
 				// Zug der AI
 				if ( mechanik.getSpiel() )
 				{
-					Zug aizug = ai.nextZug();
-					ta_log.appendText( aizug.toFormat() + "\n" );
-					String neuerGraph = mechanik.auswerten( aizug.toFormat(), gegner );
-					changebuttons( neuerGraph );
-					ta_log.appendText( neuerGraph + "\n" );
-					lb_letzerZug.setText( aizug.toFormat() );
+					Zug aiZug = ai.nextZug();
+					ta_log.appendText( aiZug.toFormat() + "\n" );
+					String neuerGraph = mechanik.auswerten( aiZug.toFormat(), gegner );
+					changeButtons(neuerGraph);
+					ta_log.appendText(neuerGraph + "\n");
+					lb_letzerZug.setText(aiZug.toFormat());
 					refreshHistory();
 				}
 			} else
@@ -369,7 +369,7 @@ public class THumanController
 					String neuerGraph = mechanik.auswerten( zug, spieler );
 					ta_log.appendText( neuerGraph + "\n" );
 
-					changebuttons( neuerGraph );
+					changeButtons(neuerGraph);
 					refreshHistory();
 					spieler = spieler == Seite.Rom ? Seite.Kathargo : Seite.Rom;
 				}
@@ -438,7 +438,7 @@ public class THumanController
 			}
 		} );
 
-		ap_map.getChildren().add( bt_aussetzen );
+		ap_map.getChildren().add(bt_aussetzen);
 	}
 
 
@@ -504,7 +504,7 @@ public class THumanController
 	 * @param s Beschreibung des Graphen wobei jedes Zeichen einer ID/Button zugeordnet ist
 	 */
 
-	private void changebuttons (String s)
+	private void changeButtons(String s)
 	{
 		ap_map.getChildren().sorted().stream().filter( n -> n instanceof Button ).forEach( n -> {
 			String bttext = ( ( Button ) n ).getText();
