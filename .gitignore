@@ -1,6 +1,7 @@
 .settings/
 .idea/
-out/
+out/production/
+out/test/
 RomUndKathargo.iml
 romundkathargoswp.iml
 /bin
