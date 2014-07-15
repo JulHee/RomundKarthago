@@ -43,10 +43,10 @@ public class Joernson extends AIPlayer {
     //TODO exception? selber aushungen lassen?
 	@Override
 	public Zug nextZug() {
-        System.out.println("Joernson anfang");
+       // System.out.println("Joernson anfang");
         Zug retrn;
 		if(mechanik.getLetzterZugAusgesetzt() || mechanik.getMyGraph().getSpielZustandWiederholt()){
-            System.out.println("GewinnerPfad");
+          //  System.out.println("GewinnerPfad");
             int me = mechanik.getMyGraph().getPunkteStandFuer(meineSeite);
 			int enemy = mechanik.getMyGraph().getPunkteStandFuer(notmysite());
 			if(me>enemy){
@@ -60,11 +60,11 @@ public class Joernson extends AIPlayer {
 			}
 		}
 		if (checkTarget()){
-            System.out.println("CheckTarget");
+         //   System.out.println("CheckTarget");
             retrn = new Zug(meineSeite,Target.id);
 			return retrn;
 		}
-        System.out.println("saveMe");
+      //  System.out.println("saveMe");
         retrn = saveme();
 		return retrn;
 	}
