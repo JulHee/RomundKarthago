@@ -152,10 +152,10 @@ public class Client
 			}
 			s.close();
 
-			out("==============================");
-			out("Das Spiel wurde beendet");
-			out("Rom: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Rom));
-			out("Kathargo: "+myMechanik.getMyGraph().getPunkteStandFuer(Seite.Kathargo));
+			out( "==============================" );
+			out( "Das Spiel wurde beendet" );
+			out( "Rom: " + myMechanik.getMyGraph().getPunkteStandFuer( Seite.Rom ) );
+			out( "Kathargo: " + myMechanik.getMyGraph().getPunkteStandFuer( Seite.Kathargo ) );
 
 		} catch ( IOException e )
 		{

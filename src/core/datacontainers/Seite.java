@@ -11,18 +11,25 @@ package core.datacontainers;
  * welche eine Stadt (Knoten) im gegebenen Spiel annehmen kann.
  */
 
-public enum Seite {
-    Rom{
-        public String toString(){
-            return "R";
-        }
-    }, Kathargo{
-        public String toString(){
-            return "C";
-        }
-    }, Neutral {
-        public String toString() {
-            return "N";
-        }
-    }
+public enum Seite
+{
+	Rom
+			{
+				public String toString ()
+				{
+					return "R";
+				}
+			}, Kathargo
+		{
+			public String toString ()
+			{
+				return "C";
+			}
+		}, Neutral
+		{
+			public String toString ()
+			{
+				return "N";
+			}
+		}
 }

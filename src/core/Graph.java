@@ -468,7 +468,7 @@ public class Graph implements Cloneable
 		Boolean kHungertAus = true;
 		k = findKnoten( k.id ); // setzte k auf den richtigen knoten aus lKnoten
 		/*
-         * Seite gegner; // Gegner wird ermittelt
+		 * Seite gegner; // Gegner wird ermittelt
 		 * if (spieler == Seite.Kathargo) {
 		 * gegner = Seite.Rom;
 		 * } else {

@@ -14,10 +14,11 @@ public class ServerJar
 {
 	public static void main (String[] args)
 	{
-		if (args.length > 0){
-			Integer port = Integer.valueOf( args[0] );
+		if ( args.length > 0 )
+		{
+			Integer port = Integer.valueOf( args[ 0 ] );
 			Joernson joernson = new Joernson( Seite.Kathargo );
-			Server server = new Server(port,joernson);
+			Server server = new Server( port, joernson );
 		}
 	}
 }

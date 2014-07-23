@@ -11,25 +11,29 @@ import logik.Mechanik;
  * Year : 2014
  */
 
-public abstract class AIPlayer {
-    protected Mechanik mechanik;
-    String path;
+public abstract class AIPlayer
+{
+	protected Mechanik mechanik;
+	String path;
 
-    public Seite meineSeite;
+	public Seite meineSeite;
 
-    abstract public Zug nextZug();
+	abstract public Zug nextZug ();
 
-    @Override
-    public String toString() {
-	return meineSeite.toString();
-    }
+	@Override
+	public String toString ()
+	{
+		return meineSeite.toString();
+	}
 
-    public void setMechanik(Mechanik mechanik) {
-        this.mechanik = mechanik;
-    }
+	public void setMechanik (Mechanik mechanik)
+	{
+		this.mechanik = mechanik;
+	}
 
-    public Mechanik getMechanik() {
-        return mechanik;
-    }
+	public Mechanik getMechanik ()
+	{
+		return mechanik;
+	}
 
 }

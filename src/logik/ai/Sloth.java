@@ -14,26 +14,33 @@ import logik.ai.AIPlayer;
  * Year : 2014
  */
 
-public class Sloth extends AIPlayer {
-    public Sloth(Seite s, Mechanik m) {
-        meineSeite = s;
-        this.mechanik = m;
-    }
+public class Sloth extends AIPlayer
+{
+	public Sloth (Seite s,
+				  Mechanik m)
+	{
+		meineSeite = s;
+		this.mechanik = m;
+	}
 
-    public Zug nextZug() {
-        Zug erg = new Zug(meineSeite, berechneZugStadt());
-        return erg;
-    }
+	public Zug nextZug ()
+	{
+		Zug erg = new Zug( meineSeite, berechneZugStadt() );
+		return erg;
+	}
 
-    private Integer berechneZugStadt() {
-        int erg = -1;
-        Graph graph = mechanik.getMyGraph();
-        for (Knoten k : graph.toArrayList(graph.l_knoten)) {
-            if (k.getSeite() == Seite.Neutral) {
-                erg = k.id;
-            }
-        }
-        return erg;
-    }
+	private Integer berechneZugStadt ()
+	{
+		int erg = - 1;
+		Graph graph = mechanik.getMyGraph();
+		for ( Knoten k : graph.toArrayList( graph.l_knoten ) )
+		{
+			if ( k.getSeite() == Seite.Neutral )
+			{
+				erg = k.id;
+			}
+		}
+		return erg;
+	}
 
 }

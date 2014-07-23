@@ -332,7 +332,8 @@ public class THumanController
 						zug = eigeneSeite.toString() + " X";
 					} else
 					{
-						zug = eigeneSeite.toString() + " " + buttonText.charAt( 0 );
+						String id = buttonText.split( " " )[ 0 ];
+						zug = eigeneSeite.toString() + " " + id;
 					}
 					ta_log.appendText( zug + "\n" );
 

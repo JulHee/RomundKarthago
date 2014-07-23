@@ -7,10 +7,12 @@ package exceptions;
  * Year : 2014
  */
 //TODO soll geworfen werden, wenn ein falscher Zug gemacht wird
-public class ZugException extends Exception {
-    public ZugException(){}
+public class ZugException extends Exception
+{
+	public ZugException () {}
 
-    public ZugException(String s){
-        super(s);
-    }
+	public ZugException (String s)
+	{
+		super( s );
+	}
 }

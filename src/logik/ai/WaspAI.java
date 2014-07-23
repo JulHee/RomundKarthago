@@ -14,20 +14,27 @@ import logik.ai.AIPlayer;
  * Year : 2014
  */
 
-public class WaspAI  extends AIPlayer {
+public class WaspAI extends AIPlayer
+{
 
-    public WaspAI(Seite s) {
-        meineSeite = s;
-    }
+	public WaspAI (Seite s)
+	{
+		meineSeite = s;
+	}
 
-    public Zug nextZug() {
-        try {
-           Zug erg = new Zug(meineSeite.toString() + " 0");
-            return erg;
-        }catch (KeinBesetzerException e){
-            System.out.println(e.getMessage());}
-        catch (ZugException e){
-            System.out.println(e.getMessage());}
-        return null;
-    }
+	public Zug nextZug ()
+	{
+		try
+		{
+			Zug erg = new Zug( meineSeite.toString() + " 0" );
+			return erg;
+		} catch ( KeinBesetzerException e )
+		{
+			System.out.println( e.getMessage() );
+		} catch ( ZugException e )
+		{
+			System.out.println( e.getMessage() );
+		}
+		return null;
+	}
 }

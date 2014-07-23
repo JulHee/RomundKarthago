@@ -12,24 +12,30 @@ import javafx.stage.Stage;
  * Date    : 08.07.14
  * Year    : 2014
  */
-public class AiGUI extends Application {
+public class AiGUI extends Application
+{
 
 	@Override
-	public void start(Stage arg0) {
-		try {
-			VBox page = (VBox) FXMLLoader.load(getClass().getResource("AiGUI.fxml"));
-            Scene scene = new Scene(page);
-            arg0.setScene(scene);
-            arg0.setTitle("Rom und Kathargo - AI");
-            arg0.show();
-			
-		} catch (Exception e) {
+	public void start (Stage arg0)
+	{
+		try
+		{
+			VBox page = ( VBox ) FXMLLoader.load( getClass().getResource( "AiGUI.fxml" ) );
+			Scene scene = new Scene( page );
+			arg0.setScene( scene );
+			arg0.setTitle( "Rom und Kathargo - AI" );
+			arg0.show();
+
+		} catch ( Exception e )
+		{
 			// TODO: handle exception
 		}
-		
+
 	}
-	public static void main(String[] args) {
-		launch(args);
+
+	public static void main (String[] args)
+	{
+		launch( args );
 	}
-	
+
 }
