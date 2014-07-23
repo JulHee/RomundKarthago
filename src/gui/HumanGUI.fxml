@@ -135,7 +135,7 @@
             <Label text="Port:" />
             <Label fx:id="lb_aktuell_port" prefHeight="17.0" prefWidth="47.0" />
                               <Label text="Letzer Zug des Gegners:" />
-                              <Label fx:id="lb_letzerZug" />
+                              <Label fx:id="lb_letzerZug" /><Label prefHeight="16.0" prefWidth="75.0" /><Label prefHeight="16.0" prefWidth="38.0" text="Rom" /><Label fx:id="lb_punkte" /><Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="66.0" text="Kathargo" />
         </items>
       </ToolBar>
   </children>

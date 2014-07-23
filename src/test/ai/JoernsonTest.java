@@ -64,10 +64,10 @@ public class JoernsonTest {
 		Pew.kette(array, Seite.Neutral, n1);
 		assertTrue(Pew.checkme(array, n2));
 	}
-	//Joernson.getchainz
+	//Joernson.getChainz
 	@Test
 	public void chainztest(){
-		Pew.getchainz();
+		Pew.getChainz();
 		Boolean result = false;
 		for(ArrayList<Knoten> a: Pew.Kchainz){
 			for(Knoten b: a){
@@ -80,7 +80,7 @@ public class JoernsonTest {
 	}
 	@Test
 	public void chainztest2(){
-		Pew.getchainz();
+		Pew.getChainz();
 		Boolean result = false;
 		for(ArrayList<Knoten> a: Pew.Rchainz){
 			for(Knoten b: a){

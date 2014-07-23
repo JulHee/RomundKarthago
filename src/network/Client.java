@@ -246,36 +246,6 @@ public class Client
 
 	}
 
-	/**
-	 * Testfunktion um geeignete Kommunikation zwischen Client und Server zu testen
-	 * TODO Vorsicht die Streams wurden geändert !!!!! In dieser Weise kann keine Verbundung funktionieren !!!!!
-	 */
-	public void test ()
-	{
-		try
-		{
-			Socket s = new Socket( this.getIp(), this.getPort() );
-
-			//Socket Streams
-			DataOutputStream out = new DataOutputStream( s.getOutputStream() );
-			DataInputStream in = new DataInputStream( s.getInputStream() );
-
-			// Senden der Map
-			ArrayList<String> maptext = myMechanik.getMyGraph().getMaptext();
-			for ( String l : maptext )
-			{
-				out.writeUTF( l );
-			}
-			out.writeUTF( "R 3" );
-			s.close();
-
-		} catch ( IOException e )
-		{
-			e.printStackTrace();
-		}
-
-	}
-
 	private void out (String message)
 	{
 		log.log( message );

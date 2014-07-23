@@ -16,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -79,6 +80,9 @@ public class THumanController
 
 	@FXML
 	private Label lb_port;
+
+	@FXML
+	private Label lb_punkte;
 
 	@FXML
 	private Button bt_map_laden;
@@ -363,7 +367,8 @@ public class THumanController
 				if ( mechanik.getSpiel() )
 				{
 					String buttonText = button.getText();
-					String zug = spieler.toString() + " " + buttonText.charAt( 0 );
+					String id = buttonText.split( " " )[ 0 ];
+					String zug = spieler.toString() + " " + id;
 					ta_log.appendText( zug + "\n" );
 
 					// Auswerten des Zuges
@@ -455,6 +460,23 @@ public class THumanController
 	{
 		final Button temp = new Button();
 		temp.setText( String.valueOf( knoten.id ) + " " + knoten.seite.toString() );
+
+		switch ( knoten.seite.toString().toLowerCase() )
+		{
+
+			case "n":
+				temp.setTextFill( Paint.valueOf( "green" ) );
+				break;
+
+			case "r":
+				temp.setTextFill( Paint.valueOf( "red" ) );
+				break;
+			case "c":
+				temp.setTextFill( Paint.valueOf( "blue" ) );
+				break;
+
+		}
+
 		temp.setLayoutX( knoten.position.x );
 		temp.setLayoutY( knoten.position.y );
 		temp.setOnAction( new EventHandler<ActionEvent>()
@@ -511,11 +533,33 @@ public class THumanController
 			String bttext = ( ( Button ) n ).getText();
 			if ( ! bttext.equals( "Aussetzen" ) )
 			{
-				Integer btid = Integer.parseInt( String.valueOf( bttext.charAt( 0 ) ) );
-				( ( Button ) n ).setText( btid + " " + String.valueOf( s.charAt( btid ) ) );
+				String id = bttext.split( " " )[ 0 ];
+				Integer btid = Integer.parseInt( String.valueOf( id ) );
+				String seite = String.valueOf( s.charAt( btid ) );
+
+				switch ( seite.toLowerCase() )
+				{
+
+					case "n":
+						( ( Button ) n ).setTextFill( Paint.valueOf( "green" ) );
+						break;
+
+					case "r":
+						( ( Button ) n ).setTextFill( Paint.valueOf( "red" ) );
+						break;
+					case "c":
+						( ( Button ) n ).setTextFill( Paint.valueOf( "blue" ) );
+						break;
+
+				}
+				( ( Button ) n ).setText( btid + " " + seite );
 			}
 
 		} );
+
+		// Setzen der Punkte
+		lb_punkte.setText( mechanik.getMyGraph().getPunkteStandFuer( Seite.Rom )
+						   + " : " + mechanik.getMyGraph().getPunkteStandFuer( Seite.Kathargo ) );
 	}
 
 	/**

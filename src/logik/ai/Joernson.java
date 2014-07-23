@@ -155,7 +155,7 @@ public class Joernson extends AIPlayer
 	 */
 	public Boolean checkTarget ()
 	{
-		getchainz();
+		getChainz();
 		if ( this.meineSeite == Seite.Rom )
 		{
 			if ( checkt( Kchainz ) )
@@ -216,7 +216,7 @@ public class Joernson extends AIPlayer
 	 * Bestimmung der Ketten zusammenhängender Städte einer Fraktion
 	 * jeweils als ArrayList von ArrayList von Knoten ausgegeben
 	 */
-	public void getchainz ()
+	public void getChainz ()
 	{
 		Rchainz.clear();
 		Kchainz.clear();
